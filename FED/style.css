@@ -229,59 +229,6 @@ form{
     padding-top: 50px;
   }
   
-  nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-  
-  nav ul li {
-    margin-right: 20px;
-    position: relative;
-  }
-  
-  nav ul li:hover ul {
-    display: block;
-  }
-  
-  nav li {
-    height: 50px;
-  }
-  
-  nav a {
-    height: 100%;
-    margin: 0 30px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    color: #3b5998;
-  }
-  
-  nav a:hover {
-    color: #28a745;
-  }
-  
-  nav ul ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #fff; /* Adjust as needed */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adjust as needed */
-  }
-  
-  nav ul ul li {
-    width: 100%;
-    text-align: left;
-  }
-  
-  nav ul ul a {
-    display: block;
-    text-decoration: none;
-    color: #333; /* Adjust as needed */
-  }
-  
   .forum {
     background-color: white;
     padding: 20px;
@@ -342,8 +289,6 @@ form{
     margin-right: 330px;
     padding-top: -100px;
   }
-
-
 
 /* header ---------- */
 header.sticky {
