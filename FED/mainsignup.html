@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Movie signup</title>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="style.css">
+</head> 
+
+<body class="loginheader">
+    <!--header-->
+    <header class="sticky">
+        <a href="moviepage.html" class="logo">cinema name</a>
+        <ul class="navlist">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="moviepage.html">Movies</a></li>
+        <li><a href="Development.html">Developmental</a></li>
+        <li><a href="industry.html">Industry</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="Community.html">Community</a></li>
+        </ul>
+    </header>
+
+     <!-- Main Content -->
+     <div class="main-content">
+        <div class="login-container">
+            <h2>Sign Up for an Account</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="login-name">Email</label>
+                    <input type="email" id="log-email" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                </div>
+                <button type="submit" id="login-submit" class="login-btn">Sign In</button>
+            </form>
+            <p class="text-center mt-4">Already have an account? <a href="mainlogin.html" class="text-blue-500">Log in here</a></p>
+        </div>
+    </div>
+</body>
