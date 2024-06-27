@@ -509,19 +509,26 @@ thead {
 }
 
 .thumbnail {
-  width: 80px;
-  height: 80px;
+  width: 150px;
+  height: 150px;
   background-color: #ccc;
+  margin: auto;
 }
 
 .section-title {
   text-align: center;
   font-size: 1.5em;
   margin: 20px 0;
+  
 }
 
 button {
   padding: 5px 10px;
   cursor: pointer;
   margin-right: 5px;
+}
+
+h4 {
+  font-size: 20px;
+  margin-top: 5px;
 }
