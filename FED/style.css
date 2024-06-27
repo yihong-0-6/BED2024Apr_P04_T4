@@ -449,3 +449,21 @@ header .navlist li a:hover {
 }
 
 /* moviepage.html --------*/
+
+/* Industry.html */
+.IntroductionForIndustry {
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.IntroductionForIndustry h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.description {
+  text-align: center;
+}
