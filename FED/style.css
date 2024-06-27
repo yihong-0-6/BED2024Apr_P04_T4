@@ -467,3 +467,61 @@ header .navlist li a:hover {
 .description {
   text-align: center;
 }
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  text-align: center;
+}
+
+td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  text-align: center;
+}
+
+thead {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.description {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  background-color: #ccc;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 1.5em;
+  margin: 20px 0;
+}
+
+button {
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 5px;
+}
