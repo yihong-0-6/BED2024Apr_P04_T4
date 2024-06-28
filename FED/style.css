@@ -1,299 +1,17 @@
-body{
-    font-family: sans-serif;
-    margin: 0;
-    padding: 20px;
+/* Global Styles --------------------------------------------------------------------------------- */
+html, body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #3f3e3e;
 }
 
-h1{
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-form{
-    display:flex;
-    flex-direction: column;
-}
-
-#sea-readiness {
-    background: url('Images/Slider.png') 
-    no-repeat center center fixed;
-    background-size: cover;
-    height: 70vh;
-  }
-  
-  .sea-readiness img {
-    width: 0px;
-    height: auto;
-  }
-  
-  #news-development {
-    background: url('Images/News.png') 
-    no-repeat center center fixed;
-    background-size: cover;
-    height: 50vh;
-  }
-  
-  .news-development img {
-    width: 0px;
-    height: auto;
-  }
-  
-  h1 a {
-    text-decoration: none;
-    color: black;
-  }
-  
-  h2 {
-    text-align: center;
-    align-content: center;
-    margin-top: 40px;
-  }
-  
-  h3 {
-    text-align: center;
-    justify-content: center;
-    font-weight: normal;
-    font-size: 15px;
-    margin-top: 35px;
-  }
-  
-  #singapore img {
-    position: relative;
-    margin-top: 100px;
-    margin-left: 200px;
-    width: 300px;
-  }
-  
-  #thailand img {
-    position: relative;
-    margin-top: -500px;
-    margin-bottom: 65px;
-    margin-left: 630px;
-    width: 300px;
-    height: 280px;
-  }
-  
-  
-  #philippines img {
-    position: relative;
-    margin-top: -350px;
-    margin-bottom: 52px;
-    margin-left: 1100px;   
-    width: 300px;
-    height: 200px;
-  }
-  
-  #myanmmar img {
-    position: relative;
-    margin-top: 110px;
-    margin-left: 200px;
-    width: 300px;
-  }
-  
-  #malaysia img {
-    position: relative;
-    margin-top: -350px;
-    margin-bottom: 55px;
-    margin-left: 630px;
-    width: 300px;
-  }
-  
-  #indonesia img {
-    position: relative;
-    margin-top: -237px;
-    margin-bottom: 47px;
-    margin-left: 1100px;
-    width: 300px;
-    height: 200px;
-  }
-  
-  #technology img {
-    position: relative;
-    margin-top: 100px;
-    margin-left: 200px;
-    width: 300px;
-  }
-  
-  #technology p {
-    position: relative;
-    margin-bottom: -90px;
-    margin-left: 140px;
-  }
-  
-  #health-wellness img {
-    position: relative;
-    margin-top: 170px;
-    margin-bottom: 30px;
-    margin-left: 200px;
-    width: 300px;
-    height: 280px;
-  }
-  
-  #health-wellness p {
-    position: relative;
-    margin-top: 250px;
-    margin-bottom: -150px;
-    margin-left: 190px;
-  }
-  
-  
-  #business-finance img {
-    position: relative;
-    margin-top: 130px;
-    margin-bottom: 52px;
-    margin-left: 200px;   
-    width: 300px;
-    height: 200px;
-  }
-  
-  #business-finance p {
-    position: relative;
-    margin-bottom: -110px;
-    margin-top: 200px;
-    margin-left: 240px;
-  }
-  
-  #entertainment img {
-    position: relative;
-    margin-top: 75px;
-    margin-left: 930px;
-    width: 300px;
-  }
-  
-  #entertainment p {
-    margin-left: 930px;
-    margin-bottom: -50px;
-    margin-top: -1000px;
-  }
-  
-  #sports img {
-    position: relative;
-    margin-top: 80px;
-    margin-bottom: 55px;
-    margin-left: 930px;
-    width: 300px;
-  }
-  
-  #sports p {
-    position: relative;
-    margin-top: 210px;
-    margin-bottom: -50px;
-    margin-left: 950px;
-  }
-  
-  #environment img {
-    position: relative;
-    margin-top: 3px;
-    margin-bottom: 55px;
-    margin-left: 930px;
-    width: 300px;
-    height: 200px;
-  }
-  
-  #environment p {
-    position: relative;
-    margin-top: 130px;
-    margin-left: 930px;
-  }
-  
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 0;
-  }
-  
-  nav {
-    background-color: #ffe5b4;
-  }
-  
-  .container a {
-    text-decoration: none;
-    color: black;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .container a:hover {
-    color: #8fb344;
-  }
-  
-  .heading {
-    margin-top: 20px;
-    font-family: serif;
-    font-size: 32px;
-    text-align: center;
-  }
-  
-  .container {
-    padding-top: 50px;
-  }
-  
-  .forum {
-    background-color: white;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .forum h2 {
-    margin-top: 0;
-    text-align: left;
-  }
-  
-  .interaction {
-    display: flex;
-    align-items: center;
-  }
-  
-  .interaction span {
-    margin: 0 10px;
-  }
-  
-  .comments {
-    margin-top: 20px;
-  }
-  
-  .comment {
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
-  
-  .form-container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    margin: 50px;
-  }
-  
-  .form-container input {
-    display: block;
-    width: 450px;
-    height: 40px;
-    margin: 40px auto;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .form-container h2 {
-    margin: 20px 0;
-  }
-  
-  .header {
-    margin-right: 330px;
-    padding-top: -100px;
-  }
-
-/* header ---------- */
+/* Header Styles --------------------------------------------------------------------------------- */
 header.sticky {
-  background-color: #333;
-  color: #fff;
+  background-color: #fffefe;
+  color: #000000;
   padding: 1rem 2rem;
   position: sticky;
   top: 0;
@@ -307,95 +25,184 @@ header .logo {
   font-size: 1.5rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: #fff;
+  color: #000000;
   text-decoration: none;
 }
 
 header .navlist {
   list-style: none;
   display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+  justify-content: space-between; 
+  flex-grow: 1;
 }
 
 header .navlist li {
-  margin-left: 2rem;
+  margin-left: 1.5rem;
 }
 
 header .navlist li a {
-  color: #fff;
+  color: #000000;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.2rem;
   transition: color 0.3s ease;
 }
 
 header .navlist li a:hover {
-  color: #f4f4f4;
+  color:  #3f3e3e;
 }
 
-/* mainlogin.html --------*/
-.main-content {
+.header-icons {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.header-icons .bx {
+  font-size: 1.5rem;
+  color: #000000;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.header-icons .bx-user {
+  margin-right: 1rem; 
+}
+
+@media (min-width: 1024px) {
+  header .navlist {
+      justify-content: center; 
+  }
+
+  header .navlist li {
+      margin: 0 2rem; 
+  }
+}
+
+/* Index Page Styles ----------------------------------------------------------------------------- */
+/* Container for the page content */
+.container {
+  padding: 2rem;
+}
+
+/* Slide banner */
+.slide-banner {
+  background-color: #ddd;
+  height: 200px;
+  margin-bottom: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 80px); 
-  background-color: #f0f0f0;
-}
-
-.login-container {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-}
-
-.login-container h2 {
-  margin-bottom: 1.5rem;
   font-size: 1.5rem;
-  text-align: center;
+  color: #333;
 }
 
-.form-group {
+/* Content section */
+.content {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  align-items: flex-start; /* Align items to the start to avoid stretching */
+}
+
+/* Adjustments for countries section */
+.countries {
+  display: flex;
+  flex-direction: column;
+  width: 40%; /* Adjust width to fit beside the movies section */
+  margin-right: 2rem; /* Space between countries and movies section */
+}
+
+.countries h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #ffffff; /* Adjust color to complement dark grey background */
+}
+
+.country-flags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.country {
+  width: calc(33.33% - 1rem); /* Ensure three flags per row */
+  margin-bottom: 1rem; /* Space between rows */
+}
+
+.country img {
+  width: 100%; /* Ensure the flag occupies the full width of its container */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensure the entire image is visible within its container */
+}
+
+/* Now Showing section */
+.now-showing {
+  display: flex;
+  flex-direction: column;
+  width: 55%; /* Adjust width to fit beside the countries section */
+}
+
+/* Now Showing label */
+.now-showing-label {
+  text-align: center;
+  margin-top: 0; 
+  margin-bottom: 1rem; 
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+/* Movies container */
+.now-showing .movies {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: space-between;
   margin-bottom: 1rem;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
+/* Individual movie */
+.now-showing .movie {
+  flex-basis: calc(33.33% - 1rem); 
+  margin-bottom: 1rem; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; 
 }
 
-.form-group input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box; 
+.now-showing .movie img {
+  max-width: 100%; 
+  height: auto; 
 }
 
-.login-btn {
-  display: block;
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #007bff;
-  color: white;
-  border: 1px solid #007bff;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  box-sizing: border-box; 
+/* Movie names */
+.now-showing .movie-name {
+  margin-top: 0.5rem; 
+  color: #ffffff;
 }
 
-.login-btn:hover {
-  background-color: #0056b3;
+/* Latest News section */
+.latest-news {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
-.text-center {
-  text-align: center;
+.latest-news div {
+  background-color: #aaa;
+  width: 18%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333;
 }
 
-/* moviepage.html --------*/
-
-/* Industry.html */
+/* Industry Page Styles -------------------------------------------------------------------------- */
 .IntroductionForIndustry {
   background-color: white;
   padding: 20px;
@@ -411,10 +218,6 @@ header .navlist li a:hover {
 
 .description {
   text-align: center;
-}
-
-body {
-  font-family: Arial, sans-serif;
 }
 
 .container {
@@ -464,7 +267,6 @@ thead {
   text-align: center;
   font-size: 1.5em;
   margin: 20px 0;
-  
 }
 
 button {
@@ -476,4 +278,121 @@ button {
 h4 {
   font-size: 20px;
   margin-top: 5px;
+}
+
+/* Miscellaneous Styles -------------------------------------------------------------------------- */
+body {
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h1 a {
+  text-decoration: none;
+  color: black;
+}
+
+h2 {
+  text-align: center;
+  align-content: center;
+  margin-top: 40px;
+}
+
+h3 {
+  text-align: center;
+  justify-content: center;
+  font-weight: normal;
+  font-size: 15px;
+  margin-top: 35px;
+}
+
+/* Section specific styles */
+#sea-readiness, #news-development {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+#sea-readiness {
+  background-image: url('Images/Slider.png');
+  height: 70vh;
+}
+
+#news-development {
+  background-image: url('Images/News.png');
+  height: 50vh;
+}
+
+.sea-readiness img, .news-development img {
+  width: 0;
+  height: auto;
+}
+
+#technology img, #health-wellness img, #business-finance img, #entertainment img, #sports img, #environment img {
+  width: 300px;
+}
+
+#technology img, #health-wellness img, #business-finance img {
+  margin-left: 200px;
+}
+
+#entertainment img, #sports img, #environment img {
+  margin-left: 930px;
+}
+
+#technology p, #health-wellness p, #business-finance p {
+  margin-left: 190px;
+}
+
+#entertainment p, #sports p, #environment p {
+  margin-left: 930px;
+}
+
+#technology p, #health-wellness p, #business-finance p {
+  margin-bottom: -100px;
+}
+
+#health-wellness img {
+  height: 280px;
+}
+
+#business-finance img, #environment img {
+  height: 200px;
+}
+
+.forum {
+  background-color: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.forum h2 {
+  margin-top: 0;
+  text-align: left;
+}
+
+.interaction {
+  display: flex;
+  align-items: center;
+}
+
+.interaction span {
+  margin: 0 10px;
+}
+
+.comments {
+  margin-top: 20px;
+}
+
+.comment {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
