@@ -104,22 +104,22 @@ header .navlist li a:hover {
   display: flex;
   justify-content: space-between;
   margin-bottom: 2rem;
-  align-items: flex-start; /* Align items to the start to avoid stretching */
+  align-items: flex-start;
 }
 
 /* Adjustments for countries section */
 .countries {
   display: flex;
   flex-direction: column;
-  width: 40%; /* Adjust width to fit beside the movies section */
-  margin-right: 2rem; /* Space between countries and movies section */
+  width: 40%; 
+  margin-right: 2rem; 
 }
 
 .countries h2 {
   text-align: center;
   margin-bottom: 1rem;
   font-size: 1.5rem;
-  color: #ffffff; /* Adjust color to complement dark grey background */
+  color: #ffffff; 
 }
 
 .country-flags {
@@ -130,21 +130,21 @@ header .navlist li a:hover {
 }
 
 .country {
-  width: calc(33.33% - 1rem); /* Ensure three flags per row */
-  margin-bottom: 1rem; /* Space between rows */
+  width: calc(33.33% - 1rem); 
+  margin-bottom: 1rem; 
 }
 
 .country img {
-  width: 100%; /* Ensure the flag occupies the full width of its container */
-  height: auto; /* Maintain aspect ratio */
-  object-fit: cover; /* Ensure the entire image is visible within its container */
+  width: 100%; 
+  height: auto; 
+  object-fit: cover; 
 }
 
 /* Now Showing section */
 .now-showing {
   display: flex;
   flex-direction: column;
-  width: 55%; /* Adjust width to fit beside the countries section */
+  width: 55%; 
 }
 
 /* Now Showing label */
@@ -456,4 +456,43 @@ h3 {
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 10px;
+}
+
+
+.containers {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.news-item {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  flex: 1 1 calc(50% - 40px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.news-item img {
+  max-width: 100%;
+  height: auto;
+}
+
+.news-item div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.news-item p {
+  margin: 10px 0;
 }
