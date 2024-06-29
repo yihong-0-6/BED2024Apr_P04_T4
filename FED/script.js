@@ -12,13 +12,13 @@ document.querySelectorAll('.dislike-button').forEach(button => {
   });
 });
 
-document.getElementById('userForm').addEventListener('submit', async function(event) {
+document.getElementById('signupForm').addEventListener('submit', async function(event) {
   event.preventDefault();
   
   const formData = {
-    username: document.getElementById('username').value,
-    password: document.getElementById('password').value,
-    email: document.getElementById('email').value
+    username: document.getElementById('signup-username').value,
+    password: document.getElementById('signup-password').value,
+    email: document.getElementById('signup-email').value
   };
 
   try {
