@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const articleController = require("./controllers/articleController")
 const sql = require("mssql"); // Assuming you've installed mssql
-const dbConfig = require(".dbConfig");
+const dbConfig = require("./dbConfig");
 const validateArticle = require('./middlewares/validateArticle')
 
 const app = express();
