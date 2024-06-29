@@ -1,7 +1,7 @@
 const sql = require('mssql');
 const dbConfig = require('.dbConfig'); //Ensure the path is correct
 
-class Article {
+class Articles {
     constructor(id, title, datePublished, author) {
         this.id
         this.title
@@ -20,8 +20,8 @@ class Article {
         connection.close();
     
         return result.recordset.map(
-          (row) => new Book(row.id, row.title, row.author)
-        ); // Convert rows to Book objects
+          (row) => new Articles(row.id, row.title, row.datePublished, row.author)
+        ); // Convert rows to Articles objects
     }
 
     static async getArticleById(id) {
@@ -36,7 +36,7 @@ class Article {
         connection.close();
     
         return result.recordset[0]
-            ? new Article(
+            ? new Articles(
                 result.recordset[0].id,
                 result.recordset[0].title,
                 result.recordset[0].datePublished,
@@ -77,4 +77,4 @@ class Article {
     }
 }
 
-module.exports = Article;
+module.exports = Articles;

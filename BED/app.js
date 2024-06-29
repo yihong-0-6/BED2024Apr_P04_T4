@@ -1,9 +1,22 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+const articleController = require("./controllers/articleController")
 const sql = require("mssql"); // Assuming you've installed mssql
 const dbConfig = require(".dbConfig");
+const validateArticle = require('./middlewares/validateArticle')
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true}));
+
+// Routes for GET request for articles
+app.get("/articles", articleController.getAllArticles);
+app.get("/articles/:id", articleController.getArticleById);
+app.put("/articles/:id", validateArticle, articleController.updateArticle);
+app.delete("/articles/:id", articleController.deleteArticle);
+
 
 app.listen(port, async () => {
   try {
