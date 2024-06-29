@@ -3,10 +3,10 @@ const dbConfig = require('../dbConfig')
 
 class Articles {
     constructor(ID, Title, Author, Published_Date) {
-        this.ID
-        this.Title
-        this.Author
-        this.Published_Date
+        this.ID = ID
+        this.Title = Title
+        this.Author = Author
+        this.Published_Date = Published_Date
     }
 
     static async getAllArticles() {
