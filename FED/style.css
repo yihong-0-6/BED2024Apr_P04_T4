@@ -532,9 +532,9 @@ label {
   margin-bottom: 5px;
 }
 
-.description,
-.date,
-.author {
+.descriptions,
+.dates,
+.authors {
   background: #e5e5e5;
   padding: 10px;
   border-radius: 5px;
