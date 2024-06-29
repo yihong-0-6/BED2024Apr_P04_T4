@@ -1,8 +1,8 @@
-const Article = require("../models/article");
+const Articles = require("../models/article");
 
 const getAllArticles = async (req, res) => {
     try {
-        const articles = await Article.getAllArticles();
+        const articles = await Articles.getAllArticles();
         res.json(articles)
     } catch (error) {
         console.error(error);
@@ -11,9 +11,9 @@ const getAllArticles = async (req, res) => {
 };
 
 const getArticleById = async (req, res) => {
-    const articleId = parseInt(req.params.id);
+    const articleId = parseInt(req.params.ID);
     try {
-        const article = await Article.getArticleById(articleId);
+        const article = await Articles.getArticleById(articleId);
         if (!article) {
             return res.status(404).send("Article not found");
         }
@@ -25,11 +25,11 @@ const getArticleById = async (req, res) => {
 };
 
 const updateArticle = async (req, res) => {
-    const articleId = parseInt(req.params.id);
+    const articleId = parseInt(req.params.ID);
     const newArticleData = req.body;
   
     try {
-        const updatedArticle = await Article.updateArticle (articleId, newArticleData);
+        const updatedArticle = await Articles.updateArticle (articleId, newArticleData);
         if (!updatedArticle) {
             return res.status(404).send("Article not found");
         }
@@ -41,7 +41,7 @@ const updateArticle = async (req, res) => {
 };
 
 const deleteArticle = async (req, res) => {
-    const articleId = parseInt(req.params.id);
+    const articleId = parseInt(req.params.ID);
   
     try {
         const success = await Article.deleteArticle(articleId);
@@ -55,7 +55,7 @@ const deleteArticle = async (req, res) => {
     }
 };
 
-module.export = {
+module.exports = {
     getAllArticles,
     getArticleById,
     updateArticle,
