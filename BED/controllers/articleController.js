@@ -11,7 +11,7 @@ const getAllArticles = async (req, res) => {
 };
 
 const getArticleById = async (req, res) => {
-    const articleId = parseInt(req.params.id);
+    const articleId = parseInt(req.params.ID);
     try {
         const article = await Articles.getArticleById(articleId);
         if (!article) {
@@ -25,7 +25,7 @@ const getArticleById = async (req, res) => {
 };
 
 const updateArticle = async (req, res) => {
-    const articleId = parseInt(req.params.id);
+    const articleId = parseInt(req.params.ID);
     const newArticleData = req.body;
   
     try {
@@ -41,7 +41,7 @@ const updateArticle = async (req, res) => {
 };
 
 const deleteArticle = async (req, res) => {
-    const articleId = parseInt(req.params.id);
+    const articleId = parseInt(req.params.ID);
   
     try {
         const success = await Article.deleteArticle(articleId);
