@@ -5,7 +5,6 @@ const validateArticle = (req, res, next) => {
         ID: Joi.string().min(1).max(100).required(),
         Title: Joi.string().min(3).max(100).required(),
         Author: Joi.string().min(3).max(100).required(),
-        Published_Date: Joi.string().min(10).max(100).required(),
     });
 
     const validation = schema.validate(req.body, { abortEarly: false }); // Validate request body
