@@ -1,6 +1,6 @@
 const express = require("express");
 const sql = require("mssql"); // Assuming you've installed mssql
-const dbConfig = require("../BED/dbconfig");
+const dbConfig = require(".dbConfig");
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
