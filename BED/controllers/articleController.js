@@ -55,7 +55,7 @@ const deleteArticle = async (req, res) => {
     }
 };
 
-module.export = {
+module.exports = {
     getAllArticles,
     getArticleById,
     updateArticle,

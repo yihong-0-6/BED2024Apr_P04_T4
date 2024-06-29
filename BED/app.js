@@ -13,9 +13,9 @@ app.use(bodyParser.urlencoded({ extended: true}));
 
 // Routes for GET request for articles
 app.get("/articles", articleController.getAllArticles);
-app.get("/articles/:id", articleController.getArticleById);
-app.put("/articles/:id", validateArticle, articleController.updateArticle);
-app.delete("/articles/:id", articleController.deleteArticle);
+app.get("/articles/:ID", articleController.getArticleById);
+app.put("/articles/:ID", validateArticle, articleController.updateArticle);
+app.delete("/articles/:ID", articleController.deleteArticle);
 
 
 app.listen(port, async () => {

@@ -2,11 +2,11 @@ const sql = require('mssql');
 const dbConfig = require('../dbConfig'); //Ensure the path is correct
 
 class Articles {
-    constructor(id, title, datePublished, author) {
-        this.id
-        this.title
-        this.datePublished
-        this.author
+    constructor(ID, Title, Author, Published_Date) {
+        this.ID
+        this.Title
+        this.Author
+        this.Published_Date
     }
 
     static async getAllArticles() {
@@ -20,40 +20,40 @@ class Articles {
         connection.close();
     
         return result.recordset.map(
-          (row) => new Articles(row.id, row.title, row.datePublished, row.author)
+          (row) => new Articles(row.ID, row.Title, row.Author, row.Published_Date)
         ); // Convert rows to Articles objects
     }
 
     static async getArticleById(id) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `SELECT * FROM Articles WHERE id = @id`; // Parameterized query
+        const sqlQuery = `SELECT * FROM Articles WHERE ID = @ID`; // Parameterized query
     
         const request = connection.request();
-        request.input("id", id);
+        request.input("id", ID);
         const result = await request.query(sqlQuery);
     
         connection.close();
     
         return result.recordset[0]
             ? new Articles(
-                result.recordset[0].id,
-                result.recordset[0].title,
-                result.recordset[0].datePublished,
-                result.recordset[0].author
+                result.recordset[0].ID,
+                result.recordset[0].Title,
+                result.recordset[0].Author,
+                result.recordset[0].Published_Date
                 )
-            : null; // Handle book not found
+            : null; // Handle article not found
     }
 
     static async updateArticle(id, newArticleData) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `UPDATE Articles SET title = @title, datePublished = @datePublished, author = @author WHERE id = @id`; // Parameterized query
+        const sqlQuery = `UPDATE Articles SET Title = @Title, Author = @Author, Published_Date = @Published_Date WHERE ID = @ID`; // Parameterized query
     
         const request = connection.request();
-        request.input("id", id);
-        request.input("title", newArticleData.title || null); // Handle optional fields
-        request.input("author", newArticleData.author || null);
+        request.input("ID", ID);
+        request.input("Title", newArticleData.Title || null); // Handle optional fields
+        request.input("Author", newArticleData.Author || null);
     
         await request.query(sqlQuery);
     
@@ -65,10 +65,10 @@ class Articles {
     static async deleteArticle(id) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `DELETE FROM Articles WHERE id = @id`; // Parameterized query
+        const sqlQuery = `DELETE FROM Articles WHERE ID = @ID`; // Parameterized query
     
         const request = connection.request();
-        request.input("id", id);
+        request.input("ID", ID);
         const result = await request.query(sqlQuery);
     
         connection.close();
