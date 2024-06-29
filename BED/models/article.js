@@ -48,7 +48,7 @@ class Articles {
     static async updateArticle(ID, newArticleData) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `UPDATE Articles SET Title = @Title, Author = @Author, Published_Date = @Published_Date WHERE ID = @ID`; // Parameterized query
+        const sqlQuery = `UPDATE Articles SET Title = @Title, Author = @Author WHERE ID = @ID`; // Parameterized query
     
         const request = connection.request();
         request.input("ID", ID);
