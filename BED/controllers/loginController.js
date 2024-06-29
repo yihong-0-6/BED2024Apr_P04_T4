@@ -40,9 +40,21 @@ const updateUsername = async (req, res) => {
   }
 };
 
+const createUser = async (req, res) => {
+  const newUser = req.body;
+  try {
+    const createdUser = await User.createUser(newUser);
+    res.status(201).json(createdUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error signing up.");
+  }
+};
+
 
 
 module.exports = {
   getAllUsers,
   updateUsername,
+  createUser
 }

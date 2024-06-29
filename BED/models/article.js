@@ -1,5 +1,5 @@
 const sql = require('mssql');
-const dbConfig = require('../dbConfig'); //Ensure the path is correct
+const dbConfig = require('../dbConfig')
 
 class Articles {
     constructor(ID, Title, Author, Published_Date) {

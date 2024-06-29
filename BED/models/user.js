@@ -1,10 +1,11 @@
 const sql = require('mssql');
-const dbConfig = require('.dbConfig');
+const dbConfig = require('../dbConfig')
 
 class User {
-  constructor(username, password) {
+  constructor(username, password, email) {
     this.username = username;
     this.password = password;
+    this.email = email;
   }
 
   static async getAllUsers() {
@@ -15,10 +16,10 @@ class User {
     const request = connection.request();
     const result = await request.query(sqlQuery);
 
-    connection.close();
+    connection.close(); 
 
     return result.recordset.map(
-      (row) => new User(row.id, row.username, row.email)
+      (row) => new Users(row.id, row.username, row.email)
     ); // Convert rows to User objects
   }
 
@@ -45,18 +46,18 @@ class User {
   static async createUser(newUserData) {
     const connection = await sql.connect(dbConfig);
 
-    const sqlQuery = `INSERT INTO Books (title, author) VALUES (@title, @author); SELECT SCOPE_IDENTITY() AS id;`; // Retrieve ID of inserted record
+    const sqlQuery = `INSERT INTO Users (username, password, email) VALUES (@username, @password, @email); SELECT SCOPE_IDENTITY() AS id;`; // Retrieve ID of inserted record
 
     const request = connection.request();
-    request.input("title", newBookData.title);
-    request.input("author", newBookData.author);
+    request.input("username", newUserData.username);
+    request.input("password", newUserData.password);
+    request.input("email", newUserData.email);
 
     const result = await request.query(sqlQuery);
 
     connection.close();
 
-    // Retrieve the newly created book using its ID
-    return this.getBookById(result.recordset[0].id);
+    return this.getAllUsers();
   }
 }
 

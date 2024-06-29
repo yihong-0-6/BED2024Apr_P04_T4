@@ -1,15 +1,21 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const articleController = require("./controllers/articleController")
-const sql = require("mssql"); // Assuming you've installed mssql
+const loginController = require("./controllers/loginController");
+const sql = require("mssql");
 const dbConfig = require("./dbConfig");
+const bodyParser = require("body-parser");
+const validateUser = require("./middlewares/validateUser");
+const articleController = require("./controllers/articleController")
 const validateArticle = require('./middlewares/validateArticle')
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
+
+app.get("/user", loginController.getAllUsers);
+app.put("/user", loginController.updateUsername);
+app.post("/user", validateUser, loginController.createUser);
 
 // Routes for GET request for articles
 app.get("/articles", articleController.getAllArticles);
