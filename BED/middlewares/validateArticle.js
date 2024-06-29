@@ -2,7 +2,6 @@ const Joi = require("joi");
 
 const validateArticle = (req, res, next) => {
     const schema = Joi.object({
-        ID: Joi.string().min(1).max(100).required(),
         Title: Joi.string().min(3).max(100).required(),
         Author: Joi.string().min(3).max(100).required(),
     });
