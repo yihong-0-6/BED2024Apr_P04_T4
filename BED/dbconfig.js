@@ -8,4 +8,4 @@ module.exports = {
       port: 1433,
       connectionTimeout: 60000,
     },
-  };
+};
