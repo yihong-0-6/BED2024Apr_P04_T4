@@ -1,6 +1,7 @@
 const sql = require('mssql');
 const dbConfig = require('../dbConfig')
 
+// Article entity with properties for 'ID', 'Title', 'Author', 'Published_Date'
 class Articles {
     constructor(ID, Title, Author, Published_Date) {
         this.ID = ID
@@ -12,13 +13,17 @@ class Articles {
     static async getAllArticles() {
         const connection = await sql.connect(dbConfig);
     
+        // Retrieves all articles from the 'Articles' table using the 'SELECT *' query
         const sqlQuery = `SELECT * FROM Articles`; // Replace with your actual table name
     
+        // It establishes a connection, executes the query, parses the results
         const request = connection.request();
         const result = await request.query(sqlQuery);
     
+        // It closes the connection
         connection.close();
     
+        // Return an array of 'Articles' objects constructed from the retrieved data.
         return result.recordset.map(
           (row) => new Articles(row.ID, row.Title, row.Author, row.Published_Date)
         ); // Convert rows to Articles objects
@@ -26,15 +31,19 @@ class Articles {
 
     static async getArticleById(ID) {
         const connection = await sql.connect(dbConfig);
-    
+        
+        // Retrieves a specific book by its ID using a parameterized query to prevent SQL injection vulnerabilities
         const sqlQuery = `SELECT * FROM Articles WHERE ID = @ID`; // Parameterized query
     
+        // It takes an `id` parameter, connects to the database, executes the query with the provided ID
         const request = connection.request();
         request.input("ID", ID);
         const result = await request.query(sqlQuery);
     
+        // It closes the connection upon completion
         connection.close();
-    
+        
+        // Returns either a `Book` object if found or `null` if not found
         return result.recordset[0]
             ? new Articles(
                 result.recordset[0].ID,

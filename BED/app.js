@@ -2,7 +2,7 @@ const express = require("express");
 const loginController = require("./controllers/loginController");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
-const bodyParser = require("body-parser");
+const bodyParser = require("body-parser"); // Import body parser
 const validateUser = require("./middlewares/validateUser");
 const articleController = require("./controllers/articleController")
 const validateArticle = require('./middlewares/validateArticle')
@@ -10,6 +10,7 @@ const validateArticle = require('./middlewares/validateArticle')
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
 
+// Include body-parser middleware to handle JSON data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 
@@ -23,7 +24,7 @@ app.put("/user", validateUser, loginController.updateUsername);
 app.post("/user", validateUser, loginController.createUser);
 
 
-// Routes for GET request for articles
+// EdisonChewJiaJun S10244576H Routes for GET request for articles
 app.get("/articles", articleController.getAllArticles);
 app.get("/articles/:ID", articleController.getArticleById);
 app.put("/articles/:ID", validateArticle, articleController.updateArticle);
