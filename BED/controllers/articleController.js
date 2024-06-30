@@ -1,19 +1,27 @@
 const Articles = require("../models/article");
 
+// Defines a controller object with functions for handling GET request related to articles
 const getAllArticles = async (req, res) => {
+    // This method utilizes the 'Articles.getAllArticles' method to retrieve all articles
     try {
         const articles = await Articles.getAllArticles();
         res.json(articles)
+
+        // It catches potential errors
     } catch (error) {
         console.error(error);
+        // Sends an error message to the client
         res.status(500).send("Error retrieving articles");
     }
 };
 
 const getArticleById = async (req, res) => {
+    // It parses the 'ID' from the request parameters
     const articleId = parseInt(req.params.ID);
+    // This function retrieves a book by ID using the 'Articles.getArticleById' method.
     try {
         const article = await Articles.getArticleById(articleId);
+        // If unsuccessful, an error message with a 404 status code
         if (!article) {
             return res.status(404).send("Article not found");
         }
