@@ -14,11 +14,34 @@ const port = process.env.PORT || 3000; // Use environment variable or default po
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 
+// Get All Forums From Community Page - Zhen Kang
+app.get("/Community", forumController.getAllForums); 
 
+// New Login Details (username, password) - Zhen Kang
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+      return res.status(400).json({ message: 'Username and password are required' });
+  }
+
+  try {
+      const user = new User(username, password);
+      await User.addUser({ username, password });
+
+      res.status(200).json({ message: 'User added successfully', user: user });
+  } 
+  catch (error) {
+      console.error('Error adding user:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// Get All User Login Details - Zhen Kang
 app.get("/user", loginController.getAllUsers);
 
-//Zhen Kang
-app.put("/user", validateUser, loginController.updateUsername);
+// Update Username of Login Details - Zhen Kang
+app.put("/user", loginController.updateUsername);
 
 //Yi Hong S10257222
 app.post("/user", validateUser, loginController.createUser);
