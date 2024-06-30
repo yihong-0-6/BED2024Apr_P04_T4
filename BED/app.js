@@ -6,9 +6,10 @@ const bodyParser = require("body-parser"); // Import body parser
 const validateUser = require("./middlewares/validateUser");
 const User = require('./models/user');
 
+const forumController = require('./controllers/forumController');
+
 // EdisonChewJiaJun S10244576H (Articles)
 const articleController = require("./controllers/articleController");
-
 const validateArticle = require('./middlewares/validateArticle');
 
 const movieController = require('./controllers/movieController');
