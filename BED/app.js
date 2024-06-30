@@ -30,6 +30,10 @@ app.get("/articles/:ID", articleController.getArticleById);
 app.put("/articles/:ID", validateArticle, articleController.updateArticle);
 app.delete("/articles/:ID", articleController.deleteArticle);
 
+// Tam Shi Ying S10257952D Routes for GET request for movies
+app.get("/movies", movieController.getAllMovies);
+app.get("/movies/:ID", movieController.getMovieById);
+
 
 app.listen(port, async () => {
   try {
