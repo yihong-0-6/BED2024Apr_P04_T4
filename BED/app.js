@@ -57,7 +57,7 @@ app.post("/user", validateUser, loginController.createUser);
 // EdisonChewJiaJun S10244576H Routes for GET request for articles
 app.get("/articles", articleController.getAllArticles);
 app.get("/articles/:ID", articleController.getArticleById);
-app.put("/articles/:ID", validateArticle, articleController.updateArticle);
+app.put("/articles/:ID", validateArticle, articleController.updateArticle); // Updating the articles
 app.delete("/articles/:ID", articleController.deleteArticle);
 
 // Tam Shi Ying S10257952D Routes for GET request for movies

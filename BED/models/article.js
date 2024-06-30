@@ -61,14 +61,18 @@ class Articles {
         const sqlQuery = `UPDATE Articles SET Title = @Title, Author = @Author WHERE ID = @ID`; // Parameterized query
     
         const request = connection.request();
+        // This line sets the value for the `@ID` parameter in the query using the provided `ID` value.
         request.input("ID", ID);
+        // This line sets the value for the `@title` parameter. It uses the optional chaining operator (`||`) to check if `newBookData.title` exists
         request.input("Title", newArticleData.Title || null); // Handle optional fields
         request.input("Author", newArticleData.Author || null);
-    
+        
+        // This line asynchronously executes the prepared SQL query with the set parameters.
         await request.query(sqlQuery);
     
         connection.close();
-    
+        
+        // This line (commented as a consideration) retrieves the updated book record using the `getBookById` method
         return this.getArticleById(ID); // returning the updated book data
     }
 
