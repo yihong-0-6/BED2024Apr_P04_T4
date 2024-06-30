@@ -12,22 +12,30 @@ class Movies {
 
     static async getAllMovies() {
         const connection = await sql.connect(dbConfig);
+
         const sqlQuery = `SELECT * FROM Movies`;
+
         const request = connection.request();
         const result = await request.query(sqlQuery);
+
         connection.close();
+
         return result.recordset.map(
-          (row) => new Movie(row.ID, row.Name, row.Published_Year, row.Director, row.Country)
+          (row) => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country)
         );
     }
 
-    static async getMovieById(id) {
+    static async getMovieById(ID) {
         const connection = await sql.connect(dbConfig);
+
         const sqlQuery = `SELECT * FROM Movies WHERE ID = @ID`;
+
         const request = connection.request();
-        request.input("ID", sql.Int, ID);
+        request.input("ID", ID);
         const result = await request.query(sqlQuery);
+
         connection.close();
+
         return result.recordset[0]
             ? new Movies(
                 result.recordset[0].ID,

@@ -1,27 +1,30 @@
-const Movies = require('../models/Movie'); 
+const Movies = require('../models/movie'); 
 
-class MovieController {
-    static async getAllMovies(req, res) {
-        try {
-            const movies = await Movies.getAllMovies();
-            res.json(movies);
-        } catch (error) {
-            res.status(500).send(error.message);
-        }
+const getAllMovies = async (req, res) => {
+    try {
+        const movies = await Movies.getAllMovies();
+        res.json(movies);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error retrieving movies");
     }
+};
 
-    static async getMovieById(req, res) {
-        try {
-            const movie = await Movies.getMovieById(req.params.ID);
-            if (movie) {
-                res.json(movie);
-            } else {
-                res.status(404).send('Movie not found');
-            }
-        } catch (error) {
-            res.status(500).send(error.message);
-        }
+const getMovieById = async (req, res) => {
+    const movieId = parseInt(req.params.ID);
+    try {
+        const movie = await Movie.getMovieById(movieId);
+        if (!movie) {
+            return res.status(404).send("Movie not found");
+        } 
+        res.json(movie);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error retrieving movie");
     }
-}
+};
 
-module.exports = MovieController;
+module.exports = {
+    getAllMovies,
+    getMovieById,
+};
