@@ -3,10 +3,10 @@ const dbConfig = require('../dbConfig')
 
 class Articles {
     constructor(ID, Title, Author, Published_Date) {
-        this.ID
-        this.Title
-        this.Author
-        this.Published_Date
+        this.ID = ID
+        this.Title = Title
+        this.Author = Author
+        this.Published_Date = Published_Date
     }
 
     static async getAllArticles() {
@@ -24,13 +24,13 @@ class Articles {
         ); // Convert rows to Articles objects
     }
 
-    static async getArticleById(id) {
+    static async getArticleById(ID) {
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `SELECT * FROM Articles WHERE ID = @ID`; // Parameterized query
     
         const request = connection.request();
-        request.input("id", ID);
+        request.input("ID", ID);
         const result = await request.query(sqlQuery);
     
         connection.close();
@@ -45,10 +45,10 @@ class Articles {
             : null; // Handle article not found
     }
 
-    static async updateArticle(id, newArticleData) {
+    static async updateArticle(ID, newArticleData) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `UPDATE Articles SET Title = @Title, Author = @Author, Published_Date = @Published_Date WHERE ID = @ID`; // Parameterized query
+        const sqlQuery = `UPDATE Articles SET Title = @Title, Author = @Author WHERE ID = @ID`; // Parameterized query
     
         const request = connection.request();
         request.input("ID", ID);
@@ -59,10 +59,10 @@ class Articles {
     
         connection.close();
     
-        return this.getArticleById(id); // returning the updated book data
+        return this.getArticleById(ID); // returning the updated book data
     }
 
-    static async deleteArticle(id) {
+    static async deleteArticle(ID) {
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `DELETE FROM Articles WHERE ID = @ID`; // Parameterized query
