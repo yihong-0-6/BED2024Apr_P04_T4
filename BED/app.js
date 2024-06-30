@@ -46,7 +46,7 @@ app.post("/login", async (req, res) => {
 app.get("/user", loginController.getAllUsers);
 
 // Update Username of Login Details - Zhen Kang
-app.put("/user", loginController.updateUsername);
+app.put("/user", validateUser, loginController.updateUsername);
 
 //Yi Hong S10257222
 app.post("/user", validateUser, loginController.createUser);

@@ -9,10 +9,40 @@ class User {
     this.email = email;
   }
 
+  // Zhen Kang
+  static async addUser(userData) {
+    let connection;
+    try {
+      connection = await sql.connect(dbConfig);
+
+      const sqlQuery = `INSERT INTO Users (username, password, email) 
+      VALUES (@username, @password, @email)`;
+
+      const request = connection.request();
+      request.input('username', sql.VarChar, userData.username);
+      request.input('password', sql.VarChar, userData.password);
+      request.input('email', sql.VarChar, userData.email);
+
+      await request.query(sqlQuery);
+    } 
+    
+    catch (error) {
+      console.error('Error adding user:', error);
+      throw error;
+    } 
+    
+    finally {
+      if (connection) {
+        connection.close();
+      }
+    }
+  }
+
+  // Zhen Kang
   static async getAllUsers() {
     const connection = await sql.connect(dbConfig);
 
-    const sqlQuery = `SELECT * FROM Users`;
+    const sqlQuery = `SELECT username, password, email FROM Users`;
 
     const request = connection.request();
     const result = await request.query(sqlQuery);
@@ -24,25 +54,39 @@ class User {
     ); // Convert rows to User objects
   }
 
-  static async updateUsername(username, newUserData) {
-    const connection = await sql.connect(dbConfig);
+  // Zhen Kang
+  static async updateUsername(oldUsername, newUserData) {
+    let connection;
+    
+    try {
+      connection = await sql.connect(dbConfig);
+      const sqlQuery = `
+        UPDATE Users
+        SET username = @newUsername
+        WHERE username = @oldUsername
+      `;
 
-    const sqlQuery = `
-      UPDATE Users
-      SET username = @username
-    `;
+      const request = connection.request();
+      request.input('oldUsername', sql.VarChar, oldUsername);
+      request.input('newUsername', sql.VarChar, newUserData.username);
 
-    const request = connection.request();
-    request.input('oldUsername', sql.VarChar, username);
-    request.input('newUsername', sql.VarChar, req.body.newUserName);
-    request.query('UPDATE Users SET Username = @newUsername WHERE Username = @oldUsername');
+      const result = await request.query(sqlQuery);
 
-    await request.query(sqlQuery);
-
-    connection.close();
-
-    return this.getAllUsers(username);
+      return result.rowsAffected[0] > 0; // Check if rows were affected
+    } 
+    
+    catch (error) {
+      console.error("Error updating username:", error);
+      throw error;
+    } 
+    
+    finally {
+      if (connection) {
+        connection.close();
+      }
+    }
   }
+
 
   //Yi Hong S10257222
   static async createUser(newUserData) {
