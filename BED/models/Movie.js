@@ -1,13 +1,13 @@
 const sql = require('mssql');
 const dbConfig = require('../dbConfig')
 
-class Movie {
-    constructor(id, name, publishedYear, director, country) {
-        this.id = id;
-        this.name = name;
-        this.publishedYear = publishedYear;
-        this.director = director;
-        this.country = country;
+class Movies {
+    constructor(ID, Name, Published_Year, Director, Country) {
+        this.ID = ID;
+        this.Name = Name;
+        this.Published_Year = Published_Year;
+        this.Director = Director;
+        this.Country = Country;
     }
 
     static async getAllMovies() {
@@ -23,13 +23,13 @@ class Movie {
 
     static async getMovieById(id) {
         const connection = await sql.connect(dbConfig);
-        const sqlQuery = `SELECT * FROM Movies WHERE ID = @id`;
+        const sqlQuery = `SELECT * FROM Movies WHERE ID = @ID`;
         const request = connection.request();
-        request.input("id", sql.Int, id);
+        request.input("ID", sql.Int, ID);
         const result = await request.query(sqlQuery);
         connection.close();
         return result.recordset[0]
-            ? new Movie(
+            ? new Movies(
                 result.recordset[0].ID,
                 result.recordset[0].Name,
                 result.recordset[0].Published_Year,
@@ -40,4 +40,4 @@ class Movie {
     }
 }
 
-module.exports = Movie;
+module.exports = Movies;

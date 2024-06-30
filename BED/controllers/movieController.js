@@ -1,9 +1,9 @@
-const Movie = require('../models/Movie'); 
+const Movies = require('../models/Movie'); 
 
 class MovieController {
     static async getAllMovies(req, res) {
         try {
-            const movies = await Movie.getAllMovies();
+            const movies = await Movies.getAllMovies();
             res.json(movies);
         } catch (error) {
             res.status(500).send(error.message);
@@ -12,7 +12,7 @@ class MovieController {
 
     static async getMovieById(req, res) {
         try {
-            const movie = await Movie.getMovieById(req.params.id);
+            const movie = await Movies.getMovieById(req.params.ID);
             if (movie) {
                 res.json(movie);
             } else {
