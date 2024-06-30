@@ -50,7 +50,7 @@ class User {
     connection.close(); 
 
     return result.recordset.map(
-      (row) => new User(row.id, row.username, row.email)
+      (row) => new User(row.username, row.password, row.email)
     ); // Convert rows to User objects
   }
 

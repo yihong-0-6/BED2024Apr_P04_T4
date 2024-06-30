@@ -4,13 +4,14 @@ const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser"); // Import body parser
 const validateUser = require("./middlewares/validateUser");
+const User = require('./models/user');
 
 // EdisonChewJiaJun S10244576H (Articles)
-const articleController = require("./controllers/articleController")
-const validateArticle = require('./middlewares/validateArticle')
+const articleController = require("./controllers/articleController");
 
-const movieController = require('./controllers/movieController')
+const validateArticle = require('./middlewares/validateArticle');
 
+const movieController = require('./controllers/movieController');
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
@@ -22,17 +23,17 @@ app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 // Get All Forums From Community Page - Zhen Kang
 app.get("/Community", forumController.getAllForums); 
 
-// New Login Details (username, password) - Zhen Kang
+// New Login Details (username, password, email) - Zhen Kang
 app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
 
-  if (!username || !password) {
-      return res.status(400).json({ message: 'Username and password are required' });
+  if (!username || !password || !email) {
+      return res.status(400).json({ message: 'Username, Password & Email are required' });
   }
 
   try {
-      const user = new User(username, password);
-      await User.addUser({ username, password });
+      const user = new User(username, password, email);
+      await User.addUser({ username, password, email});
 
       res.status(200).json({ message: 'User added successfully', user: user });
   } 
