@@ -4,8 +4,13 @@ const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser"); // Import body parser
 const validateUser = require("./middlewares/validateUser");
+
+// EdisonChewJiaJun S10244576H (Articles)
 const articleController = require("./controllers/articleController")
 const validateArticle = require('./middlewares/validateArticle')
+
+const movieController = require('./controllers/movieController')
+
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
