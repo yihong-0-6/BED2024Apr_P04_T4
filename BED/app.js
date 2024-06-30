@@ -15,8 +15,13 @@ app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 
 
 app.get("/user", loginController.getAllUsers);
+
+//Zhen Kang
 app.put("/user", validateUser, loginController.updateUsername);
+
+//Yi Hong S10257222
 app.post("/user", validateUser, loginController.createUser);
+
 
 // Routes for GET request for articles
 app.get("/articles", articleController.getAllArticles);
