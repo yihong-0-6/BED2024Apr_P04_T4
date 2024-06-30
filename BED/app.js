@@ -13,8 +13,9 @@ const port = process.env.PORT || 3000; // Use environment variable or default po
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 
+
 app.get("/user", loginController.getAllUsers);
-app.put("/user", loginController.updateUsername);
+app.put("/user", validateUser, loginController.updateUsername);
 app.post("/user", validateUser, loginController.createUser);
 
 // Routes for GET request for articles

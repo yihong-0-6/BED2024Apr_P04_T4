@@ -4,15 +4,7 @@ const getAllUsers = async (req, res) => {
   try {
     const users = await User.getAllUsers();
     res.json(users);
-
-    return users.recordset[0]
-      ? new User(
-          result.recordset[0].username,
-          result.recordset[0].password
-        )
-      : null;  
-      }
-
+  }
   catch (users) {
     console.error(users);
     res.status(500).send("Error retrieving users");
@@ -47,7 +39,7 @@ const createUser = async (req, res) => {
     res.status(201).json(createdUser);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error signing up.");
+    res.status(500).send("Error signing up");
   }
 };
 

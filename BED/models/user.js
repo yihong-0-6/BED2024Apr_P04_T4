@@ -2,7 +2,8 @@ const sql = require('mssql');
 const dbConfig = require('../dbConfig')
 
 class User {
-  constructor(username, password, email) {
+  constructor(id, username, password, email) {
+    this.id = id;
     this.username = username;
     this.password = password;
     this.email = email;
@@ -19,7 +20,7 @@ class User {
     connection.close(); 
 
     return result.recordset.map(
-      (row) => new Users(row.id, row.username, row.email)
+      (row) => new User(row.id, row.username, row.email)
     ); // Convert rows to User objects
   }
 
@@ -51,7 +52,7 @@ class User {
     const request = connection.request();
     request.input("username", newUserData.username);
     request.input("password", newUserData.password);
-    request.input("email", newUserData.email);
+    request.input("email", newUserData.email)
 
     const result = await request.query(sqlQuery);
 
