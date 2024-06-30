@@ -44,7 +44,7 @@ class Articles {
         // It closes the connection upon completion
         connection.close();
         
-        // Returns either a `Book` object if found or `null` if not found
+        // Returns either a `Article` object if found or `null` if not found
         return result.recordset[0]
             ? new Articles(
                 result.recordset[0].ID,
@@ -63,7 +63,7 @@ class Articles {
         const request = connection.request();
         // This line sets the value for the `@ID` parameter in the query using the provided `ID` value.
         request.input("ID", ID);
-        // This line sets the value for the `@title` parameter. It uses the optional chaining operator (`||`) to check if `newBookData.title` exists
+        // This line sets the value for the `@title` parameter. It uses the optional chaining operator (`||`) to check if `newArticleData.title` exists
         request.input("Title", newArticleData.Title || null); // Handle optional fields
         request.input("Author", newArticleData.Author || null);
         
