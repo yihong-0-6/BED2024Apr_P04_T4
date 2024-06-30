@@ -5,7 +5,7 @@ const getAllUsers = async (req, res) => {
   const userData = req.body; // Ensure you get data from the request body
 
   try {
-    const users = await User.getAllUsers(userData.username, userData.password);
+    const users = await User.getAllUsers(userData.username, userData.password, userData.email);
     res.json(users);
   } 
   
