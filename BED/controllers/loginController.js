@@ -32,6 +32,7 @@ const updateUsername = async (req, res) => {
   }
 };
 
+//Yi Hong S10257222
 const createUser = async (req, res) => {
   const newUser = req.body;
   try {

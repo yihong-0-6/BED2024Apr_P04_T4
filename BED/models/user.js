@@ -44,10 +44,13 @@ class User {
     return this.getAllUsers(username);
   }
 
+  //Yi Hong S10257222
   static async createUser(newUserData) {
     const connection = await sql.connect(dbConfig);
 
-    const sqlQuery = `INSERT INTO Users (username, password, email) VALUES (@username, @password, @email); SELECT SCOPE_IDENTITY() AS id;`; // Retrieve ID of inserted record
+    const sqlQuery = `INSERT INTO Users (username, password, email) 
+    VALUES (@username, @password, @email); 
+    SELECT SCOPE_IDENTITY() AS id;`; // Retrieve ID of inserted record
 
     const request = connection.request();
     request.input("username", newUserData.username);

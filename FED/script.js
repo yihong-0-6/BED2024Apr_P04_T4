@@ -66,3 +66,40 @@ const params = getQueryParams();
 if (params.id) {
   fetchArticleData(params.id);
 }
+
+//Submitting the form data to database
+document.getElementById('signupForm').addEventListener('submit', async function (event) {
+  event.preventDefault(); // Prevent default form submission behavior
+
+  const username = document.getElementById('signup-username').value;
+  const password = document.getElementById('signup-password').value;
+  const email = document.getElementById('signup-email').value;
+
+  const newUser = {
+      username: username,
+      password: password,
+      email: email
+  };
+
+  try {
+      const response = await fetch('https://localhost:3000/user', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newUser)
+      });
+
+      if (response.ok) {
+          const createdUser = await response.json();
+          console.log('User created successfully:', createdUser);
+          // Redirect to login page or show success message
+      } else {
+          console.error('Failed to create user');
+          // Show error message to the user
+      }
+  } catch (error) {
+      console.error('Error:', error);
+      // Show error message to the user
+  }
+});
