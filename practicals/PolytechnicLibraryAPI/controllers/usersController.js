@@ -26,7 +26,8 @@ async function login(req, res) {
     }
 
     // Ensure JWT secret key is defined
-    if (!process.env.JWT_SECRET) {
+    const jwtSecretKey = process.env.JWT_SECRET_KEY
+    if (!jwtSecretKey) {
       console.error("JWT secret key is not defined");
       return res.status(500).json({ message: "Internal server error" });
     }
@@ -38,7 +39,7 @@ async function login(req, res) {
     };
 
     // Sign token with secret and set expiry
-    const token = jwt.sign(payload, process.env.JWT_SECRET_KEY,
+    const token = jwt.sign(payload, jwtSecretKey,
       { expiresIn: "3600s" }); 
       
     // Return token to client
