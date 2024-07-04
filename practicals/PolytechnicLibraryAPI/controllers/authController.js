@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { Router } = require('express');
 
 const router = express.Router();
 
@@ -30,12 +31,21 @@ router.post('/login', async (req, res) => {
         message: 'Invalid credentials' });
     }
 
+    // Ensure JWT secret key is defined
+    const jwtSecretKey = process.env.JWT_SECRET_KEY;
+    console.log("JWT Secret Key:", jwtSecretKey);  // Debugging
+
+    if (!jwtSecretKey) {
+      console.error("JWT secret key is not defined");
+      return res.status(500).json({ message: "Internal server error" });
+    }
+
     // Create JWT token
     const token = jwt.sign(
       { userId: user.user_id, 
         username: user.username, role: user.role },
       
-        process.env.JWT_SECRET,
+        jwtSecretKey,
       { expiresIn: '1h' } // Token expires in 1 hour
     );
 
@@ -47,6 +57,4 @@ router.post('/login', async (req, res) => {
   }
 });
 
-module.exports = {
-  login
-};
+module.exports = router;
