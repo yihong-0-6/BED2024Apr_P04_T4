@@ -9,6 +9,7 @@ function verifyJWT(req, res, next) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
+  // verify JWT token
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
       return res.status(403).json({ message: "Forbidden" });
@@ -16,8 +17,9 @@ function verifyJWT(req, res, next) {
 
     
     const authorizedRoles = {
-      "^/books$": ["member", "librarian"], 
-      "^/books/[0-9]+/availability$": ["librarian"], 
+      "^/books$": ["member", "librarian"], // members and librarians can view books
+      "^/books/[0-9]+/availability$": ["librarian"], // only librarians can update availability
+
     };
 
     const requestedEndpoint = req.path; 
