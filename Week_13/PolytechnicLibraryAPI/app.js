@@ -22,16 +22,16 @@ app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 app.use(staticMiddleware); // Mount the static middleware
 
 // Get All Books
-app.get('/books', booksController.getAllBooks);
+app.get('/books', authenticateJWT, booksController.getAllBooks);
 
 // Update Book Availability
-app.put("/books/:id/availability", booksController.updateBookAvailability);
+app.put("/books/:id/availability", authenticateJWT, booksController.updateBookAvailability);
 
 // Create User
-app.post("/users", authenticateJWT, usersController.registerUser);
+app.post("/users", usersController.registerUser);
 
 // Login User
-app.post("/login", authenticateJWT, usersController.login);
+app.post("/login", usersController.login);
 
 // Serve the Swagger UI at a specific route
 app.use("/api-docs", swaggerUi.serve, 

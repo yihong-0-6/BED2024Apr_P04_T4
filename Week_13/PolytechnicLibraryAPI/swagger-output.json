@@ -12,6 +12,14 @@
   ],
   "paths": {
     "/books": {
+      "parameters": [
+        {
+          "name": "authorization",
+          "in": "header",
+          "required": false,
+          "type": "string"
+        }
+      ],
       "get": {
         "description": "",
         "responses": {
@@ -32,6 +40,12 @@
             "name": "id",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
             "type": "string"
           },
           {
