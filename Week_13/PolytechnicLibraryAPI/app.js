@@ -11,8 +11,9 @@ const staticMiddleware = express.static("public");
 
 const booksController = require("./controllers/booksController");
 const usersController = require("./controllers/usersController");
+const authenticateJWT = require('./middlewares/authMiddleware');
 
-const port = 3030;
+const port = 3000;
 
 // Include body-parser middleware to handle JSON data
 app.use(express.json());
@@ -27,10 +28,14 @@ app.get('/books', booksController.getAllBooks);
 app.put("/books/:id/availability", booksController.updateBookAvailability);
 
 // Create User
-app.post("/users", usersController.registerUser);
+app.post("/users", authenticateJWT, usersController.registerUser);
 
 // Login User
-app.post("/login", usersController.login);
+app.post("/login", authenticateJWT, usersController.login);
+
+// Serve the Swagger UI at a specific route
+app.use("/api-docs", swaggerUi.serve, 
+swaggerUi.setup(swaggerDocument));
 
 // Start server and connect to the database
 app.listen(port, async () => {
