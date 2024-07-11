@@ -3,6 +3,8 @@ const express = require("express");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser"); // Import body-parser
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-output.json"); // Import generated spec
 
 const app = express();
 const staticMiddleware = express.static("public");
