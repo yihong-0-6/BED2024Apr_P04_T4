@@ -37,6 +37,10 @@
             <h2>Sign Up for an Account</h2>
             <form id="signupForm">
                 <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                </div>
+                <div class="form-group">
                     <label for="signup-name">Username</label>
                     <input type="username" id="signup-username" class="w-full p-3 border border-gray-300 rounded-lg" required>
                 </div>
@@ -44,11 +48,7 @@
                     <label for="signup-password">Password</label>
                     <input type="password" id="signup-password" class="w-full p-3 border border-gray-300 rounded-lg" required>
                 </div>
-                <div class="form-group">
-                    <label for="signup-email">Email</label>
-                    <input type="email" id="signup-email" class="w-full p-3 border border-gray-300 rounded-lg" required>
-                </div>
-                <button type="submit" id="signup-submit" class="login-btn">Sign Up</button>
+                <button type="submit" id="submit" class="login-btn">Sign Up</button>
             </form>
             <p class="text-center mt-4">Already have an account? <a href="mainlogin.html" class="text-blue-500">Log in here</a></p>
         </div>

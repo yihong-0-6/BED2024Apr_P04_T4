@@ -1,12 +1,15 @@
 const express = require("express");
-const loginController = require("./controllers/loginController");
 const sql = require("mssql");
 const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser"); // Import body parser
-const validateUser = require("./middlewares/validateUser");
-const User = require('./models/user');
+const bcryptjs = require("bcryptjs");
+const jsonwebtoken = require("jsonwebtoken");
 
 const forumController = require('./controllers/forumController');
+const loginController = require("./controllers/loginController");
+
+const validateUser = require("./middlewares/validateUser");
+const authUser = require("./middlewares/authUser");
 
 // EdisonChewJiaJun S10244576H (Articles)
 const articleController = require("./controllers/articleController");
@@ -21,37 +24,17 @@ const port = process.env.PORT || 3000; // Use environment variable or default po
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 
-// Get All Forums From Community Page - Zhen Kang
+// Users Routes & Forums From Community Page - Zhen Kang
 app.get("/Community", forumController.getAllForums); 
+app.delete("/Community/delete/:forumId", forumController.deleteForum);
 
-// New Login Details (username, password, email) - Zhen Kang
-app.post("/login", async (req, res) => {
-  const { username, password, email } = req.body;
-
-  if (!username || !password || !email) {
-      return res.status(400).json({ message: 'Username, Password & Email are required' });
-  }
-
-  try {
-      const user = new User(username, password, email);
-      await User.addUser({ username, password, email});
-
-      res.status(200).json({ message: 'User added successfully', user: user });
-  } 
-  catch (error) {
-      console.error('Error adding user:', error);
-      res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-// Get All User Login Details - Zhen Kang
-app.get("/user", loginController.getAllUsers);
-
-// Update Username of Login Details - Zhen Kang
-app.put("/user", validateUser, loginController.updateUsername);
+app.post("user/account/login", loginController.userLogin);
+app.get("/login/:id", loginController.getUserById);
+app.put("/user/account/:id", loginController.updateUser);
+app.delete("user/account/:id", loginController.deleteUser);
 
 //Yi Hong S10257222
-app.post("/user", validateUser, loginController.createUser);
+app.post("/addUser", validateUser, loginController.createUser);
 
 
 // EdisonChewJiaJun S10244576H Routes for GET request for articles

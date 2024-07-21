@@ -1,42 +1,96 @@
 const User = require("../models/user");
+const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // Zhen Kang
-const getAllUsers = async (req, res) => {
-  const userData = req.body; // Ensure you get data from the request body
+const userLogin = async (req, res) => {
+  const { username, password } = req.body;
 
   try {
-    const users = await User.getAllUsers(userData.username, userData.password, userData.email);
-    res.json(users);
+      // Fetch user from the database
+      const user = await User.userLogin(username);
+
+      if (user) {
+          // Compare the hashed password
+          const isMatch = await bcryptjs.compare(password, user.password);
+
+          if (isMatch) {
+              // Define the payload
+              const payload = {
+                  userId: user.userId,
+                  username: user.username,
+              };
+
+              // Generate JWT token
+              const token = jwt.sign(payload, process.env.JWT_SECERT, { expiresIn: "3600s" });
+
+              res.status(200).json({
+                  message: "Login successful",
+                  token: token,
+                  userId: user.userId
+              });
+          } 
+          else {
+              res.status(401).json({ message: "Invalid username or password" });
+          }
+
+
+      } 
+      else {
+          res.status(401).json({ message: "Invalid username or password" });
+      }
   } 
   
   catch (error) {
-    console.error('Error retrieving users:', error);
-    res.status(500).send("Error retrieving users");
+      console.error("Login Error: ", error);
+      res.status(500).json({ message: "Internal server error" });
   }
 };
 
 // Zhen Kang
-const updateUsername = async (req, res) => {
-  const oldUsername = req.body.oldUsername;
-  const newUsername = req.body.newUsername;
-
-  if (!oldUsername || !newUsername) {
-    return res.status(400).json({ message: 'Old username and new username are required' });
-  }
+const getUserById = async (req, res) => {
+  const userId = parseInt(req.params.id);
 
   try {
-    const result = await User.updateUsername(oldUsername, { username: newUsername });
-
-    if (result) {
-      res.status(200).send("Username updated successfully");
-    } else {
-      res.status(404).send("Username not found");
+      const user = await User.getUserById(userId);
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+      res.json(user);
+    } 
+    
+    catch (error) {
+      console.error(error);
+      res.status(500).send("Error retrieving User");
     }
-  } catch (error) {
-    console.error('Error updating username:', error);
-    res.status(500).send("Error updating username");
+}
+
+// Zhen Kang
+const updateUser = async (req, res) => {
+  const userId = parseInt(req.params.id);
+  const newUserData = req.body;
+
+  try {
+      if (newUserData.password) {
+          // Hash the new password
+          const salt = await bcryptjs.genSalt(10);
+          newUserData.password = await bcryptjs.hash(newUserData.password, salt);
+      }
+
+      const updatedUser = await User.updateUser(userId, newUserData);
+
+      if (!updatedUser) {
+          return res.status(404).send("User not found");
+      }
+      res.json(updatedUser);
+  } 
+  
+  catch (error) {
+      console.error("Update User Error: ", error);
+      res.status(500).send("Error updating User");
   }
 };
+
 
 //Yi Hong S10257222
 const createUser = async (req, res) => {
@@ -50,10 +104,29 @@ const createUser = async (req, res) => {
   }
 };
 
+// Zhen Kang
+const deleteUser = async (req, res) => {
+  const userId = parseInt(req.params.id);
+
+  try {
+    const success = await User.deleteUser(userId);
+    if (!success) {
+      return res.status(404).send("User not found");
+    }
+    res.status(204).send();
+  } 
+  catch (error) {
+    console.error(error);
+    res.status(500).send("Error deleting User");
+  }
+};
+
 
 
 module.exports = {
-  getAllUsers,
-  updateUsername,
-  createUser
+  userLogin,
+  getUserById,
+  updateUser,
+  createUser,
+  deleteUser
 }

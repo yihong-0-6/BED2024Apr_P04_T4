@@ -1,5 +1,7 @@
 //Yi Hong S10257222
 const Joi = require("joi");
+const jwt = require("jsonwebtoken");
+
 
 const validateUser = (req, res, next) => {
   const schema = Joi.object({
@@ -19,4 +21,35 @@ const validateUser = (req, res, next) => {
   next(); // If validation passes, proceed to the next route handler
 };
 
+
+function verifyJWTuser(req, res, next) {
+  // Get the token from the request body
+  const token = req.body.token;
+  
+  if (!token) {
+    return res.status(401).json({ message: 'Token is missing' });
+  }
+
+  // Verify and decode the token
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: 'Token is invalid' });
+    }
+
+    // Check if the user has the "user" role
+    if (!decoded.userrole || decoded.userrole !== 'user') {
+      return res.status(403).json({ message: 'Access denied. Users only.' });
+    }
+
+    // Attach the decoded token to the request object
+    req.user = decoded;
+
+    // Proceed to the next middleware or route handler
+    next();
+  });
+}
+
+
+
 module.exports = validateUser;
+module.exports = {verifyJWTuser};

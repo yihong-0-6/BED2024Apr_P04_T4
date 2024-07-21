@@ -37,6 +37,22 @@ class Forum {
       }
     }
   }
+
+  static async deleteForum(id) {
+    const connection = await sql.connect(dbConfig);
+
+    const sqlQuery = `DELETE * FROM FORUM WHERE forumId = @id;`
+                      
+    const request = connection.request();
+
+    request.input("id", id);
+
+    const result = await request.query(sqlQuery);
+
+    connection.close();
+
+    return result.rowsAffected > 0; // Indicate success based on affected rows
+  }
 }
 
 module.exports = Forum;
