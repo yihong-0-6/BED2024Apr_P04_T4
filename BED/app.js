@@ -33,6 +33,18 @@ app.get("/login/:id", loginController.getUserById);
 app.put("/user/account/:id", loginController.updateUser);
 app.delete("user/account/:id", loginController.deleteUser);
 
+app.get("/registerUser", (req, res) => {
+  const path = path.join(__dirname, "public", "html", "mainsignup.html");
+  console.log("File path is ", path);
+  res.sendFile(path);
+});
+
+app.get("/loginUser", (req, res) => {
+  const path = path.join(__dirname, "public", "html", "mainlogin.html");
+  console.log("File path is ", path);
+  res.sendFile(path);
+})
+
 //Yi Hong S10257222
 app.post("/addUser", validateUser, loginController.createUser);
 
