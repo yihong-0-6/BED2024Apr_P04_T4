@@ -1,32 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <title>Southeast Asia Readiness</title>
-        
-        <div id="Up"></div>
-        <link rel="stylesheet" href="../css/header.css">
-        <link rel="stylesheet" href="../css/global.css">
-        <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    </head>
-    <body>
-        <div class="header">
-            <header class="sticky">
-                <a href="index.html" class="logo">Southeast Asia Readiness</a>
-                <ul class="navlist">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="moviepage.html">Movies</a></li>
-                    <li><a href="Development.html">Development</a></li>
-                    <li><a href="industry.html">Industry</a></li>
-                    <li><a href="Community.html">Community</a></li>
-                </ul>
-                <div class="header-icons">
-                    <a href="mainlogin.html">
-                        <div id="login-btn" class="bx bx-user"></div> <!-- Login Button -->
-                    </a>
-                </div>
-            </header>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Southeast Asia Readiness</title>
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+</head>
+<body>
+    <div class="header">
+        <header class="sticky">
+            <a href="index.html" class="logo">Southeast Asia Readiness</a>
+            <ul class="navlist">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="moviepage.html">Movies</a></li>
+                <li><a href="Development.html">Development</a></li>
+                <li><a href="industry.html">Industry</a></li>
+                <li><a href="Community.html">Community</a></li>
+            </ul>
+            <div class="header-icons">
+                <a href="mainlogin.html">
+                    <div id="login-btn" class="bx bx-user"></div> <!-- Login Button -->
+                </a>
+            </div>
+        </header>
+    </div>
+
+    <div class="container">
+        <div id="movie-details">
+            <h2>Movie Details</h2>
+            <div id="movie-info"></div>
         </div>
+    </div>
+
+    <script>
+        async function fetchMovieDetails(movieId) {
+            try {
+                const response = await fetch(`/movies/${movieId}`);
+                const movie = await response.json();
+                displayMovieDetails(movie);
+            } catch (error) {
+                console.error("Error fetching movie details:", error);
+            }
+        }
+
+        function displayMovieDetails(movie) {
+            const movieInfoDiv = document.getElementById("movie-info");
+            movieInfoDiv.innerHTML = `
+                <h3>${movie.Name}</h3>
+                <p><strong>Published Year:</strong> ${movie.Published_Year}</p>
+                <p><strong>Director:</strong> ${movie.Director}</p>
+                <p><strong>Country:</strong> ${movie.Country}</p>
+            `;
+        }
+
+        // Fetch and display details for a specific movie (e.g., with ID 1)
+        fetchMovieDetails(1); // Change this ID as needed
+    </script>
+</body>
+</html>
