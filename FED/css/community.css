@@ -16,6 +16,11 @@ h2 {
   text-align: left;
 }
 
+h3 {
+  text-align: left;
+  margin-top: 10px;
+}
+
 .forumHeader {
   margin-left: 1400px;
 }
