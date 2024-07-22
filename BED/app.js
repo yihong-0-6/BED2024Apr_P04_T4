@@ -1,9 +1,12 @@
 const express = require("express");
 const sql = require("mssql");
+const path = require("path");
 const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser"); // Import body parser
 const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
+
+
 
 // Controllers
 const forumController = require('./controllers/forumController');
@@ -73,7 +76,7 @@ app.get("/loginUser", (req, res) => {
 
 
 //Yi Hong S10257222
-app.post("/addUser", validateUser, loginController.createUser);
+
 
 
 // EdisonChewJiaJun S10244576H Routes for GET request for articles
