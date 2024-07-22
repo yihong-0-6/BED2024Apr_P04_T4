@@ -1,18 +1,16 @@
 async function fetchMovies() {
     try {
-        const response = await fetch("http://localhost:3000/movies");
+        const response = await fetch("http://localhost:3000/movies"); // Your API endpoint
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
-        console.log("Fetched movies data:", data); // Debugging output
 
+        const data = await response.json();
         const movieList = document.getElementById("movie-list");
-        movieList.innerHTML = ""; // Clear the list before populating
 
         data.forEach((movie) => {
             const movieItem = document.createElement("div");
-            movieItem.classList.add("movie");
+            movieItem.classList.add("movie"); // Add a CSS class for styling
 
             // Create elements for movie details and populate with movie data
             const titleElement = document.createElement("h2");
