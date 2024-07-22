@@ -5,11 +5,14 @@ const bodyParser = require("body-parser"); // Import body parser
 const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
 
+// Controllers
 const forumController = require('./controllers/forumController');
 const loginController = require("./controllers/loginController");
 
+// Middlewares
+const validateForum = require("./middlewares/validateForum");
 const validateUser = require("./middlewares/validateUser");
-const authUser = require("./middlewares/authUser");
+
 
 // EdisonChewJiaJun S10244576H (Articles)
 const articleController = require("./controllers/articleController");
@@ -25,13 +28,49 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 
 // Users Routes & Forums From Community Page - Zhen Kang
-app.get("/Community", forumController.getAllForums); 
+
+// Creating Now Forum
+app.post("/Community/create", validateForum.forumValidation, 
+forumController.createForum);
+
+// Getting all forums
+app.get("/Community/forums", forumController.getAllForums);
+
+app.get("/Community", async (req, res) => {
+  const path = path.join(__dirname, "public", "html", "Community.html");
+  console.log("File path is ", path);
+  res.sendFile(path);
+});
+
+// Get forum by Id
+app.get("/Community/id/forumId", forumController.getForumById);
+
+// Deleting a forum
 app.delete("/Community/delete/:forumId", forumController.deleteForum);
 
 app.post("user/account/login", loginController.userLogin);
+
+// Get user by Id
 app.get("/login/:id", loginController.getUserById);
+
+// Update user
 app.put("/user/account/:id", loginController.updateUser);
+
+// Remove user
 app.delete("user/account/:id", loginController.deleteUser);
+
+app.get("/registerUser", (req, res) => {
+  const path = path.join(__dirname, "public", "html", "mainsignup.html");
+  console.log("File path is ", path);
+  res.sendFile(path);
+});
+
+app.get("/loginUser", (req, res) => {
+  const path = path.join(__dirname, "public", "html", "mainlogin.html");
+  console.log("File path is ", path);
+  res.sendFile(path);
+})
+
 
 //Yi Hong S10257222
 app.post("/addUser", validateUser, loginController.createUser);
