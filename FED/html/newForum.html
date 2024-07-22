@@ -1,0 +1,33 @@
+<div class="container new-forum-container">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/newForum.css">
+    <br>
+    <div class="col">
+        <h2>Create Your Forum</h2>
+    </div>
+    <br>
+    <form id="forumPost" class="forum-form">
+        <div class="post-info">
+            <input id="forumTitle" class="forum-input" name="header" placeholder="Forum Title" required>
+        </div>
+
+        <div class="post-info">
+            <textarea id="forumComment" class="forum-input" name="comment" placeholder="Your Comments" rows="3" required></textarea>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <button type="button" id="back" class="btn btn-primary">Back</button>
+            </div>
+
+            <div class="col-sm-6 text-right">
+                <button type="submit" id="post" class="btn btn-success">Post</button>
+            </div>
+        </div>
+    </form>
+    <br>
+</div>
+
+<!-- Add this container to display new forums -->
+<div id="forumContainer"></div>
+<script src="../Javascript/forum.js"></script>

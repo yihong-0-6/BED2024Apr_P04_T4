@@ -1,0 +1,72 @@
+/* Header Styles --------------------------------------------------------------------------------- */
+header.sticky {
+  background-color: #A8C39B;
+  color: #000000;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .logo {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #000000;
+  text-decoration: none;
+}
+
+header .navlist {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+  justify-content: space-between; 
+  flex-grow: 1;
+}
+
+header .navlist li {
+  margin-left: 1.5rem;
+}
+
+header .navlist li a {
+  color: #000000;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+header .navlist li a:hover {
+  color:  #3f3e3e;
+}
+
+.header-icons {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.header-icons .bx {
+  font-size: 1.5rem;
+  color: #000000;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.header-icons .bx-user {
+  margin-right: 1rem; 
+}
+
+@media (min-width: 1024px) {
+  header .navlist {
+      justify-content: center; 
+  }
+
+  header .navlist li {
+      margin: 0 2rem; 
+  }
+}
