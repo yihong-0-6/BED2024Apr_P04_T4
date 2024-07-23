@@ -8,6 +8,7 @@ class Movies {
         this.Published_Year = Published_Year;
         this.Director = Director;
         this.Country = Country;
+        this.ImageUrl = `/images/moviesimage${this.ID}.jpg`;
     }
 
     static async getAllMovies() {
