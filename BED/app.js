@@ -26,23 +26,26 @@ const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
 
 // Include body-parser middleware to handle JSON data
-app.use(bodyParser.json());
+app.use(express.json()); 
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 
 // Users Routes & Forums From Community Page - Zhen Kang
 
-// Creating Now Forum
-app.post("/Community/create", validateForum.forumValidation, 
-forumController.createForum);
+// Creating New Forum
+app.post("/Community/create", validateForum.forumValidation, forumController.createForum);
 
 // Getting all forums
-app.get("/Community/forums", forumController.getAllForums);
+app.get('/Community/forums', forumController.getAllForums);
+
 
 app.get("/Community", async (req, res) => {
-  const path = path.join(__dirname, "public", "html", "Community.html");
-  console.log("File path is ", path);
-  res.sendFile(path);
+  const filePath = path.join(__dirname, "public", "html", "Community.html");
+  console.log("File path is ", filePath);
+  res.sendFile(filePath);
 });
+
+// Creating New Forum
+app.post("/Community/create", validateForum.forumValidation, forumController.createForum);
 
 // Get forum by Id
 app.get("/Community/id/forumId", forumController.getForumById);

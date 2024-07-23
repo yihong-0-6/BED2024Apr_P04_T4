@@ -4,7 +4,7 @@ const Forum = require("../models/forum");
 const createForum = async (req, res) => {
   const { title, author, comments } = req.body;
   try {
-    const result = await Post.createPost(title, author, comments);
+    const result = await Forum.createForum(title, author, comments);
 
     console.log('New forum created successfully:', result);
 
