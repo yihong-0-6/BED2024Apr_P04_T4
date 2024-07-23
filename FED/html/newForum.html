@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Forum</title>
+    </head>
+
 <div class="container new-forum-container">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/newForum.css">
@@ -9,6 +18,10 @@
     <form id="forumPost" class="forum-form">
         <div class="post-info">
             <input id="forumTitle" class="forum-input" name="header" placeholder="Forum Title" required>
+        </div>
+
+        <div class="post-info">
+            <input id="forumAuthor" class="forum-input" name="header" placeholder="Author" required>
         </div>
 
         <div class="post-info">
@@ -30,4 +43,4 @@
 
 <!-- Add this container to display new forums -->
 <div id="forumContainer"></div>
-<script src="../Javascript/forum.js"></script>
+<script src="../Javascript/forumHandler.js"></script>
