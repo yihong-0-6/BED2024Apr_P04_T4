@@ -11,7 +11,7 @@ const getAllMovies = async (req, res) => {
 };
 
 const getMovieById = async (req, res) => {
-    const movieId = parseInt(req.params.ID);
+    const movieId = parseInt(req.params.id);
     try {
         const movie = await Movies.getMovieById(movieId);
         if (!movie) {

@@ -1,11 +1,11 @@
 const express = require("express");
 const sql = require("mssql");
+const path = require("path");
 const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser"); // Import body parser
 const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
 const cors = require("cors"); 
-
 
 // Controllers
 const forumController = require('./controllers/forumController');
@@ -14,6 +14,7 @@ const loginController = require("./controllers/loginController");
 // Middlewares
 const validateForum = require("./middlewares/validateForum");
 const validateUser = require("./middlewares/validateUser");
+const validateMovie = require("./controllers/movieController");
 
 
 // EdisonChewJiaJun S10244576H (Articles)
@@ -25,6 +26,7 @@ const movieController = require('./controllers/movieController');
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
 
+app.use(cors()); // Enable CORS
 // Include body-parser middleware to handle JSON data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
@@ -73,9 +75,8 @@ app.get("/loginUser", (req, res) => {
   res.sendFile(path);
 })
 
-
 //Yi Hong S10257222
-app.post("/addUser", validateUser, loginController.createUser);
+
 
 
 // EdisonChewJiaJun S10244576H Routes for GET request for articles
