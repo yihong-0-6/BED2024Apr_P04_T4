@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>Southeast Asia Readiness</title>
+        
+        <div id="Up"></div>
+        <link rel="stylesheet" href="../css/header.css">
+        <link rel="stylesheet" href="../css/global.css">
+        <link rel="stylesheet" href="../css/login-singup.css">
+        <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    </head>
+    <body>
+        <div class="header">
+            <header class="sticky">
+                <a href="index.html" class="logo">Southeast Asia Readiness</a>
+                <ul class="navlist">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="moviepage.html">Movies</a></li>
+                    <li><a href="Development.html">Development</a></li>
+                    <li><a href="industry.html">Industry</a></li>
+                    <li><a href="Community.html">Community</a></li>
+                </ul>
+                <div class="header-icons">
+                    <a href="mainlogin.html">
+                        <div id="login-btn" class="bx bx-user"></div> <!-- Login Button -->
+                    </a>
+                </div>
+            </header>
+        </div>
+
+     <!-- Main Content -->
+     <div class="main-content">
+        <div class="login-container">
+            <h2>Sign Up for an Account</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-name">Username</label>
+                    <input type="username" id="signup-username" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                </div>
+                <button type="submit" id="submit" class="login-btn">Sign Up</button>
+            </form>
+            <p class="text-center mt-4">Already have an account? <a href="mainlogin.html" class="text-blue-500">Log in here</a></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
