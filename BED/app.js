@@ -7,8 +7,6 @@ const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
 const cors = require("cors"); 
 
-
-
 // Controllers
 const forumController = require('./controllers/forumController');
 const loginController = require("./controllers/loginController");
