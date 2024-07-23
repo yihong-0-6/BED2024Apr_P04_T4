@@ -35,7 +35,7 @@ app.post("/Community/create", validateForum.forumValidation, forumController.cre
 app.get("/Community/forums", forumController.getAllForums);
 
 app.get("/Community", async (req, res) => {
-  const filePath = path.join(__dirname, "public", "html", "Community.html");
+  const filePath = path.join(__dirname, "BED", "public", "html", "Community.html");
   console.log("File path is ", filePath);
   res.sendFile(filePath);
 });
