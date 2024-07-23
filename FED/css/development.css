@@ -1,5 +1,3 @@
-/* Miscellaneous Styles -------------------------------------------------------------------------- */
-/* Section specific styles */
 #news-development {
   background-size: cover;
   background-position: center center;
@@ -14,57 +12,40 @@
   height: auto;
 }
 
-#sea-readiness, #news-development {
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+.containers {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
 }
 
-#sea-readiness {
-  background-image: url('../Images/Slider.png');
-  height: 70vh;
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-#news-development {
-  background-image: url('../Images/News.png');
-  height: 50vh;
+.news-item {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  flex: 1 1 calc(50% - 40px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-.sea-readiness img, .news-development img {
-  width: 0;
+.news-item img {
+  max-width: 100%;
   height: auto;
 }
 
-#technology img, #health-wellness img, #business-finance img, #entertainment img, #sports img, #environment img {
-  width: 300px;
+.news-item div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-#technology img, #health-wellness img, #business-finance img {
-  margin-left: 200px;
+.news-item p {
+  margin: 10px 0;
 }
-
-#entertainment img, #sports img, #environment img {
-  margin-left: 930px;
-}
-
-#technology p, #health-wellness p, #business-finance p {
-  margin-left: 190px;
-}
-
-#entertainment p, #sports p, #environment p {
-  margin-left: 930px;
-}
-
-#technology p, #health-wellness p, #business-finance p {
-  margin-bottom: -100px;
-}
-
-#health-wellness img {
-  height: 280px;
-}
-
-#business-finance img, #environment img {
-  height: 200px;
-}
-
