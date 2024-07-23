@@ -92,8 +92,13 @@ document.getElementById('post').addEventListener('click', async function() {
     });
 
     if (!response.ok) {
-      const errorMessage = await response.json();
-      throw new Error(`${errorMessage.errors}`);
+      const errorMessage = await response.text();
+      throw new Error(`Server error: ${response.status} - ${errorMessage}`);
+    }
+
+    const data = await response.json();
+    if (!data) {
+      throw new Error('Server returned empty response');
     }
 
     // Assuming you want to redirect or update the page upon successful post
@@ -112,8 +117,8 @@ async function fetchForumById(forumId) {
     const response = await fetch(`/Community/${forumId}`);
 
     if (!response.ok) {
-      const errorMessage = await response.json();
-      throw new Error(`Error fetching forum: ${errorMessage.message}`);
+      const errorMessage = await response.text();
+      throw new Error(`Error fetching forum: ${response.status} - ${errorMessage}`);
     }
 
     const forumData = await response.json();
@@ -188,8 +193,8 @@ async function handleLike(forumId) {
     });
 
     if (!response.ok) {
-      const errorMessage = await response.json();
-      throw new Error(`Error liking forum: ${errorMessage.message}`);
+      const errorMessage = await response.text();
+      throw new Error(`Error liking forum: ${response.status} - ${errorMessage}`);
     }
 
   } catch (error) {
@@ -210,8 +215,8 @@ async function handleDislike(forumId) {
     });
 
     if (!response.ok) {
-      const errorMessage = await response.json();
-      throw new Error(`Error disliking forum: ${errorMessage.message}`);
+      const errorMessage = await response.text();
+      throw new Error(`Error disliking forum: ${response.status} - ${errorMessage}`);
     }
 
   } catch (error) {
@@ -227,8 +232,8 @@ async function handleDelete(forumId) {
     });
 
     if (!response.ok) {
-      const errorMessage = await response.json();
-      throw new Error(`Error deleting forum: ${errorMessage.message}`);
+      const errorMessage = await response.text();
+      throw new Error(`Error deleting forum: ${response.status} - ${errorMessage}`);
     }
 
     const forumElement = document.querySelector(`.forum[data-id="${forumId}"]`);

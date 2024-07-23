@@ -4,6 +4,8 @@ const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser"); // Import body parser
 const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
+const cors = require("cors"); 
+
 
 // Controllers
 const forumController = require('./controllers/forumController');
