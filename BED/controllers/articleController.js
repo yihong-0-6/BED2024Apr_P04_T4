@@ -21,7 +21,7 @@ const getArticleById = async (req, res) => {
     // This function retrieves a book by ID using the 'Articles.getArticleById' method.
     try {
         const article = await Articles.getArticleById(articleId);
-        // If unsuccessful, an error message with a 404 status code
+        // If unsuccessful, an error message with a 404 status code 
         if (!article) {
             return res.status(404).send("Article not found");
         }
@@ -35,7 +35,12 @@ const getArticleById = async (req, res) => {
 const updateArticle = async (req, res) => {
     const articleId = parseInt(req.params.ID);
     const newArticleData = req.body;
-  
+
+    // Basic validation of newArticleData
+    if (!newArticleData.Description || !newArticleData.Published_Date || !newArticleData.Author) {
+        return res.status(400).send("Missing required fields");
+    }
+
     try {
         const updatedArticle = await Articles.updateArticle (articleId, newArticleData);
         if (!updatedArticle) {

@@ -46,16 +46,15 @@ CREATE TABLE Articles (
     Title VARCHAR(300) NOT NULL,
     Author VARCHAR(120) NOT NULL,
     Published_Date DATE NOT NULL,
-	ImagePath VARCHAR(255)
 );
 
-INSERT INTO Articles (ID, Title, Author, Published_Date, ImagePath) VALUES
-(1, 'How independent filmmakers in Southeast Asia are on the rise', 'Liz Shackleton', '2019-09-11', '/Images/independentFilmmakers.jpg'),
-(2, 'How the Vietnam film industry is booming even in the face of censorship', 'Silvia Wong', '2023-09-08', '/Images/vietnamFilmIndustry.jpg'),
-(3, 'Southeast Asia cinema chains thrive as other markets struggle', 'Elizabeth Beattie', '2023-09-21', '/Images/cinemaChainsThrive'),
-(4, 'AI film festival gives glimpse of cinemas future', 'The Straits Times', '2024-05-13', '/Images/aiFilmFestival'),
-(5, 'For Over a Decade, Singaporean Cinema Was Dead. Then the 90s Came Along.', 'Hidzir Junaini', '2023-08-04', '/Images/singaporeCinema'),
-(6, 'X3D STUDIO: PIONEERING VIRTUAL PRODUCTION IN SOUTHEAST ASIA', 'Metropolitant', '2024-06-19', '/Images/x3dStudio');
+INSERT INTO Articles (ID, Title, Author, Published_Date) VALUES
+(1, 'How independent filmmakers in Southeast Asia are on the rise', 'Liz Shackleton', '2019-09-11'),
+(2, 'How the Vietnam film industry is booming even in the face of censorship', 'Silvia Wong', '2023-09-08'),
+(3, 'Southeast Asia cinema chains thrive as other markets struggle', 'Elizabeth Beattie', '2023-09-21'),
+(4, 'AI film festival gives glimpse of cinemas future', 'The Straits Times', '2024-05-13'),
+(5, 'For Over a Decade, Singaporean Cinema Was Dead. Then the 90s Came Along.', 'Hidzir Junaini', '2023-08-04'),
+(6, 'X3D STUDIO: PIONEERING VIRTUAL PRODUCTION IN SOUTHEAST ASIA', 'Metropolitant', '2024-06-19');
  
 CREATE TABLE Forums (
     id INT PRIMARY KEY IDENTITY(1,1),
