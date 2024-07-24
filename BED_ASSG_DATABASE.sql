@@ -1,9 +1,9 @@
 CREATE TABLE Movies (
- ID INT PRIMARY KEY NOT NULL,
- Name VARCHAR(250) NOT NULL,
- Published_Year INT NOT NULL,
- Director VARCHAR(120) NOT NULL,
- Country VARCHAR(50) NOT NULL
+    ID INT PRIMARY KEY NOT NULL,
+    Name VARCHAR(250) NOT NULL,
+    Published_Year INT NOT NULL,
+    Director VARCHAR(120) NOT NULL,
+    Country VARCHAR(50) NOT NULL
 );
 
 INSERT INTO Movies (ID, Name, Published_Year, Director, Country) VALUES
@@ -29,7 +29,7 @@ INSERT INTO Movies (ID, Name, Published_Year, Director, Country) VALUES
 (20, 'The Protector', 2005, 'Prachya Pinkaew', 'Thailand'),
 (21, 'On the Job', 2013, 'Erik Matti', 'Philippines'),
 (22, 'Birdshot', 2016, 'Mikhail Red', 'Philippines'),
-(23, 'Burma VJ', 2008, 'Anders ï¿½stergaard', 'Myanmar'),
+(23, 'Burma VJ', 2008, 'Anders Østergaard', 'Myanmar'),
 (24, 'Ada Apa dengan Cinta?', 2002, 'Rudy Soedjarwo', 'Indonesia'),
 (25, 'Laskar Pelangi', 2008, 'Riri Riza', 'Indonesia'),
 (26, 'Pulang', 2018, 'Kabir Bhatia', 'Malaysia'),
@@ -42,34 +42,36 @@ INSERT INTO Movies (ID, Name, Published_Year, Director, Country) VALUES
 (33, 'A Copy of My Mind', 2015, 'Joko Anwar', 'Indonesia');
  
 CREATE TABLE Articles (
- ID INT PRIMARY KEY NOT NULL,
- Title VARCHAR(300) NOT NULL,
- Author VARCHAR(120) NOT NULL,
- Published_Date DATE NOT NULL
+    ID INT PRIMARY KEY NOT NULL,
+    Title VARCHAR(300) NOT NULL,
+    Author VARCHAR(120) NOT NULL,
+    Published_Date DATE NOT NULL,
+	ImagePath VARCHAR(255)
 );
 
-INSERT INTO Articles (ID, Title, Author, Published_Date) VALUES
-(1, 'How independent filmmakers in Southeast Asia are on the rise', 'Liz Shackleton', '2019-09-11'),
-(2, 'How the Vietnam film industry is booming even in the face of censorship', 'Silvia Wong', '2023-09-08'),
-(3, 'Southeast Asia cinema chains thrive as other markets struggle', 'Elizabeth Beattie', '2023-09-21'),
-(4, 'AI film festival gives glimpse of cinemas future', 'The Straits Times', '2024-05-13'),
-(5, 'What Singapore can teach the world about cinemas future', 'Celluloid Junkie', '2023-03-27'),
-(6, 'X3D STUDIO: PIONEERING VIRTUAL PRODUCTION IN SOUTHEAST ASIA', 'Metropolitant', '2024-06-19');
+INSERT INTO Articles (ID, Title, Author, Published_Date, ImagePath) VALUES
+(1, 'How independent filmmakers in Southeast Asia are on the rise', 'Liz Shackleton', '2019-09-11', '/Images/independentFilmmakers.jpg'),
+(2, 'How the Vietnam film industry is booming even in the face of censorship', 'Silvia Wong', '2023-09-08', '/Images/vietnamFilmIndustry.jpg'),
+(3, 'Southeast Asia cinema chains thrive as other markets struggle', 'Elizabeth Beattie', '2023-09-21', '/Images/cinemaChainsThrive'),
+(4, 'AI film festival gives glimpse of cinemas future', 'The Straits Times', '2024-05-13', '/Images/aiFilmFestival'),
+(5, 'For Over a Decade, Singaporean Cinema Was Dead. Then the 90s Came Along.', 'Hidzir Junaini', '2023-08-04', '/Images/singaporeCinema'),
+(6, 'X3D STUDIO: PIONEERING VIRTUAL PRODUCTION IN SOUTHEAST ASIA', 'Metropolitant', '2024-06-19', '/Images/x3dStudio');
  
 CREATE TABLE Forums (
     id INT PRIMARY KEY IDENTITY(1,1),
     title NVARCHAR(255) NOT NULL,
-    author NVARCHAR(50) NOT NULL,
-    comments NVARCHAR (255) NOT NULL
+    likes INT DEFAULT 0,
+    dislikes INT DEFAULT 0,
+    comments INT DEFAULT 0
 );
 
-INSERT INTO Forums (id, title, author, comments)
-VALUES (1, 'Economic Development in Southeast Asia', 'Alex Harper', 'Good discussion!'),
-       (2, 'Regional Climate Change Adaptation Strategies', 'Jordan Blake','Really enjoyed this topic!'),
-       (3, 'Regional Security and Cooperation', 'Casey Morgan', 'Other countries should learn from SEA'),
-       (4, 'Sustainable Tourism Initiatives In Southeast Asia', 'Taylor Quinn', 'Tourism in SEA is not too bad'),
-       (5, 'Regional Technological Advancements and Innovation', 'Avery Brooks', 'SEA improving on technological advancements'),
-       (6, 'Regional Cultural Exchange and Heritage Preservation', 'Riley Parker', 'Preservation efforts is essential in SEA');
+INSERT INTO Forums (title, likes, dislikes, comments)
+VALUES ('Economic Development in Southeast Asia', 56, 23, 73),
+       ('Regional Climate Change Adaptation Strategies', 34, 78, 37),
+       ('Regional Security and Cooperation', 45, 12, 76),
+       ('Sustainable Tourism Initiatives In Southeast Asia', 89, 67, 17),
+       ('Regional Technological Advancements and Innovation', 54, 37, 61),
+       ('Regional Cultural Exchange and Heritage Preservation', 21, 49, 69);
 
 
 CREATE TABLE Users (

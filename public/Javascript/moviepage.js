@@ -1,6 +1,6 @@
 async function fetchMovies() {
     try {
-        const response = await fetch("http://localhost:3000/movies"); // Your API endpoint
+        const response = await fetch("http://localhost:3000/movies");
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -10,9 +10,15 @@ async function fetchMovies() {
 
         data.forEach((movie) => {
             const movieItem = document.createElement("div");
-            movieItem.classList.add("movie"); // Add a CSS class for styling
+            movieItem.classList.add("movie");
 
-            // Create elements for movie details and populate with movie data
+            const imgElement = document.createElement("img");
+            imgElement.src = `http://localhost:3000${movie.ImageUrl}`;
+            imgElement.alt = movie.Name;
+
+            // Log the generated image URL
+            console.log(`Image URL for ${movie.Name}: ${imgElement.src}`);
+
             const titleElement = document.createElement("h2");
             titleElement.textContent = movie.Name;
 
@@ -25,13 +31,12 @@ async function fetchMovies() {
             const countryElement = document.createElement("p");
             countryElement.textContent = `Country: ${movie.Country}`;
 
-            // Append elements to the movie item
+            movieItem.appendChild(imgElement);
             movieItem.appendChild(titleElement);
             movieItem.appendChild(yearElement);
             movieItem.appendChild(directorElement);
             movieItem.appendChild(countryElement);
 
-            // Append movie item to the movie list
             movieList.appendChild(movieItem);
         });
     } catch (error) {
@@ -39,4 +44,4 @@ async function fetchMovies() {
     }
 }
 
-fetchMovies(); // Call the function to fetch and display movie data
+fetchMovies();
