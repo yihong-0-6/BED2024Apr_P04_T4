@@ -9,6 +9,8 @@ class Articles {
         this.Title = Title
         this.Author = Author
         this.Published_Date = Published_Date
+        this.ImageUrl = `/Images/articlesimage${this.ID}.jpg`; 
+        console.log(`ImageUrl for ${this.Title}: ${this.ImageUrl}`);
     }
 
     static async getAllArticles() {

@@ -36,14 +36,14 @@
                 <h2 class="article-title">Update Article</h2>
                 <div class="thumbnail">
                     <!-- Placeholder for the image thumbnail, if necessary -->
-                    <img src="path/to/your/image.jpg" alt="Article Image" class="thumbnail-image">
+                    <img id="articleImage" alt="Article Image" class="thumbnail-image">
                 </div>
                 <div class="description-section">
                     <label for="descriptions">Description:</label>
                     <textarea id="descriptions" cols="30" rows="10" class="textbox" placeholder="Enter article description..."></textarea>
                 </div>
                 <div class="date-section">
-                    <label for="dates">Date:</label>
+                    <label for="dates">Published Date:</label>
                     <input type="date" class="textbox" id="dates" placeholder="Enter publish date">
                 </div>
                 <div class="author-section">
@@ -55,5 +55,8 @@
                 </div>
             </div>
         </div>
+
+        <script src="../Javascript/updateArticlePage.js"></script>
+
     </body>
 </html>
