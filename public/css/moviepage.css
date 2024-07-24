@@ -1,15 +1,19 @@
+/* Container Styles */
+.container {
+    max-width: 1200px; /* Adjust the max width as needed */
+    margin: 0 auto; /* Center the container */
+    padding: 20px; /* Add some padding */
+}
+
 #movie-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Always 5 columns */
+    gap: 2rem;
     margin-top: 2rem;
-    list-style: none;
     padding: 0;
 }
 
 .movie {
-    width: calc(33% - 1rem);
-    margin-bottom: 1rem;
     padding: 1rem;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -19,8 +23,9 @@
 }
 
 .movie img {
-    max-width: 100%;
-    height: auto;
+    width: 200px;  /* Set the desired width */
+    height: 300px; /* Set the desired height */
+    object-fit: cover; /* Maintain aspect ratio and cover the specified width/height */
     border-radius: 4px;
     margin-bottom: 1rem;
 }

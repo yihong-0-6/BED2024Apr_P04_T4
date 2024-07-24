@@ -13,9 +13,10 @@ async function fetchMovies() {
             movieItem.classList.add("movie");
 
             const imgElement = document.createElement("img");
-            imgElement.src = movie.ImageUrl;
+            imgElement.src = `http://localhost:3000${movie.ImageUrl}`;
             imgElement.alt = movie.Name;
 
+            // Log the generated image URL
             console.log(`Image URL for ${movie.Name}: ${imgElement.src}`);
 
             const titleElement = document.createElement("h2");

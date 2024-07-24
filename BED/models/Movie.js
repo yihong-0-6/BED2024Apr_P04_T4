@@ -9,6 +9,7 @@ class Movies {
         this.Director = Director;
         this.Country = Country;
         this.ImageUrl = `/Images/moviesimage${this.ID}.jpg`; 
+        console.log(`ImageUrl for ${this.Name}: ${this.ImageUrl}`);
     }
 
     static async getAllMovies() {
