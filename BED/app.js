@@ -1,7 +1,7 @@
 const express = require("express");
 const sql = require("mssql");
 const path = require("path");
-const dbConfig = require("./dbconfig");
+const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser"); // Import body parser
 const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
@@ -12,11 +12,13 @@ const forumController = require('./controllers/forumController');
 const loginController = require("./controllers/loginController");
 const articleController = require("./controllers/articleController");
 const movieController = require('./controllers/movieController');
+const adminController = requrie('./controllers/adminController');
 
 // Middlewares
 const validateForum = require("./middlewares/validateForum");
 const validateUser = require("./middlewares/validateUser");
 const validateArticle = require('./middlewares/validateArticle');
+const validateAdmin = require('./middlewares/validateAdmin')
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
@@ -86,6 +88,12 @@ app.delete("/articles/:ID", articleController.deleteArticle);
 app.get("/movies", movieController.getAllMovies);
 app.get("/movies/:ID", movieController.getMovieById);
 app.get("/movies/firstsix", movieController.getFirstSixMovies);
+
+//Huang Yi Hong S10257222H Routes for GET request for admins
+app.get("/admins/:email", adminController.getAdminByEmail);
+app.post("/admins/:email", validateAdmin, adminController.createAdmin)
+app.put("/admin/email", validateAdmin, adminController.updateAdmin)
+app.delete("/admins/:email", validateAdmin, adminController.deleteAdmin)
 
 app.listen(port, async () => {
   try {

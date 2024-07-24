@@ -1,9 +1,9 @@
-CREATE TABLE Movies (
-    ID INT PRIMARY KEY NOT NULL,
-    Name VARCHAR(250) NOT NULL,
-    Published_Year INT NOT NULL,
-    Director VARCHAR(120) NOT NULL,
-    Country VARCHAR(50) NOT NULL
+ï»¿CREATE TABLE Movies (
+    ID INT PRIMARY KEY NOT NULL,
+    Name VARCHAR(250) NOT NULL,
+    Published_Year INT NOT NULL,
+    Director VARCHAR(120) NOT NULL,
+    Country VARCHAR(50) NOT NULL
 );
 
 INSERT INTO Movies (ID, Name, Published_Year, Director, Country) VALUES
@@ -29,7 +29,7 @@ INSERT INTO Movies (ID, Name, Published_Year, Director, Country) VALUES
 (20, 'The Protector', 2005, 'Prachya Pinkaew', 'Thailand'),
 (21, 'On the Job', 2013, 'Erik Matti', 'Philippines'),
 (22, 'Birdshot', 2016, 'Mikhail Red', 'Philippines'),
-(23, 'Burma VJ', 2008, 'Anders Østergaard', 'Myanmar'),
+(23, 'Burma VJ', 2008, 'Anders ï¿½stergaard', 'Myanmar'),
 (24, 'Ada Apa dengan Cinta?', 2002, 'Rudy Soedjarwo', 'Indonesia'),
 (25, 'Laskar Pelangi', 2008, 'Riri Riza', 'Indonesia'),
 (26, 'Pulang', 2018, 'Kabir Bhatia', 'Malaysia'),
@@ -42,12 +42,13 @@ INSERT INTO Movies (ID, Name, Published_Year, Director, Country) VALUES
 (33, 'A Copy of My Mind', 2015, 'Joko Anwar', 'Indonesia');
  
 CREATE TABLE Articles (
-    ID INT PRIMARY KEY NOT NULL,
-    Title VARCHAR(300) NOT NULL,
-    Author VARCHAR(120) NOT NULL,
-    Published_Date DATE NOT NULL,
+    ID INT PRIMARY KEY NOT NULL,
+    Title VARCHAR(300) NOT NULL,
+    Author VARCHAR(120) NOT NULL,
+    Published_Date DATE NOT NULL,
 	ImagePath VARCHAR(255)
 );
+
 
 INSERT INTO Articles (ID, Title, Author, Published_Date, ImagePath) VALUES
 (1, 'How independent filmmakers in Southeast Asia are on the rise', 'Liz Shackleton', '2019-09-11', '/Images/independentFilmmakers.jpg'),
@@ -85,3 +86,14 @@ INSERT INTO Users (username, password, email)
 VALUES 
    ('User123', 'pass1234', 'User123@gmail.com'), 
    ('admin123', 'forum456', 'admin123@gmail.com');
+
+CREATE TABLE Admins (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+	email NVARCHAR(50) NOT NULL,
+    password NVARCHAR(50) NOT NULL
+);
+
+INSERT INTO Admins (email, password)
+VALUES 
+   ('admin123@gmail.com', 'pass1234'), 
+   ('admin456@gmail.com', 'pass456');
