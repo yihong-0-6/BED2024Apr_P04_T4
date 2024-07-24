@@ -89,6 +89,17 @@ app.get("/movies/firstsix", movieController.getFirstSixMovies); // More specific
 app.get("/movies/:id", movieController.getMovieById); // More general route
 app.get("/movies", movieController.getAllMovies);
 
+app.get("/countries", async (req, res) => {
+  try {
+      const connection = await sql.connect(dbConfig);
+      const result = await connection.request().query("SELECT ID, CountryName, Description FROM Countries");
+      res.json(result.recordset);
+  } catch (err) {
+      console.error("Error fetching countries:", err);
+      res.status(500).send("Error fetching countries");
+  }
+});
+
 //Huang Yi Hong S10257222H Routes for GET request for admins
 app.get("/admins/:email", adminController.getAdminByEmail);
 

@@ -36,3 +36,36 @@ async function fetchPopularMovies() {
 }
 
 fetchPopularMovies();
+
+async function fetchCountries() {
+    try {
+        const response = await fetch("http://localhost:3000/countries");
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const countries = await response.json();
+        const countryFlagsContainer = document.getElementById("country-flags");
+
+        countries.forEach((country) => {
+            const countryItem = document.createElement("div");
+            countryItem.classList.add("country");
+
+            const imgElement = document.createElement("img");
+            imgElement.src = `http://localhost:3000/Images/country${country.ID}.png`; // Adjust the URL based on your image path
+            imgElement.alt = country.CountryName;
+
+            const titleElement = document.createElement("h3");
+            titleElement.textContent = country.CountryName;
+
+            countryItem.appendChild(imgElement);
+            countryItem.appendChild(titleElement);
+
+            countryFlagsContainer.appendChild(countryItem);
+        });
+    } catch (error) {
+        console.error("Error fetching country details:", error);
+    }
+}
+
+fetchCountries();
