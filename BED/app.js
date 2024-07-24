@@ -26,23 +26,26 @@ app.use(cors()); // Enable CORS
 app.use(express.json()); 
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 
+// Serve static files from the 'public' directory at the root level
+app.use(express.static(path.join(__dirname, '..', 'public')));
+
 // Users Routes & Forums From Community Page - Zhen Kang
 
-// Creating New Forum
-app.post("/Community/create", validateForum.forumValidation, forumController.createForum);
-
 // Getting all forums
-app.get('/Community/forums', forumController.getAllForums);
+app.get('/Community', forumController.getAllForums);
 
 
-app.get("/Community", async (req, res) => {
-  const filePath = path.join(__dirname, "BED", "public", "html", "Community.html");
+app.get("/Community/forums", async (req, res) => {
+  const filePath = path.join(__dirname, "public", "html", "Community.html");
   console.log("File path is ", filePath);
   res.sendFile(filePath);
 });
 
 // Creating New Forum
-app.post("/Community/create", validateForum.forumValidation, forumController.createForum);
+app.post('/Community/create', (req, res, next) => {
+  next();
+}, validateForum.forumValidation, forumController.createForum);
+
 
 // Get forum by Id
 app.get("/Community/:forumId", forumController.getForumById);

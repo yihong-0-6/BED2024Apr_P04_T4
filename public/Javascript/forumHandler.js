@@ -10,17 +10,18 @@ document.getElementById('forumPost').addEventListener('submit', async function(e
 
   if (title && author && message) { // Updated variable name
       try {
-          const response = await fetch('http://localhost:3000/Community/create', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                  title: title,
-                  author: author,
-                  message: message // Updated field name
-              })
+        const response = await fetch('http://localhost:3000/Community/create', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              title: title,
+              author: author,
+              message: message // Ensure this field is included
+            })
           });
+          
 
           if (!response.ok) {
               const errorMessage = await response.text();
@@ -34,7 +35,9 @@ document.getElementById('forumPost').addEventListener('submit', async function(e
 
           // Assuming you want to redirect or update the page upon successful post
           window.location.href = 'Community.html';
-      } catch (error) {
+      } 
+      
+      catch (error) {
           console.error('Error posting forum:', error);
           alert('Failed to post forum: ' + error.message);
       }
@@ -43,11 +46,9 @@ document.getElementById('forumPost').addEventListener('submit', async function(e
   }
 });
 
-
-
 async function fetchForums() {
   try {
-      const response = await fetch('http://localhost:3000/Community/forums');
+      const response = await fetch('http://localhost:3000/Community');
 
       if (!response.ok) {
           const errorMessage = await response.text();

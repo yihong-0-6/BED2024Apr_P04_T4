@@ -4,17 +4,21 @@ const Forum = require("../models/forum");
 const createForum = async (req, res) => {
   const { title, author, message } = req.body;
 
-  // Validate input
   if (!title || !author || !message) {
-    return res.status(400).json({ success: false, 
-      message: 'All fields are required' });
+    return res.status(400).json({ success: false, message: 'All fields are required' });
   }
 
   try {
-    // Create forum post
-    const result = await Forum.createForum(title, author, message);
+    // Check for existing forums with the same title and author
+    const existingForums = await Forum.find({ title: title, author: author });
+
+    if (existingForums.length > 0) {
+      return res.status(400).json({ success: false, message: 'A forum with the same title and author already exists.' });
+    }
   
-    // Log and respond with success
+    // Create the forum post
+    const result = await Forum.createForum({ title, author, message });
+
     const logForum = {
       success: "New Forum Created Successfully!",
       title: title,
@@ -22,18 +26,17 @@ const createForum = async (req, res) => {
       message: message
     };
 
-    // Convert the object to a JSON string and pretty-print it
     console.log(JSON.stringify(logForum, null, 2)); 
     
     res.status(201).json({ success: true, data: result });
   } 
-  
   catch (err) {
-    // Handle and log errors
     console.error('Error creating forum:', err);
     res.status(500).json({ success: false, message: 'Internal server error', error: process.env.NODE_ENV === 'development' ? err.message : 'Error creating forum' });
   }
-}
+};
+
+
 
 const getForumById = async (req, res) => {
   const forumId = parseInt(req.params.forumId);
