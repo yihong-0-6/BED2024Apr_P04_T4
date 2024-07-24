@@ -25,9 +25,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             Country: ${movie.Country}
         `;
 
-        document.getElementById('buy-button').addEventListener('click', () => {
-            alert('Purchase functionality not implemented yet.');
-        });
     } catch (error) {
         console.error("Error fetching movie details:", error);
     }

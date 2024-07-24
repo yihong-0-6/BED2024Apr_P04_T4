@@ -4,8 +4,9 @@
   padding: 2rem;
 }
 
-/* Content section */
-.content {
+
+/* Content wrapper for side by side layout */
+.content-wrapper {
   display: flex;
   justify-content: space-between;
   margin-bottom: 2rem;
@@ -15,9 +16,9 @@
 
 /* Adjustments for countries section */
 .countries {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  width: 40%; 
   margin-right: 2rem; 
 }
 
@@ -35,9 +36,9 @@
 }
 
 .country img {
-  width: 100%; 
-  height: auto; 
-  object-fit: cover; 
+  width: 300px; /* Increased width */
+  height: 200px; /* Increased height */
+  object-fit: cover; /* Ensure the image is contained within the specified dimensions */
 }
 
 .country h3 {
@@ -46,12 +47,11 @@
   font-weight: bold;
 }
 
-
 /* Now Showing section */
 .now-showing {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  width: 55%; 
 }
 
 /* Now Showing label */
@@ -95,7 +95,6 @@
   transform: scale(1.05); /* Optional: Slightly scale up the image */
   cursor: pointer; /* Change cursor to pointer */
 }
-
 
 /* Movie names */
 .now-showing .movie-name {
