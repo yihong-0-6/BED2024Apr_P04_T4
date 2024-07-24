@@ -12,7 +12,7 @@ const forumController = require('./controllers/forumController');
 const loginController = require("./controllers/loginController");
 const articleController = require("./controllers/articleController");
 const movieController = require('./controllers/movieController');
-const adminController = requrie('./controllers/adminController');
+const adminController = require('./controllers/adminController');
 
 // Middlewares
 const validateForum = require("./middlewares/validateForum");
@@ -91,9 +91,9 @@ app.get("/movies/firstsix", movieController.getFirstSixMovies);
 
 //Huang Yi Hong S10257222H Routes for GET request for admins
 app.get("/admins/:email", adminController.getAdminByEmail);
-app.post("/admins/:email", validateAdmin, adminController.createAdmin)
-app.put("/admin/email", validateAdmin, adminController.updateAdmin)
-app.delete("/admins/:email", validateAdmin, adminController.deleteAdmin)
+
+
+
 
 app.listen(port, async () => {
   try {

@@ -1,11 +1,14 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const movieId = urlParams.get('id');
+    console.log(`Extracted movie ID: ${movieId}`); // Add this log
 
     if (!movieId) {
         alert('Movie ID not found!');
         return;
     }
+
+    console.log(`Fetching movie with ID: ${movieId}`); // Add this log
 
     try {
         const response = await fetch(`http://localhost:3000/movies/${movieId}`);

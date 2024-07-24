@@ -34,19 +34,24 @@ class Movies {
     }
 
     static async getMovieById(ID) {
-        const connection = await sql.connect(dbConfig);
-        const sqlQuery = `SELECT * FROM Movies WHERE ID = @ID`;
-        const request = connection.request();
-        request.input("ID", ID);
-        const result = await request.query(sqlQuery);
-        connection.close();
-        if (result.recordset.length > 0) {
-            const row = result.recordset[0];
-            return new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country);
-        } else {
-            return null;
+        try {
+            const connection = await sql.connect(dbConfig);
+            const sqlQuery = `SELECT * FROM Movies WHERE ID = @ID`;
+            const request = connection.request();
+            request.input("ID", sql.Int, ID); // Ensure correct type is used
+            const result = await request.query(sqlQuery);
+            console.log(`Database query result for ID ${ID}: ${JSON.stringify(result.recordset)}`);
+            connection.close();
+            if (result.recordset.length > 0) {
+                const row = result.recordset[0];
+                return new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country);
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error('Error in getMovieById query:', error);
+            throw error;
         }
     }
 }
-
 module.exports = Movies;
