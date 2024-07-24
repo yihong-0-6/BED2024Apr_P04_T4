@@ -23,14 +23,18 @@ class Movies {
     }
 
     static async getFirstSixMovies() {
-        const connection = await sql.connect(dbConfig);
-        const sqlQuery = `SELECT TOP 6 * FROM Movies ORDER BY ID`;
-        const request = connection.request();
-        const result = await request.query(sqlQuery);
-        connection.close();
-        return result.recordset.map(
-            (row) => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country)
-        );
+        try {
+            const connection = await sql.connect(dbConfig);
+            const sqlQuery = `SELECT TOP 6 * FROM Movies ORDER BY ID`;
+            const request = connection.request();
+            const result = await request.query(sqlQuery);
+            console.log(`Database query result for first six movies: ${JSON.stringify(result.recordset)}`);
+            connection.close();
+            return result.recordset.map(row => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country));
+        } catch (error) {
+            console.error('Error in getFirstSixMovies query:', error);
+            throw error;
+        }
     }
 
     static async getMovieById(ID) {

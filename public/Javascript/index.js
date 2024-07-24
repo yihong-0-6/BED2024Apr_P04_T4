@@ -20,6 +20,11 @@ async function fetchPopularMovies() {
             titleElement.classList.add("movie-name");
             titleElement.textContent = movie.Name;
 
+            // Add click event listener to navigate to purchase page
+            movieItem.addEventListener('click', () => {
+                window.location.href = `purchase.html?id=${movie.ID}`;
+            });
+
             movieItem.appendChild(imgElement);
             movieItem.appendChild(titleElement);
 

@@ -31,12 +31,14 @@ const getMovieById = async (req, res) => {
     }
 };
 
+
 const getFirstSixMovies = async (req, res) => {
     try {
         const movies = await Movies.getFirstSixMovies();
         res.json(movies);
     } catch (error) {
-        res.status(500).send(error.message);
+        console.error('Error retrieving first six movies:', error);
+        res.status(500).send("Error retrieving first six movies");
     }
 };
 

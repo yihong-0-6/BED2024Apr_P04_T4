@@ -85,9 +85,9 @@ app.put("/articles/:ID", validateArticle, articleController.updateArticle); // U
 app.delete("/articles/:ID", articleController.deleteArticle);
 
 // Tam Shi Ying S10257952D Routes for GET request for movies
+app.get("/movies/firstsix", movieController.getFirstSixMovies); // More specific route
+app.get("/movies/:id", movieController.getMovieById); // More general route
 app.get("/movies", movieController.getAllMovies);
-app.get("/movies/:ID", movieController.getMovieById);
-app.get("/movies/firstsix", movieController.getFirstSixMovies);
 
 //Huang Yi Hong S10257222H Routes for GET request for admins
 app.get("/admins/:email", adminController.getAdminByEmail);
