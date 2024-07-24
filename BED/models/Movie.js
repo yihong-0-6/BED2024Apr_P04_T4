@@ -9,7 +9,6 @@ class Movies {
         this.Director = Director;
         this.Country = Country;
         this.ImageUrl = `/Images/moviesimage${this.ID}.jpg`; 
-        console.log(`ImageUrl for ${this.Name}: ${this.ImageUrl}`);
     }
 
     static async getAllMovies() {
@@ -19,21 +18,10 @@ class Movies {
         const result = await request.query(sqlQuery);
         connection.close();
         return result.recordset.map(
-          (row) => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country, row.Description)
+            (row) => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country)
         );
     }
 
-    static async getMoviesByIds(ids) {
-        const connection = await sql.connect(dbConfig);
-        const sqlQuery = `SELECT * FROM Movies WHERE ID IN (${ids.join(',')})`;
-        const request = connection.request();
-        const result = await request.query(sqlQuery);
-        connection.close();
-        return result.recordset.map(
-          (row) => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country, row.Description)
-        );
-    }
-    
     static async getFirstSixMovies() {
         const connection = await sql.connect(dbConfig);
         const sqlQuery = `SELECT TOP 6 * FROM Movies ORDER BY ID`;
@@ -41,8 +29,23 @@ class Movies {
         const result = await request.query(sqlQuery);
         connection.close();
         return result.recordset.map(
-            (row) => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country, row.Description)
+            (row) => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country)
         );
+    }
+
+    static async getMovieById(ID) {
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `SELECT * FROM Movies WHERE ID = @ID`;
+        const request = connection.request();
+        request.input("ID", ID);
+        const result = await request.query(sqlQuery);
+        connection.close();
+        if (result.recordset.length > 0) {
+            const row = result.recordset[0];
+            return new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country);
+        } else {
+            return null;
+        }
     }
 }
 

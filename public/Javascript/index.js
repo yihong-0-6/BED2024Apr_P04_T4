@@ -1,6 +1,6 @@
 async function fetchPopularMovies() {
     try {
-        const response = await fetch("http://localhost:3000/movies/popular");
+        const response = await fetch("http://localhost:3000/movies/firstsix");
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
