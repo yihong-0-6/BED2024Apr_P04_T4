@@ -24,7 +24,19 @@ const getMovieById = async (req, res) => {
     }
 };
 
+exports.getPopularMovies = async (req, res) => {
+    try {
+        const popularMovieIds = [1, 2, 3, 4, 5, 6];
+        const movies = await Movies.getMoviesByIds(popularMovieIds);
+        res.json(movies);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+};
+
+
 module.exports = {
     getAllMovies,
     getMovieById,
+    getPopularMovies
 };

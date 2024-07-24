@@ -23,13 +23,13 @@ async function fetchMovies() {
             titleElement.textContent = movie.Name;
 
             const yearElement = document.createElement("p");
-            yearElement.textContent = `Published Year: ${movie.Published_Year}`;
+            
 
             const directorElement = document.createElement("p");
-            directorElement.textContent = `Director: ${movie.Director}`;
+            
 
             const countryElement = document.createElement("p");
-            countryElement.textContent = `Country: ${movie.Country}`;
+            
 
             movieItem.appendChild(imgElement);
             movieItem.appendChild(titleElement);
