@@ -19,26 +19,30 @@ class Movies {
         const result = await request.query(sqlQuery);
         connection.close();
         return result.recordset.map(
-          (row) => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country)
+          (row) => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country, row.Description)
         );
     }
 
-    static async getMovieById(ID) {
+    static async getMoviesByIds(ids) {
         const connection = await sql.connect(dbConfig);
-        const sqlQuery = `SELECT * FROM Movies WHERE ID = @ID`;
+        const sqlQuery = `SELECT * FROM Movies WHERE ID IN (${ids.join(',')})`;
         const request = connection.request();
-        request.input("ID", ID);
         const result = await request.query(sqlQuery);
         connection.close();
-        return result.recordset[0]
-            ? new Movies(
-                result.recordset[0].ID,
-                result.recordset[0].Name,
-                result.recordset[0].Published_Year,
-                result.recordset[0].Director,
-                result.recordset[0].Country
-                )
-            : null;
+        return result.recordset.map(
+          (row) => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country, row.Description)
+        );
+    }
+    
+    static async getFirstSixMovies() {
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `SELECT TOP 6 * FROM Movies ORDER BY ID`;
+        const request = connection.request();
+        const result = await request.query(sqlQuery);
+        connection.close();
+        return result.recordset.map(
+            (row) => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country, row.Description)
+        );
     }
 }
 
