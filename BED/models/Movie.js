@@ -9,7 +9,6 @@ class Movies {
         this.Director = Director;
         this.Country = Country;
         this.ImageUrl = `/Images/moviesimage${this.ID}.jpg`; 
-        console.log(`ImageUrl for ${this.Name}: ${this.ImageUrl}`);
     }
 
     static async getAllMovies() {
@@ -19,27 +18,44 @@ class Movies {
         const result = await request.query(sqlQuery);
         connection.close();
         return result.recordset.map(
-          (row) => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country)
+            (row) => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country)
         );
     }
 
+    static async getFirstSixMovies() {
+        try {
+            const connection = await sql.connect(dbConfig);
+            const sqlQuery = `SELECT TOP 6 * FROM Movies ORDER BY ID`;
+            const request = connection.request();
+            const result = await request.query(sqlQuery);
+            console.log(`Database query result for first six movies: ${JSON.stringify(result.recordset)}`);
+            connection.close();
+            return result.recordset.map(row => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country));
+        } catch (error) {
+            console.error('Error in getFirstSixMovies query:', error);
+            throw error;
+        }
+    }
+
     static async getMovieById(ID) {
-        const connection = await sql.connect(dbConfig);
-        const sqlQuery = `SELECT * FROM Movies WHERE ID = @ID`;
-        const request = connection.request();
-        request.input("ID", ID);
-        const result = await request.query(sqlQuery);
-        connection.close();
-        return result.recordset[0]
-            ? new Movies(
-                result.recordset[0].ID,
-                result.recordset[0].Name,
-                result.recordset[0].Published_Year,
-                result.recordset[0].Director,
-                result.recordset[0].Country
-                )
-            : null;
+        try {
+            const connection = await sql.connect(dbConfig);
+            const sqlQuery = `SELECT * FROM Movies WHERE ID = @ID`;
+            const request = connection.request();
+            request.input("ID", sql.Int, ID); // Ensure correct type is used
+            const result = await request.query(sqlQuery);
+            console.log(`Database query result for ID ${ID}: ${JSON.stringify(result.recordset)}`);
+            connection.close();
+            if (result.recordset.length > 0) {
+                const row = result.recordset[0];
+                return new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country);
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error('Error in getMovieById query:', error);
+            throw error;
+        }
     }
 }
-
 module.exports = Movies;

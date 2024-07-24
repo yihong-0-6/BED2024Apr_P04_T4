@@ -16,20 +16,24 @@ async function fetchMovies() {
             imgElement.src = `http://localhost:3000${movie.ImageUrl}`;
             imgElement.alt = movie.Name;
 
-            // Log the generated image URL
-            console.log(`Image URL for ${movie.Name}: ${imgElement.src}`);
-
             const titleElement = document.createElement("h2");
             titleElement.textContent = movie.Name;
 
             const yearElement = document.createElement("p");
-            yearElement.textContent = `Published Year: ${movie.Published_Year}`;
+            
 
             const directorElement = document.createElement("p");
-            directorElement.textContent = `Director: ${movie.Director}`;
+            
 
             const countryElement = document.createElement("p");
-            countryElement.textContent = `Country: ${movie.Country}`;
+            
+
+            // Add click event listener to navigate to movieDetail.html with the movie ID
+            movieItem.addEventListener('click', () => {
+                const detailUrl = `movieDetail.html?id=${movie.ID}`;
+                console.log(`Navigating to: ${detailUrl}`); // Add this log
+                window.location.href = detailUrl;
+            });
 
             movieItem.appendChild(imgElement);
             movieItem.appendChild(titleElement);

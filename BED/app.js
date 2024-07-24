@@ -12,11 +12,13 @@ const forumController = require('./controllers/forumController');
 const loginController = require("./controllers/loginController");
 const articleController = require("./controllers/articleController");
 const movieController = require('./controllers/movieController');
+const adminController = require('./controllers/adminController');
 
 // Middlewares
 const validateForum = require("./middlewares/validateForum");
 const validateUser = require("./middlewares/validateUser");
 const validateArticle = require('./middlewares/validateArticle');
+const validateAdmin = require('./middlewares/validateAdmin')
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
@@ -83,8 +85,15 @@ app.put("/articles/:ID", validateArticle, articleController.updateArticle); // U
 app.delete("/articles/:ID", articleController.deleteArticle);
 
 // Tam Shi Ying S10257952D Routes for GET request for movies
+app.get("/movies/firstsix", movieController.getFirstSixMovies); // More specific route
+app.get("/movies/:id", movieController.getMovieById); // More general route
 app.get("/movies", movieController.getAllMovies);
-app.get("/movies/:ID", movieController.getMovieById);
+
+//Huang Yi Hong S10257222H Routes for GET request for admins
+app.get("/admins/:email", adminController.getAdminByEmail);
+
+
+
 
 app.listen(port, async () => {
   try {

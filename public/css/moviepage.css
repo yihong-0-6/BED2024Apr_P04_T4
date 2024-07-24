@@ -5,21 +5,29 @@
     padding: 20px; /* Add some padding */
 }
 
+.centered-header {
+    text-align: center; /* Center the text */
+}
+
 #movie-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* Always 5 columns */
     gap: 2rem;
+    justify-content: center; /* Center the grid items */
     margin-top: 2rem;
     padding: 0;
 }
 
 .movie {
+    position: relative; /* Ensure the overlay is positioned correctly */
     padding: 1rem;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     background-color: #fff;
     text-align: center;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    cursor: pointer;
 }
 
 .movie img {
@@ -27,10 +35,24 @@
     height: 300px; /* Set the desired height */
     object-fit: cover; /* Maintain aspect ratio and cover the specified width/height */
     border-radius: 4px;
-    margin-bottom: 1rem;
+    transition: opacity 0.3s ease; /* Smooth transition */
 }
 
 .movie h2 {
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
+}
+
+.movie:hover {
+    background-color: rgba(0, 0, 0, 0.7); /* Darken background */
+    transform: scale(1.05); /* Slightly enlarge the movie container */
+}
+
+.movie:hover img {
+    opacity: 0.7; /* Reduce image opacity to show the dark background */
+}
+
+.movie:hover h2,
+.movie:hover p {
+    color: #fff; /* Change text color to white on hover */
 }

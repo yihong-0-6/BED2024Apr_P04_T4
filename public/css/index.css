@@ -4,24 +4,13 @@
   padding: 2rem;
 }
 
-/* Slide banner */
-.slide-banner {
-  background-color: #ddd;
-  height: 200px;
-  margin-bottom: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  color: #333;
-}
-
 /* Content section */
 .content {
   display: flex;
   justify-content: space-between;
   margin-bottom: 2rem;
   align-items: flex-start;
+  margin-top: 5rem; /* Add top margin to push content down */
 }
 
 /* Adjustments for countries section */
@@ -78,28 +67,41 @@
   display: flex;
   flex-wrap: wrap; 
   justify-content: space-between;
-  margin-bottom: 1rem;
+  gap: 0.5rem; /* Reduce the gap between images */
 }
 
 /* Individual movie */
 .now-showing .movie {
-  flex-basis: calc(33.33% - 1rem); 
-  margin-bottom: 1rem; 
+  flex-basis: calc(33.33% - 0.5rem); /* Adjust based on the new gap */
+  margin-bottom: 0.5rem; /* Reduce the margin-bottom */
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center; 
+  transition: transform 0.3s ease; /* Smooth transition for scaling */
 }
 
 .now-showing .movie img {
-  max-width: 100%; 
-  height: auto; 
+  width: 280px;  /* Adjust the width */
+  height: 420px; /* Adjust the height */
+  object-fit: cover; /* Maintain aspect ratio and cover the specified width/height */
+  border-radius: 4px; /* Optional: Add some rounding to the edges */
+  transition: filter 0.3s ease; /* Smooth transition for darkening effect */
 }
+
+.now-showing .movie:hover img {
+  filter: brightness(70%); /* Darken the image on hover */
+  transform: scale(1.05); /* Optional: Slightly scale up the image */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
 
 /* Movie names */
 .now-showing .movie-name {
-  margin-top: 0.5rem; 
+  margin-top: 1rem; 
   color: #000000;
+  margin-bottom: 1rem;
+  font-weight: bold;
 }
 
 /* Latest News section */
