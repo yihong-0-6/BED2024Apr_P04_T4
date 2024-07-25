@@ -53,7 +53,7 @@ app.get("/Community/forums", async (req, res) => {
 app.get("/Community/id/:forumId", forumController.getForumById);
 
 // Deleting a forum
-app.delete("/Community/remove/:forumId", forumController.deleteForum);
+app.delete("/Community/delete/:forumId", forumController.deleteForum);
 
 app.post("/user/account/login", loginController.userLogin);
 

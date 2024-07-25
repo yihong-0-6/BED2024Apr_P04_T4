@@ -1,5 +1,3 @@
-
-
 const Forum = require("../models/forum");
 
 // Create new forum
