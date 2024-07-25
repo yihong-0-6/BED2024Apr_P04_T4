@@ -254,3 +254,6 @@ WHERE ID = 32;
 UPDATE Movies
 SET Description = 'A Copy of My Mind is a 2015 Indonesian drama film directed by Joko Anwar. The film tells the story of Sari, a young woman who works in a beauty salon and enjoys pirated DVDs, and Alek, a man who creates subtitles for these DVDs. Their romance blossoms amidst the gritty backdrop of Jakarta''s bustling streets. However, their lives take a dangerous turn when they stumble upon a corrupt political scheme involving a powerful politician. A Copy of My Mind explores themes of love, ambition, and the moral compromises individuals make in a corrupt society. The film is praised for its raw and realistic portrayal of Jakarta''s urban life, its compelling narrative, and the chemistry between the lead actors. A Copy of My Mind has been celebrated as a poignant and thought-provoking commentary on contemporary Indonesian society.'
 WHERE ID = 33;
+
+ALTER TABLE Movies
+ADD TrailerUrl NVARCHAR(255);

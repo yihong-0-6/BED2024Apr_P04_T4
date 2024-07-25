@@ -20,7 +20,35 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    async function fetchCountries() {
+        try {
+            const response = await fetch("http://localhost:3000/countries");
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const countries = await response.json();
+            const countrySelect = document.getElementById('movie-country');
+            const countryIdSelect = document.getElementById('country-id');
+
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.ID;
+                option.textContent = `${country.ID} - ${country.CountryName}`;
+                countrySelect.appendChild(option);
+
+                const countryIdOption = document.createElement('option');
+                countryIdOption.value = country.ID;
+                countryIdOption.textContent = `${country.ID} - ${country.CountryName}`;
+                countryIdSelect.appendChild(countryIdOption);
+            });
+        } catch (error) {
+            console.error('Error fetching countries:', error);
+        }
+    }
+
     fetchMovies();
+    fetchCountries();
 
     document.getElementById('update-movie-form').addEventListener('submit', async function (e) {
         e.preventDefault();
