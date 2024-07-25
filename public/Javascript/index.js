@@ -64,7 +64,7 @@ async function fetchCountries() {
 
             // Add click event listener to show country details in a modal
             countryItem.addEventListener('click', () => {
-                showCountryModal(country.CountryName, country.Description);
+                showCountryModal(country.CountryName, country.Description, imgElement.src);
             });
 
             countryFlagsContainer.appendChild(countryItem);
@@ -77,13 +77,15 @@ async function fetchCountries() {
 fetchCountries();
 
 // Function to show the modal with country details
-function showCountryModal(name, description) {
+function showCountryModal(name, description, imageUrl) {
     const modal = document.getElementById("countryModal");
     const countryNameElement = document.getElementById("countryName");
     const countryDescriptionElement = document.getElementById("countryDescription");
+    const countryImageElement = document.getElementById("countryImage");
 
     countryNameElement.textContent = name;
     countryDescriptionElement.textContent = description;
+    countryImageElement.src = imageUrl;
 
     modal.style.display = "block";
 }

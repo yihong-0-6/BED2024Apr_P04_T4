@@ -33,6 +33,11 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // Users Routes & Forums From Community Page - Zhen Kang
 
+// Creating New Forum
+app.post('/Community/create', (req, res, next) => {
+  next();
+}, validateForum.forumValidation, forumController.createForum);
+
 // Getting all forums
 app.get('/Community', forumController.getAllForums);
 
@@ -43,14 +48,9 @@ app.get("/Community/forums", async (req, res) => {
   res.sendFile(filePath);
 });
 
-// Creating New Forum
-app.post('/Community/create', (req, res, next) => {
-  next();
-}, validateForum.forumValidation, forumController.createForum);
-
 
 // Get forum by Id
-app.get("/Community/:forumId", forumController.getForumById);
+app.get("/Community/id/:forumId", forumController.getForumById);
 
 // Deleting a forum
 app.delete("/Community/delete/:forumId", forumController.deleteForum);
@@ -122,6 +122,58 @@ app.get("/countries", async (req, res) => {
   } catch (err) {
       console.error("Error fetching countries:", err);
       res.status(500).send("Error fetching countries");
+  }
+});
+
+app.put('/movies/:id', async (req, res) => {
+  const movieId = req.params.id;
+  const { Name, Published_Year, Director, Country, Description, TrailerUrl } = req.body;
+
+  try {
+      const connection = await sql.connect(dbConfig);
+      const query = `
+          UPDATE Movies
+          SET Name = @Name, Published_Year = @Published_Year, Director = @Director, Country = @Country, Description = @Description, TrailerUrl = @TrailerUrl
+          WHERE ID = @ID
+      `;
+      const request = connection.request();
+      request.input('ID', sql.Int, movieId);
+      request.input('Name', sql.NVarChar, Name);
+      request.input('Published_Year', sql.Int, Published_Year);
+      request.input('Director', sql.NVarChar, Director);
+      request.input('Country', sql.NVarChar, Country);
+      request.input('Description', sql.NVarChar, Description);
+      request.input('TrailerUrl', sql.NVarChar, TrailerUrl);
+      await request.query(query);
+      connection.close();
+      res.status(200).send('Movie updated successfully');
+  } catch (error) {
+      console.error('Error updating movie:', error);
+      res.status(500).send('Error updating movie');
+  }
+});
+
+app.put('/countries/:id', async (req, res) => {
+  const countryId = req.params.id;
+  const { CountryName, Description } = req.body;
+
+  try {
+      const connection = await sql.connect(dbConfig);
+      const query = `
+          UPDATE Countries
+          SET CountryName = @CountryName, Description = @Description
+          WHERE ID = @ID
+      `;
+      const request = connection.request();
+      request.input('ID', sql.Int, countryId);
+      request.input('CountryName', sql.NVarChar, CountryName);
+      request.input('Description', sql.NVarChar, Description);
+      await request.query(query);
+      connection.close();
+      res.status(200).send('Country updated successfully');
+  } catch (error) {
+      console.error('Error updating country:', error);
+      res.status(500).send('Error updating country');
   }
 });
 

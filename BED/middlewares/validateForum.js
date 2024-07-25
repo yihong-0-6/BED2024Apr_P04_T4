@@ -1,5 +1,8 @@
 const Joi = require("joi");
 
+// In-memory storage for titles (for demonstration purposes)
+let titles = new Set();
+
 const forumValidation = (req, res, next) => {
   const schema = Joi.object({
     title: Joi.string().max(60).required(),
@@ -15,10 +18,20 @@ const forumValidation = (req, res, next) => {
     return res.status(400).json({ message: "Validation error", errors });
   }
 
-  next(); // Proceed to next route handler once validation passes
-};
+  // Check for duplicate title
+  const { title} = req.body;
 
+  if (titles.has(title)) {
+    return res.status(400).json("Title already exists" );
+  }
+
+  // Add the title to the set (for future requests)
+  titles.add(title);
+
+  next(); // Proceed to the next route handler
+};
 
 module.exports = {
   forumValidation,
 };
+
