@@ -18,7 +18,7 @@ const adminController = require('./controllers/adminController');
 const validateForum = require("./middlewares/validateForum");
 const validateUser = require("./middlewares/validateUser");
 const validateArticle = require('./middlewares/validateArticle');
-const validateAdmin = require('./middlewares/validateAdmin')
+const { validateAdmin, verifyJWTadmin } = require("./middlewares/validateAdmin");
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable or default port
@@ -106,7 +106,6 @@ app.get("/admins", adminController.getAllAdmins);
 app.post("/admins/create", adminController.createAdmin);
 app.put("/admins/:email", validateAdmin, adminController.updateAdmin);
 app.delete("/admins/:email", validateAdmin, adminController.deleteAdmin);
-
 
 
 
