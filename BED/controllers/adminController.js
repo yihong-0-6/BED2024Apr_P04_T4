@@ -4,41 +4,41 @@ const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const adminLogin = async (req, res) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
   
-    try {
-        // Fetch admin from the database
-        const admin = await Admins.adminLogin(email);
-  
-        if (admin) {
-            // Compare the hashed password
-            const isMatch = await bcryptjs.compare(password, admin.password);
-  
-            if (isMatch) {
-                // Define the payload
-                const payload = {
-                    email: admin.email,
-                };
-  
-                // Generate JWT token
-                const token = jwt.sign(payload, process.env.JWT_SECERT, { expiresIn: "3600s" });
-  
-                res.status(200).json({
-                    message: "Login successful",
-                    token: token,
-                    email: admin.email
-                });
-            } 
-            else {
-                res.status(401).json({ message: "Invalid email or password" });
-            }
-  
-  
+  try {
+    // Fetch admin from the database
+    const admin = await Admins.adminLogin(email);
+
+    if (admin) {
+        // Compare the hashed password
+        const isMatch = await bcryptjs.compare(password, admin.password);
+
+        if (isMatch) {
+            // Define the payload
+            const payload = {
+                email: admin.email,
+            };
+
+            // Generate JWT token
+            const token = jwt.sign(payload, process.env.JWT_SECERT, { expiresIn: "3600s" });
+
+            res.status(200).json({
+                message: "Login successful",
+                token: token,
+                email: admin.email
+            });
         } 
         else {
             res.status(401).json({ message: "Invalid email or password" });
         }
+
+
     } 
+    else {
+        res.status(401).json({ message: "Invalid email or password" });
+    }
+  } 
     
     catch (error) {
         console.error("Login Error: ", error);
@@ -46,11 +46,11 @@ const adminLogin = async (req, res) => {
     }
   };
   
-  const getAdminByEmail = async (req, res) => {
+  const getAdminsByEmail = async (req, res) => {
     const email = req.params.email;
   
     try {
-        const admin = await Admin.getAdminByEmail(email);
+        const admin = await Admins.getAdminsByEmail(email);
         if (!admin) {
           return res.status(404).send("Admin not found");
         }
@@ -65,8 +65,8 @@ const adminLogin = async (req, res) => {
 
   const getAllAdmins = async (req, res) => {
     try {
-      const admins = await Admins.getAllAdmins();
-      res.json(admins);
+      const admin = await Admins.getAllAdmins();
+      res.json(admin);
     } 
     catch (error) {
       console.error(error);
@@ -85,7 +85,7 @@ const adminLogin = async (req, res) => {
             newAdminsData.password = await bcryptjs.hash(newAdminsData.password, salt);
         }
   
-        const updatedAdmin = await Admin.updateAdmin(email, newAdminsData);
+        const updatedAdmin = await Admins.updateAdmin(email, newAdminsData);
   
         if (!updatedAdmin) {
             return res.status(404).send("Admin not found");
@@ -103,7 +103,7 @@ const adminLogin = async (req, res) => {
   const createAdmin = async (req, res) => {
     const newAdmin = req.body;
     try {
-      const createdAdmin = await Admins.createAdmin(newAdmin);
+      const createdAdmin = await Admins.createAdmin(newAdminsData);
       res.status(201).json(createdAdmin);
     } catch (error) {
       console.error(error);
@@ -112,7 +112,7 @@ const adminLogin = async (req, res) => {
   };
   
   const deleteAdmin = async (req, res) => {
-    const email = req.params.emai;;
+    const email = req.params.email;
   
     try {
       const success = await Admins.deleteAdmin(email);
@@ -131,7 +131,7 @@ const adminLogin = async (req, res) => {
   
   module.exports = {
     adminLogin,
-    getAdminByEmail,
+    getAdminsByEmail,
     getAllAdmins,
     updateAdmin,
     createAdmin,

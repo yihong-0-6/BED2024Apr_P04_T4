@@ -101,7 +101,11 @@ app.get("/countries", async (req, res) => {
 });
 
 //Huang Yi Hong S10257222H Routes for GET request for admins
-app.get("/admins/:email", adminController.getAdminByEmail);
+app.get("/admins/:email", adminController.getAdminsByEmail);
+app.get("/admins", adminController.getAllAdmins);
+app.post("/admins/create", adminController.createAdmin);
+app.put("/admins/:email", validateAdmin, adminController.updateAdmin);
+app.delete("/admins/:email", validateAdmin, adminController.deleteAdmin);
 
 
 

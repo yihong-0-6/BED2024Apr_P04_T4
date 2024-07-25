@@ -18,7 +18,7 @@ class Admins{
 
         const result = await request.query(sqlQuery);
 
-        connection.clost();
+        connection.close();
 
         if (result.recordset.length > 0) {
             return result.recordset[0];
@@ -28,20 +28,20 @@ class Admins{
         }
     }
 
-    static async getAdminByEmail(adminEmail) {
+    static async getAdminsByEmail(email) {
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `SELECT * FROM Admins WHERE email = @email`; // Parameterized query
     
         const request = connection.request();
-        request.input("userEmail", userEmail);
+        request.input("email", email);
         const result = await request.query(sqlQuery);
     
         connection.close();
     
         return result.recordset[0]
           ? new Admins(
-              result.recordset[0].userEmail,
+              result.recordset[0].email,
               result.recordset[0].password,
             )
           : null;
@@ -86,11 +86,11 @@ class Admins{
         connection.close(); 
     
         return result.recordset.map(
-          (row) => new User(row.email, row.password)
+          (row) => new Admins(row.email, row.password)
         ); // Convert rows to Admin objects
       }
 
-      static async createAdmin(newAdminData) {
+      static async createAdmin(newAdminsData) {
         const connection = await sql.connect(dbConfig);
     
         const sqlQuery = `INSERT INTO Admins (email, password) 
@@ -107,22 +107,22 @@ class Admins{
         return this.getAllAdmins();
       }
 
-      static async updateAdmin(adminEmail, newAdminData) {
-        const createdAdmin = await this.getAdminByEmail(adminEmail);
+      static async updateAdmin(email, newAdminsData) {
+        const createdAdmin = await this.getAdminByEmail(email);
         const connection = await sql.connect(dbConfig);
         
         const sqlQuery = `UPDATE Admins SET email = @email, 
-                                password = @password WHERE userEmail = @userEmail`; // Parameterized query
+                                password = @password WHERE email = @email`; // Parameterized query
     
         const request = connection.request();
-        request.input("email", newAdminData.email || createdAdmin.email);
-        request.input("password", newAdminData.password || createdAdmin.password);
+        request.input("email", newAdminsData.email || createdAdmin.email);
+        request.input("password", newAdminsData.password || createdAdmin.password);
     
         await request.query(sqlQuery);
         
         connection.close();
     
-        return this.getAdminByEmail(adminEmail);
+        return this.getAdminByEmail(email);
       }
 
       static async deleteAdmin(email) {
@@ -141,4 +141,4 @@ class Admins{
 }   
 
 
-module.export = Admins;
+module.exports = Admins;
