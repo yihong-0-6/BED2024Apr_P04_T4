@@ -1,15 +1,21 @@
+
+
 /* Container Styles */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    display: flex;
-    justify-content: center;
-    text-align: left;
 }
 
 /* Movie Detail Layout */
 #movie-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.top-section {
     display: flex;
     gap: 20px;
     align-items: flex-start;
@@ -17,10 +23,8 @@
 
 .movie-info {
     flex: 1;
-}
-
-.movie-trailer {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 #movie-image {
@@ -32,6 +36,13 @@
 
 #movie-trailer {
     width: 100%;
-    height: 315px;
+    height: 600px;
     border-radius: 4px;
+}
+#movie-title {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 2rem;
+    color: #000000;
+    padding-top: 30px;
 }

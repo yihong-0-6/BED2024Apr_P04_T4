@@ -24,21 +24,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById('update-movie-form').addEventListener('submit', async function (e) {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('movie-id', document.getElementById('movie-id').value);
-        formData.append('Name', document.getElementById('movie-name').value);
-        formData.append('Published_Year', document.getElementById('movie-year').value);
-        formData.append('Director', document.getElementById('movie-director').value);
-        formData.append('Country', document.getElementById('movie-country').value);
-        formData.append('Description', document.getElementById('movie-description').value);
-        formData.append('TrailerUrl', document.getElementById('movie-trailer-url').value);
-
         const movieId = document.getElementById('movie-id').value;
+        const updateData = {};
+
+        const name = document.getElementById('movie-name').value;
+        if (name) updateData.Name = name;
+
+        const year = document.getElementById('movie-year').value;
+        if (year) updateData.Published_Year = year;
+
+        const director = document.getElementById('movie-director').value;
+        if (director) updateData.Director = director;
+
+        const country = document.getElementById('movie-country').value;
+        if (country) updateData.Country = country;
+
+        const description = document.getElementById('movie-description').value;
+        if (description) updateData.Description = description;
+
+        const trailerUrl = document.getElementById('movie-trailer-url').value;
+        if (trailerUrl) updateData.TrailerUrl = trailerUrl;
 
         try {
             const response = await fetch(`http://localhost:3000/movies/${movieId}`, {
                 method: 'PUT',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateData)
             });
 
             if (response.ok) {
@@ -54,10 +67,13 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('update-country-form').addEventListener('submit', async function (e) {
         e.preventDefault();
         const countryId = document.getElementById('country-id').value;
-        const countryData = {
-            CountryName: document.getElementById('country-name').value,
-            Description: document.getElementById('country-description').value
-        };
+        const countryData = {};
+
+        const countryName = document.getElementById('country-name').value;
+        if (countryName) countryData.CountryName = countryName;
+
+        const description = document.getElementById('country-description').value;
+        if (description) countryData.Description = description;
 
         try {
             const response = await fetch(`http://localhost:3000/countries/${countryId}`, {

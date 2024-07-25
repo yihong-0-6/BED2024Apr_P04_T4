@@ -127,53 +127,55 @@ app.get("/countries", async (req, res) => {
 
 app.put('/movies/:id', async (req, res) => {
   const movieId = req.params.id;
-  const { Name, Published_Year, Director, Country, Description, TrailerUrl } = req.body;
+  const updates = req.body;
+
+  let query = 'UPDATE Movies SET ';
+  const fields = Object.keys(updates).map((key, index) => {
+      return `${key} = @${key}`;
+  });
+  query += fields.join(', ') + ' WHERE ID = @ID';
 
   try {
-      const connection = await sql.connect(dbConfig);
-      const query = `
-          UPDATE Movies
-          SET Name = @Name, Published_Year = @Published_Year, Director = @Director, Country = @Country, Description = @Description, TrailerUrl = @TrailerUrl
-          WHERE ID = @ID
-      `;
-      const request = connection.request();
+      const pool = await sql.connect(dbConfig);
+      const request = pool.request();
+
+      Object.keys(updates).forEach(key => {
+          request.input(key, updates[key]);
+      });
       request.input('ID', sql.Int, movieId);
-      request.input('Name', sql.NVarChar, Name);
-      request.input('Published_Year', sql.Int, Published_Year);
-      request.input('Director', sql.NVarChar, Director);
-      request.input('Country', sql.NVarChar, Country);
-      request.input('Description', sql.NVarChar, Description);
-      request.input('TrailerUrl', sql.NVarChar, TrailerUrl);
+
       await request.query(query);
-      connection.close();
-      res.status(200).send('Movie updated successfully');
-  } catch (error) {
-      console.error('Error updating movie:', error);
-      res.status(500).send('Error updating movie');
+      res.sendStatus(200);
+  } catch (err) {
+      console.error('Error updating movie:', err);
+      res.sendStatus(500);
   }
 });
 
 app.put('/countries/:id', async (req, res) => {
   const countryId = req.params.id;
-  const { CountryName, Description } = req.body;
+  const updates = req.body;
+
+  let query = 'UPDATE Countries SET ';
+  const fields = Object.keys(updates).map((key, index) => {
+      return `${key} = @${key}`;
+  });
+  query += fields.join(', ') + ' WHERE ID = @ID';
 
   try {
-      const connection = await sql.connect(dbConfig);
-      const query = `
-          UPDATE Countries
-          SET CountryName = @CountryName, Description = @Description
-          WHERE ID = @ID
-      `;
-      const request = connection.request();
+      const pool = await sql.connect(dbConfig);
+      const request = pool.request();
+
+      Object.keys(updates).forEach(key => {
+          request.input(key, updates[key]);
+      });
       request.input('ID', sql.Int, countryId);
-      request.input('CountryName', sql.NVarChar, CountryName);
-      request.input('Description', sql.NVarChar, Description);
+
       await request.query(query);
-      connection.close();
-      res.status(200).send('Country updated successfully');
-  } catch (error) {
-      console.error('Error updating country:', error);
-      res.status(500).send('Error updating country');
+      res.sendStatus(200);
+  } catch (err) {
+      console.error('Error updating country:', err);
+      res.sendStatus(500);
   }
 });
 

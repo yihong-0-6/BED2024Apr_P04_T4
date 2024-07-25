@@ -28,15 +28,16 @@
     </div>
 
     <div class="container">
+        <h1 id="movie-title"></h1> <!-- Movie title at the top -->
         <div id="movie-detail">
-            <div class="movie-info">
-                <h1 id="movie-title"></h1>
+            <div class="top-section">
                 <img id="movie-image" src="" alt="">
-                <p id="movie-description"></p>
-                <p id="movie-year"></p>
-                <p id="movie-director"></p>
-                <p id="movie-country"></p>
-
+                <div class="movie-info">
+                    <p><strong>Description:</strong> <span id="movie-description"></span></p>
+                    <p><strong>Published Year:</strong> <span id="movie-year"></span></p>
+                    <p><strong>Director:</strong> <span id="movie-director"></span></p>
+                    <p><strong>Country:</strong> <span id="movie-country"></span></p>
+                </div>
             </div>
             <div class="movie-trailer">
                 <iframe id="movie-trailer" width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
