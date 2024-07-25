@@ -39,7 +39,6 @@ app.post("/Community/create", validateForum.forumValidation, forumController.cre
 // Getting all forums
 app.get('/Community/forums', forumController.getAllForums);
 
-
 app.get("/Community", async (req, res) => {
   const filePath = path.join(__dirname, "public", "html", "Community.html");
   console.log("File path is ", filePath);
@@ -53,7 +52,7 @@ app.post("/Community/create", validateForum.forumValidation, forumController.cre
 app.get("/Community/id/forumId", forumController.getForumById);
 
 // Deleting a forum
-app.delete("/Community/delete/:forumId", forumController.deleteForum);
+app.delete("/Community/remove/:forumId", forumController.deleteForum);
 
 app.post("user/account/login", loginController.userLogin);
 

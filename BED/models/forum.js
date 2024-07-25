@@ -13,22 +13,23 @@ class Forum {
 
   static async createForum(title, author, comments) {
     try {
-
       await sql.connect(dbConfig);
-
+  
       const request = new sql.Request();
-
-      const query = `INSERT INTO Forums (title, author, comments) 
-      VALUES (@title, @author, @comments)`;
-
+  
+      // Assuming `id` is an identity column that auto-generates
+      const query = `
+        INSERT INTO Forums (title, author, comments) 
+        OUTPUT Inserted.forumId AS forumId
+        VALUES (@title, @author, @comments)
+      `;
+  
       request.input('title', sql.VarChar, title);
-
-      request.input('author', author);
-
+      request.input('author', sql.VarChar, author);
       request.input('comments', sql.NVarChar, comments);
-
+  
       const result = await request.query(query);
-
+  
       return result;
     } 
     
@@ -94,21 +95,52 @@ class Forum {
     }
   }
 
-  static async deleteForum(forumId) {
+  static async getForumById(forumId){
     const connection = await sql.connect(dbConfig);
 
-    const sqlQuery = `DELETE * FROM FORUM WHERE forumId = @forumId;`
-                      
+    const sqlQuery = `SELECT * FROM Forums WHERE forumId = @forumId`; 
+
     const request = connection.request();
 
-    request.input("id", forumId);
+    request.input("forumId", forumId);
 
     const result = await request.query(sqlQuery);
 
     connection.close();
 
-    return result.rowsAffected > 0; // Indicate success based on affected rows
+    return result.recordset[0]
+      ? new Forum(
+          result.recordset[0].forumId,
+          result.recordset[0].title,
+          result.recordset[0].author,
+          result.recordset[0].comments
+        )
+      : null;
   }
-}
+
+  static async deleteForum(forumId) {
+        const connection = await sql.connect(dbConfig);
+
+        // Define the SQL query with parameter
+        const sqlQuery = 'DELETE FROM Forums WHERE forumId = @forumId';
+
+        // Create a new request
+        const request = new sql.Request(connection);
+
+        // Add the parameter to the request
+        request.input('forumId', forumId); // Ensure the data type matches the database schema
+
+        // Execute the query
+        const result = await request.query(sqlQuery);
+
+        connection.close();
+
+        // Check if any rows were affected
+        return result.rowsAffected[0] > 0; // Return true if rows were affected, indicating success
+    } 
+} 
+
+
+
 
 module.exports = Forum;

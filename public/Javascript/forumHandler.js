@@ -19,52 +19,43 @@ document.addEventListener('DOMContentLoaded', function() {
             const author = document.getElementById('forumAuthor').value;
             const message = document.getElementById('forumComment').value || '';
 
-  if (title && author && message) { // Updated variable name
-      try {
-        const response = await fetch('http://localhost:3000/Community/create', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              title: title,
-              author: author,
-              message: message // Ensure this field is included
-            })
-          });
-          
+            if (title && author && message) {
+                try {
+                    const response = await fetch('http://localhost:3000/Community/create', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            title: title,
+                            author: author,
+                            message: message
+                        })
+                    });
 
                     if (!response.ok) {
                         const errorMessage = await response.text();
                         throw new Error(`Server error: ${response.status} - ${errorMessage}`);
                     }
 
-          const data = await response.json();
-          if (!data) {
-              throw new Error('Server returned empty response');
-          }
+                    window.location.href = 'Community.html'; // Redirect after successful post
+                } catch (error) {
+                    console.error('Error posting forum:', error);
+                    alert('Failed to post forum: ' + error.message);
+                }
+            } else {
+                alert('Please fill in all fields');
+            }
+        });
+    }
 
-          // Assuming you want to redirect or update the page upon successful post
-          window.location.href = 'Community.html';
-      } catch (error) {
-          console.error('Error posting forum:', error);
-          alert('Failed to post forum: ' + error.message);
-      }
-  } else {
-      alert('Please fill in all fields');
-  }
-});
-
-
-
-async function fetchForums() {
-  try {
-      const response = await fetch('http://localhost:3000/Community');
-
-      if (!response.ok) {
-          const errorMessage = await response.text();
-          throw new Error(`Failed to fetch forums, status: ${response.status}, message: ${errorMessage}`);
-      }
+    // Fetch forums from the server
+    async function fetchForums() {
+        try {
+            const response = await fetch('http://localhost:3000/Community/forums');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
 
             const forums = await response.json();
             renderForums(forums); // Render forums on the page
