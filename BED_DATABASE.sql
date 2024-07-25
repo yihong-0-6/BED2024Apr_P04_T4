@@ -57,20 +57,19 @@ INSERT INTO Articles (ID, Title, Author, Published_Date) VALUES
 (6, 'X3D STUDIO: PIONEERING VIRTUAL PRODUCTION IN SOUTHEAST ASIA', 'Metropolitant', '2024-06-19');
  
 CREATE TABLE Forums (
-    id INT PRIMARY KEY IDENTITY(1,1),
+    forumId INT PRIMARY KEY IDENTITY(1,1),
     title NVARCHAR(255) NOT NULL,
-    likes INT DEFAULT 0,
-    dislikes INT DEFAULT 0,
-    comments INT DEFAULT 0
+    author NVARCHAR(50) NOT NULL,
+    comments NVARCHAR(255) NULL
 );
 
-INSERT INTO Forums (title, likes, dislikes, comments)
-VALUES ('Economic Development in Southeast Asia', 56, 23, 73),
-       ('Regional Climate Change Adaptation Strategies', 34, 78, 37),
-       ('Regional Security and Cooperation', 45, 12, 76),
-       ('Sustainable Tourism Initiatives In Southeast Asia', 89, 67, 17),
-       ('Regional Technological Advancements and Innovation', 54, 37, 61),
-       ('Regional Cultural Exchange and Heritage Preservation', 21, 49, 69);
+INSERT INTO Forums (forumId, title, author, comments)
+VALUES (1, 'Economic Development in Southeast Asia', 'Alex Harper', 'Good discussion!'),
+       (2, 'Regional Climate Change Adaptation Strategies', 'Jordan Blake', 'Really enjoyed this topic!'),
+       (3, 'Regional Security and Cooperation', 'Casey Morgan', 'Other countries should learn from SEA'),
+       (4, 'Sustainable Tourism Initiatives In Southeast Asia', 'Taylor Quinn', 'Tourism in SEA is not too bad'),
+       (5,'Regional Technological Advancements and Innovation', 'Avery Brooks', 'SEA improving on technological advancements'),
+       (6, 'Regional Cultural Exchange and Heritage Preservation', 'Riley Parker', 'Preservation efforts is essential in SEA');
 
 
 CREATE TABLE Users (

@@ -33,6 +33,11 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // Users Routes & Forums From Community Page - Zhen Kang
 
+// Creating New Forum
+app.post('/Community/create', (req, res, next) => {
+  next();
+}, validateForum.forumValidation, forumController.createForum);
+
 // Getting all forums
 app.get('/Community', forumController.getAllForums);
 
@@ -43,17 +48,12 @@ app.get("/Community/forums", async (req, res) => {
   res.sendFile(filePath);
 });
 
-// Creating New Forum
-app.post('/Community/create', (req, res, next) => {
-  next();
-}, validateForum.forumValidation, forumController.createForum);
-
 
 // Get forum by Id
-app.get("/Community/:forumId", forumController.getForumById);
+app.get("/Community/id/:forumId", forumController.getForumById);
 
 // Deleting a forum
-app.delete("/Community/delete/:forumId", forumController.deleteForum);
+app.delete("/Community/remove/:forumId", forumController.deleteForum);
 
 app.post("/user/account/login", loginController.userLogin);
 
