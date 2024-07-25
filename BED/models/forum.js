@@ -6,8 +6,6 @@ class Forum {
     this.forumId = forumId,
     this.title = title;
     this.author = author,
-    this.likes = likes;
-    this.dislikes = dislikes;
     this.comments = comments;
   }
 
@@ -25,10 +23,13 @@ class Forum {
       `;
   
       request.input('title', sql.VarChar, title);
+
       request.input('author', sql.VarChar, author);
+
       request.input('comments', sql.NVarChar, comments);
   
       const result = await request.query(query);
+  
   
       return result;
     } 

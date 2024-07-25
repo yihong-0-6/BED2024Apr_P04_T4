@@ -19,6 +19,11 @@ const validateMovie = require("./controllers/movieController");
 
 // EdisonChewJiaJun S10244576H (Articles)
 const articleController = require("./controllers/articleController");
+const validateMovie = require("./controllers/movieController");
+
+
+// EdisonChewJiaJun S10244576H (Articles)
+const articleController = require("./controllers/articleController");
 const validateArticle = require('./middlewares/validateArticle');
 
 const movieController = require('./controllers/movieController');
@@ -36,8 +41,12 @@ app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 // Creating New Forum
 app.post("/Community/create", validateForum.forumValidation, forumController.createForum);
 
+// Creating New Forum
+app.post("/Community/create", validateForum.forumValidation, forumController.createForum);
+
 // Getting all forums
 app.get('/Community/forums', forumController.getAllForums);
+
 
 app.get("/Community", async (req, res) => {
   const filePath = path.join(__dirname, "public", "html", "Community.html");
@@ -48,11 +57,13 @@ app.get("/Community", async (req, res) => {
 // Creating New Forum
 app.post("/Community/create", validateForum.forumValidation, forumController.createForum);
 
+
 // Get forum by Id
 app.get("/Community/id/forumId", forumController.getForumById);
 
 // Deleting a forum
 app.delete("/Community/remove/:forumId", forumController.deleteForum);
+
 
 app.post("user/account/login", loginController.userLogin);
 
@@ -89,6 +100,7 @@ app.delete("/articles/:ID", articleController.deleteArticle);
 
 // Tam Shi Ying S10257952D Routes for GET request for movies
 app.get("/movies", movieController.getAllMovies);
+
 app.get("/movies/:ID", movieController.getMovieById);
 
 
@@ -97,7 +109,9 @@ app.listen(port, async () => {
     // Connect to the database
     await sql.connect(dbConfig);
     console.log("Database connection established successfully");
-  } catch (err) {
+  } 
+  
+  catch (err) {
     console.error("Database connection error:", err);
     // Terminate the application with an error code (optional)
     process.exit(1); // Exit with code 1 indicating an error
