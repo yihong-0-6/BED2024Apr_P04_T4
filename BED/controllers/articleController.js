@@ -9,7 +9,7 @@ const getAllArticles = async (req, res) => {
 
         // It catches potential errors
     } catch (error) {
-        console.error(error);
+        console.error("Error fetching articles: ", error);
         // Sends an error message to the client
         res.status(500).send("Error retrieving articles");
     }
@@ -27,29 +27,40 @@ const getArticleById = async (req, res) => {
         }
         res.json(article);
     } catch (error) {
-        console.error(error);
+        console.error("Error fetching article: ",error);
         res.status(500).send("Error retrieving article");
     }
 };
 
 const updateArticle = async (req, res) => {
-    const articleId = parseInt(req.params.ID);
-    const newArticleData = req.body;
-
-    // Basic validation of newArticleData
-    if (!newArticleData.Description || !newArticleData.Published_Date || !newArticleData.Author) {
-        return res.status(400).send("Missing required fields");
-    }
 
     try {
-        const updatedArticle = await Articles.updateArticle (articleId, newArticleData);
-        if (!updatedArticle) {
-            return res.status(404).send("Article not found");
+        const articleId = req.params.ID;
+        const { Title, Author } = req.body;
+
+        console.log("Updating article ID:", articleId);  // Log article ID
+        console.log("Request body:", req.body);         // Log request body
+
+        // Find the article by ID and update it
+        const updatedArticle = await articles.update(
+            {
+                Title,
+                Author,
+            },
+            {
+                where: {
+                    ID: articleId,
+                },
+            }
+        );
+
+        if (updatedArticle[0] === 1) {
+            res.status(200).json({ message: "Article updated successfully" });
+        } else {
+            res.status(404).json({ message: "Article not found" });
         }
-        res.json(updatedArticle);
     } catch (error) {
-        console.error(error);
-        res.status(500).send("Error updating article");
+        res.status(500).json({ message: "Failed to update article", error });
     }
 };
 

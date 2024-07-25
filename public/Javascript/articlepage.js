@@ -8,9 +8,6 @@ async function fetchArticles() {
         const data = await response.json();
         const articleList = document.getElementById("article-list");
 
-        // Clear existing articles before adding new ones
-        articleList.innerHTML = '';
-
         data.forEach((article) => {
             // Create a table row for each article
             const articleRow = document.createElement("tr");
@@ -33,15 +30,6 @@ async function fetchArticles() {
             titleCell.appendChild(titleElement);
             titleCell.appendChild(thumbnailDiv);
 
-            // Description
-            const descriptionCell = document.createElement("td");
-            const descriptionDiv = document.createElement("div");
-            descriptionDiv.classList.add("description");
-            const descriptionText = document.createElement("div");
-            descriptionText.classList.add("text");
-            descriptionText.textContent = article.Description;
-            descriptionDiv.appendChild(descriptionText);
-            descriptionCell.appendChild(descriptionDiv);
 
             // Author and Date
             const authorDateCell = document.createElement("td");
@@ -60,6 +48,7 @@ async function fetchArticles() {
             updateButtonElement.onclick = function () {
                 // Save the article data in localStorage
                 localStorage.setItem("articleToUpdate", article.ID);
+                localStorage.setItem("articleImagesUrl", `http://localhost:3000${article.ImageUrl}`);
 
                 // Redirect to the update page
                 window.location.href = "updateArticle.html";
@@ -77,7 +66,6 @@ async function fetchArticles() {
 
             // Append cells to the article row
             articleRow.appendChild(titleCell);
-            articleRow.appendChild(descriptionCell);
             articleRow.appendChild(authorDateCell);
             articleRow.appendChild(actionsCell);
 

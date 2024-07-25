@@ -12,10 +12,6 @@
   text-align: center;
 }
 
-.description {
-  text-align: center;
-}
-
 .container {
   width: 80%;
   margin: auto;
@@ -43,11 +39,6 @@ thead {
   font-weight: bold;
 }
 
-.description {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
 
 .thumbnail {
   width: 350px;

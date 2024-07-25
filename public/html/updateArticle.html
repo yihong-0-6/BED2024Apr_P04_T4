@@ -7,7 +7,7 @@
         <title>Update Article</title>
         <link rel="stylesheet" href="../css/header.css">
         <link rel="stylesheet" href="../css/global.css">
-        <link rel="stylesheet" href="../css/industry.css">
+        <link rel="stylesheet" href="../css/updateArticle.css">
         <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     </head>
     <body>
@@ -29,31 +29,29 @@
             </header>
         </div>
 
-        <div class="main-content">
-            <h1 class="page-title">Industry Insights</h1>
-    
-            <div class="article">
-                <h2 class="article-title">Update Article</h2>
-                <div class="thumbnail">
-                    <!-- Placeholder for the image thumbnail, if necessary -->
-                    <img id="articleImage" alt="Article Image" class="thumbnail-image">
-                </div>
-                <div class="description-section">
-                    <label for="descriptions">Description:</label>
-                    <textarea id="descriptions" cols="30" rows="10" class="textbox" placeholder="Enter article description..."></textarea>
-                </div>
-                <div class="date-section">
-                    <label for="dates">Published Date:</label>
-                    <input type="date" class="textbox" id="dates" placeholder="Enter publish date">
-                </div>
-                <div class="author-section">
-                    <label for="authors">Author:</label>
-                    <input type="text" class="textbox" id="authors" placeholder="Enter author name">
-                </div>
-                <div class="buttons">
-                    <a href="industry.html" class="button-link"><button class="update-button">Update</button></a>
+        <div class="container">
+            <h1>Update Article</h1>
+            <div class="article-preview">
+                <img id="article-image" src="" alt="Article Image" class="article-image">
+                <div class="article-details">
+                    <h2 id="article-title"></h2>
+                    <p><strong>Author:</strong> <span id="article-author"></span></p>
+                    <p><strong>Published Date:</strong> <span id="article-published-date"></span></p>
                 </div>
             </div>
+            <form id="update-form">
+                <input type="hidden" id="article-id" name="article-id">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text" id="author" name="author" required>
+                </div>
+                <button type="submit">Update Article</button>
+                <p id="message"></p>
+            </form>
         </div>
 
         <script src="../Javascript/updateArticlePage.js"></script>

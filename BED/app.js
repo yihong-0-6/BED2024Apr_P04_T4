@@ -84,6 +84,31 @@ app.get("/articles/:ID", articleController.getArticleById);
 app.put("/articles/:ID", validateArticle, articleController.updateArticle); // Updating the articles
 app.delete("/articles/:ID", articleController.deleteArticle);
 
+app.put("/articles/:ID", async (req, res) => {
+  const articleId = req.params.ID;
+  const { Title, Author } = req.body;
+
+  if (!Title || !Author) {
+      return res.status(400).send("Bad Request: Missing required fields");
+  }
+
+  try {
+      const updatedArticle = await Article.updatedArticle(articleId, {
+          Title,
+          Author,
+      }, { new: true });
+
+      if (updatedArticle) {
+          res.json({ message: "Article updated successfully", article: updatedArticle });
+      } else {
+          res.status(404).send("Article not found");
+      }
+  } catch (error) {
+      console.error("Error updating article:", error);
+      res.status(500).send("Internal Server Error");
+  }
+});
+
 // Tam Shi Ying S10257952D Routes for GET request for movies
 app.get("/movies/firstsix", movieController.getFirstSixMovies); // More specific route
 app.get("/movies/:id", movieController.getMovieById); // More general route

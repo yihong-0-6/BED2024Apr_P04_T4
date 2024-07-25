@@ -4,9 +4,10 @@ const dbConfig = require('../dbConfig')
 
 // Article entity with properties for 'ID', 'Title', 'Author', 'Published_Date'
 class Articles {
-    constructor(ID, Title, Author, Published_Date) {
+    constructor(ID, Title, Description, Author, Published_Date) {
         this.ID = ID
         this.Title = Title
+        this.Description = Description
         this.Author = Author
         this.Published_Date = Published_Date
         this.ImageUrl = `/Images/articlesimage${this.ID}.jpg`; 
@@ -28,7 +29,7 @@ class Articles {
     
         // Return an array of 'Articles' objects constructed from the retrieved data.
         return result.recordset.map(
-          (row) => new Articles(row.ID, row.Title, row.Author, row.Published_Date)
+          (row) => new Articles(row.ID, row.Title, row.Description, row.Author, row.Published_Date)
         ); // Convert rows to Articles objects
     }
 
@@ -51,6 +52,7 @@ class Articles {
             ? new Articles(
                 result.recordset[0].ID,
                 result.recordset[0].Title,
+                result.recordset[0].Description,
                 result.recordset[0].Author,
                 result.recordset[0].Published_Date
                 )
@@ -60,14 +62,14 @@ class Articles {
     static async updateArticle(ID, newArticleData) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `UPDATE Articles SET Title = @Title, Author = @Author WHERE ID = @ID`; // Parameterized query
+        const sqlQuery = `UPDATE Articles SET Title = @Title, Description = @Description, Author = @Author, Published_Date = @Published_Date WHERE ID = @ID`; // Parameterized query
     
         const request = connection.request();
         // This line sets the value for the `@ID` parameter in the query using the provided `ID` value.
         request.input("ID", ID);
         // This line sets the value for the `@title` parameter. It uses the optional chaining operator (`||`) to check if `newArticleData.title` exists
-        request.input("Title", newArticleData.Title || null); // Handle optional fields
-        request.input("Author", newArticleData.Author || null);
+        request.input("Title", newArticleData.Title); // Handle optional fields
+        request.input("Author", newArticleData.Author);
         
         // This line asynchronously executes the prepared SQL query with the set parameters.
         await request.query(sqlQuery);

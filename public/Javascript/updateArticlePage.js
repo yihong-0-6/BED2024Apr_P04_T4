@@ -1,90 +1,100 @@
-const { response } = require("express");
+document.addEventListener("DOMContentLoaded", async () => {
+    const articleId = localStorage.getItem("articleToUpdate");
+    const articleImageUrl = localStorage.getItem("articleImageUrl"); // Retrieve image URL
 
-// Function to load an article for editing
-async function loadArticle() {
-    // Get the article ID from localStorage
-    const articleId = localStorage.getItem("articleToUpdate")
+    console.log("Article ID:", articleId);
+    console.log("Article Image URL:", articleImageUrl);
 
-    if (articleId) {
 
+    if (!articleId) {
+        alert("No article selected for update.");
+        return;
+    }
+
+    // Fetch article details and populate the form
+    const fetchArticleDetails = async () => {
         try {
-            // Fetch the article data from your backend API
-            const response = await fetch(`http://localhost:3000/articles/${articleId}`); // Use your actual API endpoint
+            const response = await fetch(`http://localhost:3000/articles/${articleId}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-
             const article = await response.json();
 
-            // Populate the fields with the article data
-            document.getElementById("descriptions").value = article.Description;
-            document.getElementById("dates").value = new Date(article.Published_Date).toISOString().substring(0, 10);
-            document.getElementById("authors").value = article.Author;
-            document.getElementById("articleImage").src = `http://localhost:3000${article.ImageUrl}`;
-            document.getElementById("articleImage").alt = article.Title;
+            // Display the article image and details
+            const imgElement = document.getElementById("article-image");
+            if (articleImageUrl) {
+                imgElement.onerror = () => {
+                imgElement.src = `http://localhost:3000${article.ImageUrl}`; // Set a default image
+            }} else {
+                imgElement.src = `http://localhost:3000${article.ImageUrl}`; // Use the retrieved URL
+            }
 
+            // Display the article image and details
+            document.getElementById("article-title").textContent = article.Title;
+            document.getElementById("article-author").textContent = article.Author;
+            document.getElementById("article-published-date").textContent = new Date(article.Published_Date).toLocaleDateString();
+
+            // Populate form with article data
+            document.getElementById("article-id").value = article.ID;
+            document.getElementById("title").value = article.Title;
+            document.getElementById("author").value = article.Author;
 
         } catch (error) {
-            console.error("Error fetching article details: ", error);
-            alert("Failed to load the article. Please try again.");
+            console.error("Error fetching article details:", error);
         }
-    } else {
-        alert("No article data found!");
-    }
-}
+    };
 
-// Function to update an article
-async function updateArticle() {
+    await fetchArticleDetails();
 
-    // Get the article data from localStorage
-    const articleId = localStorage.getItem("articleToUpdate")
+    // Handle form submission for updating article
+    const updateForm = document.getElementById("update-form");
+    updateForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-    if (articleId) {
+        const articleId = document.getElementById("article-id").value;
+        const title = document.getElementById("title").value;
+        const author = document.getElementById("author").value;
 
-        // Get the updated values
-        const newDescription = document.getElementById("descriptions").value;
-        const newDate = document.getElementById("dates").value;
-        const newAuthor = document.getElementById("authors").value;
 
-        // Create an Update article detail
-        const updatedArticle = {
-            Description: newDescription,
-            Published_Date: newDate,
-            Author: newAuthor
-        };
+        console.log("Updating article with data: ", {
+            Title: title,
+            Author: author,
+        });
 
         try {
-            // Send the updated data to the server
             const response = await fetch(`http://localhost:3000/articles/${articleId}`, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify(updatedArticle)
+                body: JSON.stringify({
+                    Title: title,
+                    Author: author,
+                }),
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                const errorText = await response.text();
+                throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
             }
 
-            // Display success message
-            alert("Article updated successfully!");
+            const result = await response.json();
+            document.getElementById("message").textContent = result.message || "Article updated successfully";
+            document.getElementById("message").style.color = "#28a745";
 
-            // Redirect back to the article list page
-            window.location.href = "industry.html";
+            // Update the displayed article details
+            document.getElementById("article-title").textContent = title;
+            document.getElementById("article-author").textContent = author;
+            
+            // Optionally redirect back to the articles list page
+            setTimeout(() => {
+                window.location.href = "industry.html";
+            }, 2000);
+
         } catch (error) {
             console.error("Error updating article:", error);
-            alert("Failed to update the article. Please try again.");
+            document.getElementById("message").textContent = "Failed to update article.";
+            document.getElementById("message").style.color = "#e74c3c";
         }
-    } else {
-        alert("Article not found!");
-    }
-}
-
-// Load the article when the page is loaded
-window.onload = function() {
-    loadArticle();
-};
-
-// Add an event listener for the update button
-document.getElementById("updateButton").addEventListener("click", updateArticle);
+    });
+});
