@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Update Article</title>
+        <link rel="stylesheet" href="../css/header.css">
+        <link rel="stylesheet" href="../css/global.css">
+        <link rel="stylesheet" href="../css/industry.css">
+        <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    </head>
+    <body>
+        <div class="header">
+            <header class="sticky">
+                <a href="index.html" class="logo">Southeast Asia Readiness</a>
+                <ul class="navlist">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="moviepage.html">Movies</a></li>
+                    <li><a href="Development.html">Development</a></li>
+                    <li><a href="industry.html">Industry</a></li>
+                    <li><a href="Community.html">Community</a></li>
+                </ul>
+                <div class="header-icons">
+                    <a href="mainlogin.html">
+                        <div id="login-btn" class="bx bx-user"></div> <!-- Login Button -->
+                    </a>
+                </div>
+            </header>
+        </div>
+
+        <div class="main-content">
+            <h1 class="page-title">Industry Insights</h1>
+    
+            <div class="article">
+                <h2 class="article-title">Update Article</h2>
+                <div class="thumbnail">
+                    <!-- Placeholder for the image thumbnail, if necessary -->
+                    <img id="articleImage" alt="Article Image" class="thumbnail-image">
+                </div>
+                <div class="description-section">
+                    <label for="descriptions">Description:</label>
+                    <textarea id="descriptions" cols="30" rows="10" class="textbox" placeholder="Enter article description..."></textarea>
+                </div>
+                <div class="date-section">
+                    <label for="dates">Published Date:</label>
+                    <input type="date" class="textbox" id="dates" placeholder="Enter publish date">
+                </div>
+                <div class="author-section">
+                    <label for="authors">Author:</label>
+                    <input type="text" class="textbox" id="authors" placeholder="Enter author name">
+                </div>
+                <div class="buttons">
+                    <a href="industry.html" class="button-link"><button class="update-button">Update</button></a>
+                </div>
+            </div>
+        </div>
+
+        <script src="../Javascript/updateArticlePage.js"></script>
+
+    </body>
+</html>
