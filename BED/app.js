@@ -144,6 +144,9 @@ app.put('/movies/:id', async (req, res) => {
       });
       request.input('ID', sql.Int, movieId);
 
+      console.log('Executing query:', query); // Log the query
+      console.log('With parameters:', updates); // Log the parameters
+
       await request.query(query);
       res.sendStatus(200);
   } catch (err) {
@@ -152,31 +155,30 @@ app.put('/movies/:id', async (req, res) => {
   }
 });
 
-app.put('/countries/:id', async (req, res) => {
-  const countryId = req.params.id;
-  const updates = req.body;
 
-  let query = 'UPDATE Countries SET ';
-  const fields = Object.keys(updates).map((key, index) => {
-      return `${key} = @${key}`;
-  });
-  query += fields.join(', ') + ' WHERE ID = @ID';
+app.get('/movies/:id', async (req, res) => {
+  const movieId = req.params.id;
 
   try {
       const pool = await sql.connect(dbConfig);
-      const request = pool.request();
+      const result = await pool.request()
+          .input('ID', sql.Int, movieId)
+          .query('SELECT * FROM Movies WHERE ID = @ID');
 
-      Object.keys(updates).forEach(key => {
-          request.input(key, updates[key]);
-      });
-      request.input('ID', sql.Int, countryId);
-
-      await request.query(query);
-      res.sendStatus(200);
+      if (result.recordset.length > 0) {
+          res.json(result.recordset[0]);
+      } else {
+          res.sendStatus(404);
+      }
   } catch (err) {
-      console.error('Error updating country:', err);
+      console.error('Error fetching movie details:', err);
       res.sendStatus(500);
   }
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 //Huang Yi Hong S10257222H Routes for GET request for admins

@@ -24,34 +24,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById('update-movie-form').addEventListener('submit', async function (e) {
         e.preventDefault();
+
         const movieId = document.getElementById('movie-id').value;
-        const updateData = {};
+        const updates = {};
 
         const name = document.getElementById('movie-name').value;
-        if (name) updateData.Name = name;
-
         const year = document.getElementById('movie-year').value;
-        if (year) updateData.Published_Year = year;
-
         const director = document.getElementById('movie-director').value;
-        if (director) updateData.Director = director;
-
         const country = document.getElementById('movie-country').value;
-        if (country) updateData.Country = country;
-
         const description = document.getElementById('movie-description').value;
-        if (description) updateData.Description = description;
-
         const trailerUrl = document.getElementById('movie-trailer-url').value;
-        if (trailerUrl) updateData.TrailerUrl = trailerUrl;
+
+        if (name) updates.Name = name;
+        if (year) updates.Published_Year = year;
+        if (director) updates.Director = director;
+        if (country) updates.Country = country;
+        if (description) updates.Description = description;
+        if (trailerUrl) updates.TrailerUrl = trailerUrl;
 
         try {
             const response = await fetch(`http://localhost:3000/movies/${movieId}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(updateData)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updates)
             });
 
             if (response.ok) {
@@ -67,13 +62,10 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('update-country-form').addEventListener('submit', async function (e) {
         e.preventDefault();
         const countryId = document.getElementById('country-id').value;
-        const countryData = {};
-
-        const countryName = document.getElementById('country-name').value;
-        if (countryName) countryData.CountryName = countryName;
-
-        const description = document.getElementById('country-description').value;
-        if (description) countryData.Description = description;
+        const countryData = {
+            CountryName: document.getElementById('country-name').value,
+            Description: document.getElementById('country-description').value
+        };
 
         try {
             const response = await fetch(`http://localhost:3000/countries/${countryId}`, {
