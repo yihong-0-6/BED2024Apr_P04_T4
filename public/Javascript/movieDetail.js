@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById('movie-year').textContent = `Published Year: ${movie.Published_Year}`;
             document.getElementById('movie-director').textContent = `Director: ${movie.Director}`;
             document.getElementById('movie-country').textContent = `Country: ${movie.Country}`;
+            document.getElementById('movie-trailer').src = movie.TrailerUrl; // Correct ID used here
         } catch (error) {
             console.error("Error fetching movie details:", error);
         }
