@@ -21,7 +21,7 @@ const validateArticle = require('./middlewares/validateArticle');
 const { validateAdmin, verifyJWTadmin } = require("./middlewares/validateAdmin");
 
 const app = express();
-const port = process.env.PORT || 3000; // Use environment variable or default port
+const port = process.env.PORT || 3001; // Use environment variable or default port
 
 app.use(cors()); // Enable CORS
 // Include body-parser middleware to handle JSON data
