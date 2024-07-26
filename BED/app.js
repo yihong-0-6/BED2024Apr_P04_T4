@@ -55,7 +55,7 @@ async function getLastMovieID() {
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/Images');
+    cb(null, 'public/Images/moviesimage');
   },
   filename: function (req, file, cb) {
     cb(null, `placeholder${path.extname(file.originalname)}`);
@@ -81,7 +81,7 @@ app.post('/movies/add', upload.single('image'), async (req, res) => {
 
     // Generate the new image name using the movieID
     const newImageName = `moviesimage${movieID}${path.extname(image.originalname)}`;
-    const newImagePath = `public/Images/${newImageName}`;
+    const newImagePath = path.join('public', 'Images', 'moviesimage', newImageName);
 
     // Rename the uploaded file
     fs.renameSync(image.path, newImagePath);
@@ -94,7 +94,7 @@ app.post('/movies/add', upload.single('image'), async (req, res) => {
       Country: country,
       Description: description,
       TrailerUrl: trailerUrl,
-      ImageUrl: `/Images/${newImageName}`
+      ImageUrl: `/Images/moviesimage/${newImageName}`
     };
 
     const query = `
@@ -115,18 +115,6 @@ app.post('/movies/add', upload.single('image'), async (req, res) => {
   } catch (error) {
     console.error('Error adding movie:', error);
     res.status(500).send('Error adding movie: ' + error.message);
-  }
-});
-
-app.get('/LastmovieID', async (req, res) => {
-  try {
-    const pool = await sql.connect(dbConfig);
-    const result = await pool.request().query('SELECT MAX(ID) AS maxID FROM Movies');
-    const maxID = result.recordset[0].maxID;
-    res.json({ maxID });
-  } catch (error) {
-    console.error('Error fetching last movie ID:', error);
-    res.status(500).send('Error fetching last movie ID');
   }
 });
 
