@@ -117,23 +117,33 @@ app.post('/movies/add', upload.single('image'), async (req, res) => {
 app.delete('/movies/:id', async (req, res) => {
   const movieId = req.params.id;
 
-  const query = `
-      DELETE FROM Movies WHERE ID = @ID
-  `;
-
   try {
-      const pool = await sql.connect(dbConfig);
-      const request = pool.request();
-      request.input('ID', sql.Int, movieId);
+    const pool = await sql.connect(dbConfig);
+    const result = await pool.request()
+      .input('ID', sql.Int, movieId)
+      .query('SELECT ImageUrl FROM Movies WHERE ID = @ID');
 
-      console.log('Executing query:', query);
-      console.log('With parameters:', { ID: movieId });
+    if (result.recordset.length === 0) {
+      return res.status(404).send('Movie not found');
+    }
 
-      await request.query(query);
-      res.status(200).send('Movie deleted successfully');
+    const imageUrl = result.recordset[0].ImageUrl;
+    const imagePath = path.join(__dirname, 'public', imageUrl);
+
+    // Delete the movie from the database
+    await pool.request()
+      .input('ID', sql.Int, movieId)
+      .query('DELETE FROM Movies WHERE ID = @ID');
+
+    // Delete the image file from the local storage
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
+    }
+
+    res.status(200).send('Movie and associated image deleted successfully');
   } catch (error) {
-      console.error('Error deleting movie:', error);
-      res.status(500).send('Error deleting movie: ' + error.message);
+    console.error('Error deleting movie:', error);
+    res.status(500).send('Error deleting movie: ' + error.message);
   }
 });
 
