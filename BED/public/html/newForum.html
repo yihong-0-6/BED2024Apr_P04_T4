@@ -7,40 +7,59 @@
         <title>New Forum</title>
     </head>
 
-<div class="container new-forum-container">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/newForum.css">
-    <br>
-    <div class="col">
-        <h2>Create Your Forum</h2>
-    </div>
-    <br>
-    <form id="forumPost" class="forum-form">
-        <div class="post-info">
-            <input id="forumTitle" class="forum-input" name="header" placeholder="Forum Title" required>
+    <body>
+        <div class="header">
+            <header class="sticky">
+                <a href="/html/index.html" class="logo">Southeast Asia Readiness</a>
+                <ul class="navlist">
+                    <li><a href="/html/index.html">Home</a></li>
+                    <li><a href="/html/moviepage.html">Movies</a></li>
+                    <li><a href="/html/Development.html">Development</a></li>
+                    <li><a href="/html/industry.html">Industry</a></li>
+                    <li><a href="/html/Community.html">Community</a></li>
+                </ul>
+                <div class="header-icons">
+                    <a href="/html/mainlogin.html">
+                        <div id="login-btn" class="bx bx-user"></div> <!-- Login Button -->
+                    </a>
+                </div>
+            </header>
         </div>
-
-        <div class="post-info">
-            <input id="forumAuthor" class="forum-input" name="header" placeholder="Author" required>
-        </div>
-
-        <div class="post-info">
-            <textarea id="forumComment" class="forum-input" name="comment" placeholder="Your Comments" rows="3" required></textarea>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-6">
-                <button type="button" id="back" class="btn btn-primary">Back</button>
+        <div class="container new-forum-container">
+            <link rel="stylesheet" href="../css/header.css">
+            <link rel="stylesheet" href="../css/newForum.css">
+            <br>
+            <div class="col">
+                <h2>Create Your Forum</h2>
             </div>
-
-            <div class="col-sm-6 text-right">
-                <button type="submit" id="post" class="btn btn-success">Post</button>
-            </div>
+            <br>
+            <form id="forumPost" class="forum-form">
+                <div class="post-info">
+                    <input id="forumTitle" class="forum-input" name="header" placeholder="Forum Title" required>
+                </div>
+        
+                <div class="post-info">
+                    <input id="forumAuthor" class="forum-input" name="header" placeholder="Author" required>
+                </div>
+        
+                <div class="post-info">
+                    <textarea id="forumComment" class="forum-input" name="comment" placeholder="Your Comments" rows="3" required></textarea>
+                </div>
+        
+                <div class="row">
+                    <div class="col-sm-6">
+                        <button type="button" id="back" class="btn btn-primary">Back</button>
+                    </div>
+        
+                    <div class="col-sm-6 text-right">
+                        <button type="submit" id="post" class="btn btn-success">Post</button>
+                    </div>
+                </div>
+            </form>
+            <br>
         </div>
-    </form>
-    <br>
-</div>
-
-<!-- Add this container to display new forums -->
-<div id="forumContainer"></div>
-<script src="../Javascript/forumHandler.js"></script>
+        
+        <!-- Add this container to display new forums -->
+        <div id="forumContainer"></div>
+        <script src="../Javascript/forumHandler.js"></script>
+    </body>

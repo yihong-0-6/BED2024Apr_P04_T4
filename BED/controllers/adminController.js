@@ -101,7 +101,7 @@ const adminLogin = async (req, res) => {
   
   
   const createAdmin = async (req, res) => {
-    const newAdmin = req.body;
+    const newAdminsData = req.body;
     try {
       const createdAdmin = await Admins.createAdmin(newAdminsData);
       res.status(201).json(createdAdmin);
