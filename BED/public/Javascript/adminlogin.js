@@ -18,7 +18,8 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
         if (response.ok) {
             localStorage.setItem('token', data.token);
             alert('Login successful!');
-            window.location.href = 'adminDashboard.html'; // Redirect to admin dashboard
+            window.location.href = 'adminpage.html'; // Redirect to admin dashboard
+
         } else {
             document.getElementById('message').innerText = data.message;
         }

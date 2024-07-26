@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const sql = require("mssql");
 const path = require("path");
@@ -21,6 +22,7 @@ const validateForum = require("./middlewares/validateForum");
 const validateUser = require("./middlewares/validateUser");
 const validateArticle = require('./middlewares/validateArticle');
 const { validateAdmin, verifyJWTadmin } = require("./middlewares/validateAdmin");
+const { Console } = require("console");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -50,6 +52,7 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage: storage });
+
 
 // Add movie endpoint
 app.post('/movies/add', upload.single('image'), async (req, res) => {

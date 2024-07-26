@@ -3,48 +3,53 @@ const Admins = require("../models/admin");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const adminLogin = async (req, res) => {
+async function adminLogin(req, res) {
   const { email, password } = req.body;
-  
+
   try {
-    // Fetch admin from the database
-    const admin = await Admins.adminLogin(email);
-
-    if (admin) {
-        // Compare the hashed password
-        const isMatch = await bcryptjs.compare(password, admin.password);
-
-        if (isMatch) {
-            // Define the payload
-            const payload = {
-                email: admin.email,
-            };
-
-            // Generate JWT token
-            const token = jwt.sign(payload, process.env.JWT_SECERT, { expiresIn: "3600s" });
-
-            res.status(200).json({
-                message: "Login successful",
-                token: token,
-                email: admin.email
-            });
-        } 
-        else {
-            res.status(401).json({ message: "Invalid email or password" });
-        }
-
-
-    } 
-    else {
-        res.status(401).json({ message: "Invalid email or password" });
+    // Validate user input
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
     }
-  } 
+
+    // Retrieve user from database by username
+    const admin = await Admins.getAdminsByEmail(email);
+
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    // Compare password
+    const passwordMatch = await bcryptjs.compare(password, admin.password);
     
-    catch (error) {
-        console.error("Login Error: ", error);
-        res.status(500).json({ message: "Internal server error" });
+    if (!passwordMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
-  };
+
+    // Ensure JWT secret key is defined
+    if (!process.env.JWT_SECRET_KEY) {
+      console.error("JWT secret key is not defined");
+      return res.status(500).json({ message: "Internal server error" });
+    }
+
+    // Generate JWT token
+    const payload = {
+      email: admin.email
+    };
+
+    // Sign token with secret and set expiry
+    const token = jwt.sign(payload, process.env.JWT_SECRET_KEY,
+      { expiresIn: "3600s" }); // Expires in 1 hour
+      
+    // Return token to client
+    res.status(200).json({ token });
+  } 
+  
+  catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
   
   const getAdminsByEmail = async (req, res) => {
     const email = req.params.email;
