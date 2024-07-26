@@ -43,11 +43,10 @@ h3 {
 }
 
 footer {
-  background-color: #3B5323; /* Match the header's background color */
+  background-color: #A8C39B; /* Match the header's background color */
   color: white;
   text-align: center;
   padding: 10px 0; /* Adjusted padding for a more compact footer */
-  position: fixed;
   width: 100%;
   bottom: 0;
 }
