@@ -58,9 +58,7 @@ const storage = multer.diskStorage({
     cb(null, 'public/Images');
   },
   filename: function (req, file, cb) {
-    const ext = path.extname(file.originalname);
-    const newName = `moviesimage${req.body.movieID}${ext}`;
-    cb(null, newName);
+    cb(null, `placeholder${path.extname(file.originalname)}`);
   }
 });
 const upload = multer({ storage: storage });
@@ -78,8 +76,15 @@ app.post('/movies/add', upload.single('image'), async (req, res) => {
     // Get the next movie ID from the database
     const pool = await sql.connect(dbConfig);
     const result = await pool.request().query('SELECT MAX(ID) AS maxID FROM Movies');
-    const maxID = result.recordset[0].maxID;
+    const maxID = result.recordset[0].maxID || 0;
     const movieID = maxID + 1;
+
+    // Generate the new image name using the movieID
+    const newImageName = `moviesimage${movieID}${path.extname(image.originalname)}`;
+    const newImagePath = `public/Images/${newImageName}`;
+
+    // Rename the uploaded file
+    fs.renameSync(image.path, newImagePath);
 
     const movieData = {
       ID: movieID,
@@ -89,7 +94,7 @@ app.post('/movies/add', upload.single('image'), async (req, res) => {
       Country: country,
       Description: description,
       TrailerUrl: trailerUrl,
-      ImageUrl: `/Images/moviesimage/moviesimage${movieID}${path.extname(image.originalname)}`
+      ImageUrl: `/Images/${newImageName}`
     };
 
     const query = `
@@ -112,6 +117,7 @@ app.post('/movies/add', upload.single('image'), async (req, res) => {
     res.status(500).send('Error adding movie: ' + error.message);
   }
 });
+
 app.get('/LastmovieID', async (req, res) => {
   try {
     const pool = await sql.connect(dbConfig);
