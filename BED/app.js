@@ -1,6 +1,7 @@
 const express = require("express");
 const sql = require("mssql");
 const path = require("path");
+const fs = require('fs');
 const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser"); // Import body parser
 const bcryptjs = require("bcryptjs");
@@ -20,24 +21,39 @@ const validateForum = require("./middlewares/validateForum");
 const validateUser = require("./middlewares/validateUser");
 const validateArticle = require('./middlewares/validateArticle');
 const { validateAdmin, verifyJWTadmin } = require("./middlewares/validateAdmin");
-
 const app = express();
-const port = process.env.PORT || 3001; // Use environment variable or default port
+const port = process.env.PORT || 3000;
 
+// Middleware setup
 app.use(cors()); // Enable CORS
-// Include body-parser middleware to handle JSON data
 app.use(express.json()); 
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 
-// Serve static files from the 'public' directory at the root level
-app.use(express.static(path.join(__dirname, '..', 'public')));
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'html', 'index.html'));
+});
+
+
+app.listen(port, async () => {
+  try {
+    // Connect to the database
+    await sql.connect(dbConfig);
+    console.log("Database connection established successfully");
+    
+    // Server is ready
+    console.log(`Server listening on port ${port}`);
+  } catch (err) {
+    console.error("Database connection error:", err);
+    process.exit(1); // Exit with code 1 indicating an error
+  }
+});
 // Users Routes & Forums From Community Page - Zhen Kang
 
 // Creating New Forum
-app.post('/Community/create', (req, res, next) => {
-  next();
-}, validateForum.forumValidation, forumController.createForum);
+app.post('/Community/create', validateForum.forumValidation, forumController.createForum);
 
 // Getting all forums
 app.get('/Community', forumController.getAllForums);
@@ -177,10 +193,7 @@ app.get('/movies/:id', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
 
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
@@ -243,21 +256,7 @@ app.delete("/admins/:email", validateAdmin, adminController.deleteAdmin);
 
 
 
-app.listen(port, async () => {
-  try {
-    // Connect to the database
-    await sql.connect(dbConfig);
-    console.log("Database connection established successfully");
-  } 
-  
-  catch (err) {
-    console.error("Database connection error:", err);
-    // Terminate the application with an error code (optional)
-    process.exit(1); // Exit with code 1 indicating an error
-  }
 
-  console.log(`Server listening on port ${port}`);
-});
 
 // Close the connection pool on SIGINT signal
 process.on("SIGINT", async () => {
