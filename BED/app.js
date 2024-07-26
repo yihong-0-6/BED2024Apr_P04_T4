@@ -64,7 +64,7 @@ app.post('/movies/add', upload.single('image'), async (req, res) => {
       Country: country,
       Description: description,
       TrailerUrl: trailerUrl,
-      ImageUrl: `/Images/moviesimage/moviesimage${movieID}${path.extname(req.file.originalname)}`
+      ImageUrl: `/Images/moviesimage${movieID}${path.extname(req.file.originalname)}`
   };
 
   const query = `
