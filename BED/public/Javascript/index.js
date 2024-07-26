@@ -21,9 +21,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 titleElement.classList.add("movie-name");
                 titleElement.textContent = movie.Name;
 
-                // Add click event listener to navigate to purchase page
+                // Add click event listener to navigate to movie details page
                 movieItem.addEventListener('click', () => {
-                    window.location.href = `purchase.html?id=${movie.ID}`;
+                    window.location.href = `moviedetail.html?id=${movie.ID}`;
                 });
 
                 movieItem.appendChild(imgElement);
