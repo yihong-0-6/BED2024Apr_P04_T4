@@ -44,7 +44,7 @@ h3 {
 
 footer {
   background-color: #A8C39B; /* Match the header's background color */
-  color: white;
+  color: rgb(0, 0, 0);
   text-align: center;
   padding: 10px 0; /* Adjusted padding for a more compact footer */
   width: 100%;
@@ -58,7 +58,7 @@ footer {
 }
 
 .footer-container a {
-  color: white;
+  color: rgb(0, 0, 0);
   text-decoration: none;
   font-size: 16px;
 }
