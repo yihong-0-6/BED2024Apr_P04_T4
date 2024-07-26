@@ -1,3 +1,21 @@
+const express = require('express');
+const path = require('path');
+const router = express.Router();
+
+router.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/html/index.html'));
+});
+
+router.get('/industry', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/html/industry.html'));
+});
+
+router.get('/Community', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/html/Community.html'));
+});
+
+module.exports = router;
+
 async function fetchPopularMovies() {
     try {
         const response = await fetch("http://localhost:3000/movies/firstsix");
@@ -105,3 +123,4 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 }
+

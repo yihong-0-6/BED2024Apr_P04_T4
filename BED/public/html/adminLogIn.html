@@ -1,45 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <title>Southeast Asia Readiness</title>
-        
-        <div id="Up"></div>
-        <link rel="stylesheet" href="../css/header.css">
-        <link rel="stylesheet" href="../css/global.css">
-        <link rel="stylesheet" href="../css/login-singup.css">
-        <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    </head>
-    <body>
-        <div class="header">
-            <header class="sticky">
-                <a href="index.html" class="logo">Southeast Asia Readiness</a>
-                <ul class="navlist">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="moviepage.html">Movies</a></li>
-                    <li><a href="Development.html">Development</a></li>
-                    <li><a href="industry.html">Industry</a></li>
-                    <li><a href="Community.html">Community</a></li>
-                </ul>
-                <div class="header-icons">
-                    <a href="mainlogin.html">
-                        <div id="login-btn" class="bx bx-user"></div> <!-- Login Button -->
-                    </a>
-                </div>
-            </header>
-        </div>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Southeast Asia Readiness</title>
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/login-singup.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+</head>
+<body>
+    <div class="header">
+        <header class="sticky">
+            <a href="index.html" class="logo">Southeast Asia Readiness</a>
+            <ul class="navlist">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="moviepage.html">Movies</a></li>
+                <li><a href="Development.html">Development</a></li>
+                <li><a href="industry.html">Industry</a></li>
+                <li><a href="Community.html">Community</a></li>
+            </ul>
+            <div class="header-icons">
+                <a href="mainlogin.html">
+                    <div id="login-btn" class="bx bx-user"></div> <!-- Login Button -->
+                </a>
+            </div>
+        </header>
+    </div>
 
-     <!-- Main Content -->
-     <div class="main-content">
+    <!-- Main Content -->
+    <div class="main-content">
         <div class="login-container">
             <h2>Login to Your Account</h2>
             <form id="loginForm">
                 <div class="form-group">
-                    <label for="login-username">Username</label>
-                    <input type="username" id="login-username" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" class="w-full p-3 border border-gray-300 rounded-lg" required>
                 </div>
                 <div class="form-group">
                     <label for="login-password">Password</label>
@@ -50,9 +47,10 @@
             <div id="message"></div>
 
             <p class="text-center mt-4">Don't have an account? <a href="adminSignUp.html" class="text-blue-500">Sign up here</a></p>
-            <p class="text-center mt-4">A user? <a href="mainlogin.html" class="text-blue-500">Sign up here</a></p>
+            <p class="text-center mt-4">A user? <a href="mainlogin.html" class="text-blue-500">Log in here</a></p>
 
         </div>
     </div>
-    <script src="adminlogin.js"></script>
+    <script src="../Javascript/adminlogin.js"></script>
 </body>
+</html>

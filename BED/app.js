@@ -8,6 +8,7 @@ const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
 const multer = require("multer");
 const cors = require("cors"); 
+const indexRoutes = require('./public/Javascript/index');
 
 // Controllers
 const forumController = require('./controllers/forumController');
@@ -35,6 +36,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'html', 'index.html'));
 });
+
+app.use('/', indexRoutes);
 
 
 app.listen(port, async () => {
@@ -225,11 +228,12 @@ app.post('/movies/add', upload.single('image'), async (req, res) => {
 
 
 //Huang Yi Hong S10257222H Routes for GET request for admins
-app.get("/admins/:email", adminController.getAdminsByEmail);
-app.get("/admins", adminController.getAllAdmins);
-app.post("/admins/create", adminController.createAdmin);
+app.post("/admins/login", adminController.adminLogin);
+app.post("/admins/create", validateAdmin, adminController.createAdmin);
 app.put("/admins/:email", validateAdmin, adminController.updateAdmin);
 app.delete("/admins/:email", validateAdmin, adminController.deleteAdmin);
+app.get("/admins/:email", adminController.getAdminsByEmail);
+app.get("/admins", adminController.getAllAdmins);
 
 
 
