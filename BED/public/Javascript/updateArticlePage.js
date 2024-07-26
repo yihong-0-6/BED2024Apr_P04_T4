@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization" : `Bearer 1234`
                 },
                 body: JSON.stringify({
                     Title: title,

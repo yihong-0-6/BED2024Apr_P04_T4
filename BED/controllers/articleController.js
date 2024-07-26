@@ -33,36 +33,23 @@ const getArticleById = async (req, res) => {
 };
 
 const updateArticle = async (req, res) => {
+    const articleId = parseInt(req.params.ID);
+    const updatedData = req.body;
 
     try {
-        const articleId = req.params.ID;
-        const { Title, Author } = req.body;
-
-        console.log("Updating article ID:", articleId);  // Log article ID
-        console.log("Request body:", req.body);         // Log request body
-
-        // Find the article by ID and update it
-        const updatedArticle = await articles.update(
-            {
-                Title,
-                Author,
-            },
-            {
-                where: {
-                    ID: articleId,
-                },
-            }
-        );
-
-        if (updatedArticle[0] === 1) {
-            res.status(200).json({ message: "Article updated successfully" });
-        } else {
-            res.status(404).json({ message: "Article not found" });
+        const updatedArticle = await Articles.updateArticle(articleId, updatedData);
+        
+        if (!updatedArticle) {
+            return res.status(404).send("Article not found");
         }
-    } catch (error) {
-        res.status(500).json({ message: "Failed to update article", error });
+        
+        res.status(200).json(updatedArticle); // Send back the updated article
+    } catch (err) {
+        console.error('Error updating article:', err);
+        res.status(500).send("Error updating article");
     }
 };
+
 
 const deleteArticle = async (req, res) => {
     const articleId = parseInt(req.params.ID);

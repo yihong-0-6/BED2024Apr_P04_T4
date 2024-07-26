@@ -8,7 +8,7 @@ class Admins{
     }
 
     static async adminLogin(email, password) {
-        const connection = await sqll.connect(dbConfig);
+        const connection = await sql.connect(dbConfig);
 
         const sqlQuery = `SELECT * FROM Admins WHERE email = @email`;
         const request = connection.request();

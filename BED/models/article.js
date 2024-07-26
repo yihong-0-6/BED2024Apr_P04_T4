@@ -62,7 +62,7 @@ class Articles {
     static async updateArticle(ID, newArticleData) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `UPDATE Articles SET Title = @Title, Description = @Description, Author = @Author, Published_Date = @Published_Date WHERE ID = @ID`; // Parameterized query
+        const sqlQuery = `UPDATE Articles SET Title = @Title, Author = @Author WHERE ID = @ID`; // Parameterized query
     
         const request = connection.request();
         // This line sets the value for the `@ID` parameter in the query using the provided `ID` value.
@@ -73,6 +73,8 @@ class Articles {
         
         // This line asynchronously executes the prepared SQL query with the set parameters.
         await request.query(sqlQuery);
+
+        
     
         connection.close();
         
