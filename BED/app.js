@@ -34,11 +34,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'html', 'index.html'));
-});
-
 // Function to get the last movie ID
 async function getLastMovieID() {
   const query = 'SELECT TOP 1 ID FROM Movies ORDER BY ID DESC';
@@ -54,7 +49,7 @@ async function getLastMovieID() {
 
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
-  destination: async function (req, file, cb) {
+  destination: function (req, file, cb) {
     cb(null, 'public/Images');
   },
   filename: async function (req, file, cb) {
