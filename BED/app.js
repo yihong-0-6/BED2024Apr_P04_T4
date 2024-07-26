@@ -39,6 +39,19 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'html', 'index.html'));
 });
 
+// Function to get the last movie ID
+async function getLastMovieID() {
+  const query = 'SELECT TOP 1 ID FROM Movies ORDER BY ID DESC';
+  try {
+    const pool = await sql.connect(dbConfig);
+    const result = await pool.request().query(query);
+    return result.recordset[0] ? result.recordset[0].ID : 0;
+  } catch (err) {
+    console.error('Error fetching last movie ID:', err);
+    throw err;
+  }
+}
+
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -54,31 +67,36 @@ const upload = multer({ storage: storage });
 
 // Add movie endpoint
 app.post('/movies/add', upload.single('image'), async (req, res) => {
-  const { movieID, name, publishedYear, director, country, description, trailerUrl } = req.body;
-
-  // Validate movieID and other required fields
-  if (!movieID || !name || !publishedYear || !director || !country || !description || !trailerUrl) {
-    return res.status(400).send('All fields are required');
-  }
-
-  const movieData = {
-    ID: movieID,
-    Name: name,
-    Published_Year: publishedYear,
-    Director: director,
-    Country: country,
-    Description: description,
-    TrailerUrl: trailerUrl,
-    ImageUrl: `/Images/moviesimage${movieID}${path.extname(req.file.originalname)}`
-  };
-
-  const query = `
-    INSERT INTO Movies (ID, Name, Published_Year, Director, Country, Description, TrailerUrl, ImageUrl)
-    VALUES (@ID, @Name, @Published_Year, @Director, @Country, @Description, @TrailerUrl, @ImageUrl)
-  `;
-
   try {
+    const { name, publishedYear, director, country, description, trailerUrl } = req.body;
+    const image = req.file;
+
+    if (!name || !publishedYear || !director || !country || !description || !trailerUrl || !image) {
+      return res.status(400).send('Missing required fields');
+    }
+
+    // Get the next movie ID from the database
     const pool = await sql.connect(dbConfig);
+    const result = await pool.request().query('SELECT MAX(ID) AS maxID FROM Movies');
+    const maxID = result.recordset[0].maxID;
+    const movieID = maxID + 1;
+
+    const movieData = {
+      ID: movieID,
+      Name: name,
+      Published_Year: publishedYear,
+      Director: director,
+      Country: country,
+      Description: description,
+      TrailerUrl: trailerUrl,
+      ImageUrl: `/Images/moviesimage/moviesimage${movieID}${path.extname(image.originalname)}`
+    };
+
+    const query = `
+      INSERT INTO Movies (ID, Name, Published_Year, Director, Country, Description, TrailerUrl, ImageUrl)
+      VALUES (@ID, @Name, @Published_Year, @Director, @Country, @Description, @TrailerUrl, @ImageUrl)
+    `;
+
     const request = pool.request();
     Object.keys(movieData).forEach(key => {
       request.input(key, movieData[key]);
@@ -92,6 +110,17 @@ app.post('/movies/add', upload.single('image'), async (req, res) => {
   } catch (error) {
     console.error('Error adding movie:', error);
     res.status(500).send('Error adding movie: ' + error.message);
+  }
+});
+app.get('/LastmovieID', async (req, res) => {
+  try {
+    const pool = await sql.connect(dbConfig);
+    const result = await pool.request().query('SELECT MAX(ID) AS maxID FROM Movies');
+    const maxID = result.recordset[0].maxID;
+    res.json({ maxID });
+  } catch (error) {
+    console.error('Error fetching last movie ID:', error);
+    res.status(500).send('Error fetching last movie ID');
   }
 });
 
