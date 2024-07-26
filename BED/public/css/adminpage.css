@@ -5,6 +5,11 @@
     padding: 20px;
 }
 
+.back-button-container {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
 .back-button {
     background-color: #ff6666;
     color: white;
@@ -17,7 +22,6 @@
     margin: 10px 2px;
     cursor: pointer;
     border-radius: 5px;
-    float: right;
 }
 
 
