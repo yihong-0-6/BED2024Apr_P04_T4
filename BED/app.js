@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/Images/moviesimage');
+    cb(null, 'public/Images');
   },
   filename: function (req, file, cb) {
     const ext = path.extname(file.originalname);
@@ -56,37 +56,42 @@ const upload = multer({ storage: storage });
 app.post('/movies/add', upload.single('image'), async (req, res) => {
   const { movieID, name, publishedYear, director, country, description, trailerUrl } = req.body;
 
+  // Validate movieID and other required fields
+  if (!movieID || !name || !publishedYear || !director || !country || !description || !trailerUrl) {
+    return res.status(400).send('All fields are required');
+  }
+
   const movieData = {
-      ID: movieID,
-      Name: name,
-      Published_Year: publishedYear,
-      Director: director,
-      Country: country,
-      Description: description,
-      TrailerUrl: trailerUrl,
-      ImageUrl: `/Images/moviesimage${movieID}${path.extname(req.file.originalname)}`
+    ID: movieID,
+    Name: name,
+    Published_Year: publishedYear,
+    Director: director,
+    Country: country,
+    Description: description,
+    TrailerUrl: trailerUrl,
+    ImageUrl: `/Images/moviesimage${movieID}${path.extname(req.file.originalname)}`
   };
 
   const query = `
-      INSERT INTO Movies (ID, Name, Published_Year, Director, Country, Description, TrailerUrl, ImageUrl)
-      VALUES (@ID, @Name, @Published_Year, @Director, @Country, @Description, @TrailerUrl, @ImageUrl)
+    INSERT INTO Movies (ID, Name, Published_Year, Director, Country, Description, TrailerUrl, ImageUrl)
+    VALUES (@ID, @Name, @Published_Year, @Director, @Country, @Description, @TrailerUrl, @ImageUrl)
   `;
 
   try {
-      const pool = await sql.connect(dbConfig);
-      const request = pool.request();
-      Object.keys(movieData).forEach(key => {
-          request.input(key, movieData[key]);
-      });
+    const pool = await sql.connect(dbConfig);
+    const request = pool.request();
+    Object.keys(movieData).forEach(key => {
+      request.input(key, movieData[key]);
+    });
 
-      console.log('Executing query:', query);
-      console.log('With parameters:', movieData);
+    console.log('Executing query:', query);
+    console.log('With parameters:', movieData);
 
-      await request.query(query);
-      res.status(200).send('Movie added successfully');
+    await request.query(query);
+    res.status(200).send('Movie added successfully');
   } catch (error) {
-      console.error('Error adding movie:', error);
-      res.status(500).send('Error adding movie: ' + error.message);
+    console.error('Error adding movie:', error);
+    res.status(500).send('Error adding movie: ' + error.message);
   }
 });
 
