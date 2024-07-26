@@ -54,11 +54,18 @@ async function getLastMovieID() {
 
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: async function (req, file, cb) {
     cb(null, 'public/Images');
   },
-  filename: function (req, file, cb) {
-    cb(null, `placeholder${path.extname(file.originalname)}`);
+  filename: async function (req, file, cb) {
+    try {
+      const lastMovieID = await getLastMovieID();
+      const newMovieID = lastMovieID + 1;
+      const newImageName = `moviesimage${newMovieID}${path.extname(file.originalname)}`;
+      cb(null, newImageName);
+    } catch (err) {
+      cb(err);
+    }
   }
 });
 const upload = multer({ storage: storage });
@@ -79,13 +86,6 @@ app.post('/movies/add', upload.single('image'), async (req, res) => {
     const maxID = result.recordset[0].maxID || 0;
     const movieID = maxID + 1;
 
-    // Generate the new image name using the movieID
-    const newImageName = `moviesimage${movieID}${path.extname(image.originalname)}`;
-    const newImagePath = path.join('public', 'Images', newImageName);
-
-    // Rename the uploaded file
-    fs.renameSync(image.path, newImagePath);
-
     const movieData = {
       ID: movieID,
       Name: name,
@@ -94,7 +94,7 @@ app.post('/movies/add', upload.single('image'), async (req, res) => {
       Country: country,
       Description: description,
       TrailerUrl: trailerUrl,
-      ImageUrl: `/Images/${newImageName}`
+      ImageUrl: `/Images/moviesimage${movieID}${path.extname(image.originalname)}`
     };
 
     const query = `
