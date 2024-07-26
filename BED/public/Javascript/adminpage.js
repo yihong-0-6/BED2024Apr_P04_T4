@@ -28,29 +28,29 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const countries = await response.json();
-            const countrySelect = document.getElementById('movie-country');
-            const countryIdSelect = document.getElementById('country-id');
+            const countrySelect = document.getElementById('movie-country') || document.getElementById('country-id');
 
             countries.forEach(country => {
                 const option = document.createElement('option');
                 option.value = country.ID;
                 option.textContent = `${country.ID} - ${country.CountryName}`;
                 countrySelect.appendChild(option);
-
-                const countryIdOption = document.createElement('option');
-                countryIdOption.value = country.ID;
-                countryIdOption.textContent = `${country.ID} - ${country.CountryName}`;
-                countryIdSelect.appendChild(countryIdOption);
             });
         } catch (error) {
             console.error('Error fetching countries:', error);
         }
     }
 
-    fetchMovies();
-    fetchCountries();
+    if (document.getElementById('update-movie-form')) {
+        fetchMovies();
+        fetchCountries();
+    }
 
-    document.getElementById('update-movie-form').addEventListener('submit', async function (e) {
+    if (document.getElementById('update-country-form')) {
+        fetchCountries();
+    }
+
+    document.getElementById('update-movie-form')?.addEventListener('submit', async function (e) {
         e.preventDefault();
 
         const movieId = document.getElementById('movie-id').value;
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    document.getElementById('update-country-form').addEventListener('submit', async function (e) {
+    document.getElementById('update-country-form')?.addEventListener('submit', async function (e) {
         e.preventDefault();
         const countryId = document.getElementById('country-id').value;
         const countryData = {
@@ -111,13 +111,13 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Error updating country:', error);
         }
     });
-    document.getElementById('add-movie-form').addEventListener('submit', async function (e) {
+
+    document.getElementById('add-movie-form')?.addEventListener('submit', async function (e) {
         e.preventDefault();
-        
         const formData = new FormData(this);
 
         try {
-            const response = await fetch('http://localhost:3000/movies', {
+            const response = await fetch('http://localhost:3000/movies/add', {
                 method: 'POST',
                 body: formData
             });
