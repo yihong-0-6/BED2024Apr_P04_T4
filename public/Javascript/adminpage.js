@@ -111,4 +111,24 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Error updating country:', error);
         }
     });
+    document.getElementById('add-movie-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+
+        try {
+            const response = await fetch('http://localhost:3000/movies', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                alert('Movie added successfully');
+            } else {
+                alert('Failed to add movie');
+            }
+        } catch (error) {
+            console.error('Error adding movie:', error);
+        }
+    });
 });

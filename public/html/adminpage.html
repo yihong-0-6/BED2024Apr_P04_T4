@@ -54,6 +54,34 @@
                 <button type="submit">Update Country</button>
             </form>
         </div>
+        
+        <div class="form-container">
+            <h2>Add New Movie</h2>
+            <form id="add-movie-form" enctype="multipart/form-data">
+                <label for="new-movie-name">Name:</label>
+                <input type="text" id="new-movie-name" name="name" required>
+
+                <label for="new-movie-year">Published Year:</label>
+                <input type="number" id="new-movie-year" name="year" required>
+
+                <label for="new-movie-director">Director:</label>
+                <input type="text" id="new-movie-director" name="director" required>
+
+                <label for="new-movie-country">Country:</label>
+                <input type="text" id="new-movie-country" name="country" required>
+
+                <label for="new-movie-description">Description:</label>
+                <textarea id="new-movie-description" name="description" required></textarea>
+
+                <label for="new-movie-trailer-url">Trailer URL:</label>
+                <input type="text" id="new-movie-trailer-url" name="trailerUrl" required>
+
+                <label for="new-movie-image">Movie Image:</label>
+                <input type="file" id="new-movie-image" name="image" accept="image/*" required>
+
+                <button type="submit">Add Movie</button>
+            </form>
+        </div>
     </div>
 
     <script src="../Javascript/adminpage.js"></script>

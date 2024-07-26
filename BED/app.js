@@ -5,6 +5,7 @@ const dbConfig = require("./dbConfig");
 const bodyParser = require("body-parser"); // Import body parser
 const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
+const multer = require("multer");
 const cors = require("cors"); 
 
 // Controllers
@@ -180,6 +181,58 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// Multer configuration for file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+      cb(null, 'public/Images/moviesimage');
+  },
+  filename: function (req, file, cb) {
+      const ext = path.extname(file.originalname);
+      const newName = `moviesimage${req.body.movieID}${ext}`;
+      cb(null, newName);
+  }
+});
+const upload = multer({ storage: storage });
+
+// Add movie endpoint
+app.post('/movies/add', upload.single('image'), async (req, res) => {
+  const { movieID, name, publishedYear, director, country, description, trailerUrl } = req.body;
+
+  const movieData = {
+      ID: movieID,
+      Name: name,
+      Published_Year: publishedYear,
+      Director: director,
+      Country: country,
+      Description: description,
+      TrailerUrl: trailerUrl,
+      ImageUrl: `/Images/moviesimage/moviesimage${movieID}${path.extname(req.file.originalname)}`
+  };
+
+  const query = `
+      INSERT INTO Movies (ID, Name, Published_Year, Director, Country, Description, TrailerUrl, ImageUrl)
+      VALUES (@ID, @Name, @Published_Year, @Director, @Country, @Description, @TrailerUrl, @ImageUrl)
+  `;
+
+  try {
+      const pool = await sql.connect(dbConfig);
+      const request = pool.request();
+      Object.keys(movieData).forEach(key => {
+          request.input(key, movieData[key]);
+      });
+
+      console.log('Executing query:', query); // Log the query
+      console.log('With parameters:', movieData); // Log the parameters
+
+      await request.query(query);
+      res.status(200).send('Movie added successfully');
+  } catch (error) {
+      console.error('Error adding movie:', error);
+      res.status(500).send('Error adding movie: ' + error.message);
+  }
+});
+
 
 //Huang Yi Hong S10257222H Routes for GET request for admins
 app.get("/admins/:email", adminController.getAdminsByEmail);
