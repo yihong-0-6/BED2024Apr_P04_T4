@@ -7,13 +7,15 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const movies = await response.json();
-            const movieSelect = document.getElementById('movie-id');
+            const movieSelects = document.querySelectorAll('select[name="movie-id"]');
 
-            movies.forEach(movie => {
-                const option = document.createElement('option');
-                option.value = movie.ID;
-                option.textContent = `${movie.ID} - ${movie.Name}`;
-                movieSelect.appendChild(option);
+            movieSelects.forEach(select => {
+                movies.forEach(movie => {
+                    const option = document.createElement('option');
+                    option.value = movie.ID;
+                    option.textContent = `${movie.ID} - ${movie.Name}`;
+                    select.appendChild(option);
+                });
             });
         } catch (error) {
             console.error('Error fetching movies:', error);
@@ -28,25 +30,23 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const countries = await response.json();
-            const countrySelect = document.getElementById('movie-country') || document.getElementById('country-id');
+            const countrySelects = document.querySelectorAll('select[name="country-id"], select[name="country"]');
 
-            countries.forEach(country => {
-                const option = document.createElement('option');
-                option.value = country.ID;
-                option.textContent = `${country.ID} - ${country.CountryName}`;
-                countrySelect.appendChild(option);
+            countrySelects.forEach(select => {
+                countries.forEach(country => {
+                    const option = document.createElement('option');
+                    option.value = country.ID;
+                    option.textContent = `${country.ID} - ${country.CountryName}`;
+                    select.appendChild(option);
+                });
             });
         } catch (error) {
             console.error('Error fetching countries:', error);
         }
     }
 
-    if (document.getElementById('update-movie-form')) {
+    if (document.getElementById('update-movie-form') || document.getElementById('delete-movie-form') || document.getElementById('add-movie-form')) {
         fetchMovies();
-        fetchCountries();
-    }
-
-    if (document.getElementById('update-country-form')) {
         fetchCountries();
     }
 
@@ -132,80 +132,24 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    document.addEventListener("DOMContentLoaded", function () {
-        async function fetchMovies() {
-            try {
-                const response = await fetch("http://localhost:3000/movies");
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-    
-                const movies = await response.json();
-                const movieSelects = document.querySelectorAll('select[name="movie-id"]');
-    
-                movieSelects.forEach(select => {
-                    movies.forEach(movie => {
-                        const option = document.createElement('option');
-                        option.value = movie.ID;
-                        option.textContent = `${movie.ID} - ${movie.Name}`;
-                        select.appendChild(option);
-                    });
-                });
-            } catch (error) {
-                console.error('Error fetching movies:', error);
-            }
-        }
-    
-        async function fetchCountries() {
-            try {
-                const response = await fetch("http://localhost:3000/countries");
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-    
-                const countries = await response.json();
-                const countrySelects = document.querySelectorAll('select[name="country-id"], select[name="country"]');
-    
-                countrySelects.forEach(select => {
-                    countries.forEach(country => {
-                        const option = document.createElement('option');
-                        option.value = country.ID;
-                        option.textContent = `${country.ID} - ${country.CountryName}`;
-                        select.appendChild(option);
-                    });
-                });
-            } catch (error) {
-                console.error('Error fetching countries:', error);
-            }
-        }
-    
-        if (document.getElementById('update-movie-form') || document.getElementById('delete-movie-form')) {
-            fetchMovies();
-            fetchCountries();
-        }
-    
-        document.getElementById('delete-movie-form')?.addEventListener('submit', async function (e) {
-            e.preventDefault();
-    
-            const movieId = document.getElementById('delete-movie-id').value;
-    
-            try {
-                const response = await fetch(`http://localhost:3000/movies/${movieId}`, {
-                    method: 'DELETE'
-                });
-    
-                if (response.ok) {
-                    alert('Movie deleted successfully');
-                    location.reload();
-                } else {
-                    alert('Failed to delete movie');
-                }
-            } catch (error) {
-                console.error('Error deleting movie:', error);
-            }
-        });
-    
-    });
+    document.getElementById('delete-movie-form')?.addEventListener('submit', async function (e) {
+        e.preventDefault();
 
-    
+        const movieId = document.getElementById('delete-movie-id').value;
+
+        try {
+            const response = await fetch(`http://localhost:3000/movies/${movieId}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                alert('Movie deleted successfully');
+                location.reload();
+            } else {
+                alert('Failed to delete movie');
+            }
+        } catch (error) {
+            console.error('Error deleting movie:', error);
+        }
+    });
 });
