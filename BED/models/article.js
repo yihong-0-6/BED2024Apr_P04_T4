@@ -4,10 +4,9 @@ const dbConfig = require('../../dbconfig')
 
 // Article entity with properties for 'ID', 'Title', 'Author', 'Published_Date'
 class Articles {
-    constructor(ID, Title, Description, Author, Published_Date) {
+    constructor(ID, Title, Author, Published_Date) {
         this.ID = ID
         this.Title = Title
-        this.Description = Description
         this.Author = Author
         this.Published_Date = Published_Date
         this.ImageUrl = `/Images/articlesimage${this.ID}.jpg`; 
@@ -29,7 +28,7 @@ class Articles {
     
         // Return an array of 'Articles' objects constructed from the retrieved data.
         return result.recordset.map(
-          (row) => new Articles(row.ID, row.Title, row.Description, row.Author, row.Published_Date)
+          (row) => new Articles(row.ID, row.Title, row.Author, row.Published_Date)
         ); // Convert rows to Articles objects
     }
 
@@ -52,7 +51,6 @@ class Articles {
             ? new Articles(
                 result.recordset[0].ID,
                 result.recordset[0].Title,
-                result.recordset[0].Description,
                 result.recordset[0].Author,
                 result.recordset[0].Published_Date
                 )

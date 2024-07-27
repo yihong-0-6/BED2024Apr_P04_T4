@@ -55,7 +55,7 @@ const deleteArticle = async (req, res) => {
     const articleId = parseInt(req.params.ID);
   
     try {
-        const success = await Article.deleteArticle(articleId);
+        const success = await Articles.deleteArticle(articleId);
         if (!success) {
             return res.status(404).send("Article not found");
         }

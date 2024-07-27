@@ -1,5 +1,5 @@
-document.addEventListener("DOMContentLoaded", async () => {
-    const articleId = localStorage.getItem("articleToUpdate");
+ document.addEventListener("DOMContentLoaded", async () => {
+    const articleId = localStorage.getItem("articleId");
     const articleImageUrl = localStorage.getItem("articleImageUrl"); // Retrieve image URL
 
     console.log("Article ID:", articleId);
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             
             // Optionally redirect back to the articles list page
             setTimeout(() => {
-                window.location.href = "industry.html";
+                window.location.href = "./industry.html";
             }, 2000);
 
         } catch (error) {
@@ -96,5 +96,34 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById("message").textContent = "Failed to update article.";
             document.getElementById("message").style.color = "#e74c3c";
         }
+    });
+
+    const deleteButton = document.getElementById("deleteButton");
+    deleteButton.addEventListener("click", async (event) =>{
+        event.preventDefault();
+
+        const confirmed = confirm(
+        "Are you sure you want to delete your article? This action cannot be undone."
+        );
+        if (!confirmed) {
+        return;
+        }
+        
+        await fetch(`/articles/${localStorage.getItem('articleId')}`, {
+        method: "DELETE",
+        })
+        .then((response) => {
+            if (response.ok) {
+            alert("Article deleted successfully.");
+            // Optionally redirect the user to another page
+            window.location.href = "./industry.html";
+            } else {
+                alert("Failed to delete article.");
+            }
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            alert("An error occurred. Please try again later.");
+        });
     });
 });
