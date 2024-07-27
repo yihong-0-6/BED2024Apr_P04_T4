@@ -1,0 +1,207 @@
+/* Container styles */
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Content wrapper for side by side layout */
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  align-items: flex-start;
+  margin-top: 2rem; /* Add top margin to push content down */
+}
+
+/* Adjustments for countries section */
+.countries {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-right: 2rem; 
+}
+
+.country-flags {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 1rem;
+}
+
+.country {
+  position: relative; /* Required for absolutely positioned child elements */
+  width: 100%; /* Full width of grid column */
+  padding-bottom: 66.67%; /* Maintain aspect ratio */
+  text-align: center; 
+  cursor: pointer;
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  border-radius: 10px; /* Optional: Add some rounding to the edges */
+  overflow: hidden; /* Ensure child elements do not overflow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.country:hover {
+  transform: scale(1.05);
+}
+
+.country img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.3s ease; /* Smooth transition for darkening effect */
+}
+
+.country .country-name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Darken the background */
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  opacity: 0; /* Start with the name hidden */
+  transition: opacity 0.3s ease; /* Smooth transition for showing the name */
+}
+
+.country:hover .country-name {
+  opacity: 1; /* Show the name on hover */
+}
+
+.country:hover img {
+  filter: brightness(70%); /* Darken the image on hover */
+}
+
+/* Now Showing section */
+.now-showing {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Now Showing label */
+.now-showing-label {
+  text-align: center;
+  margin-top: 0; 
+  margin-bottom: 1rem; 
+  font-size: 2rem;
+  color: #000000;
+}
+
+/* Movies container */
+.now-showing .movies {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: space-between;
+  gap: 0.5rem; /* Reduce the gap between images */
+}
+
+/* Individual movie */
+.now-showing .movie {
+  flex-basis: calc(33.33% - 0.5rem); /* Adjust based on the new gap */
+  margin-bottom: 0.5rem; /* Reduce the margin-bottom */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; 
+  transition: transform 0.3s ease; /* Smooth transition for scaling */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff; /* Ensure the background is white */
+  height: 370px; /* Set a fixed height for uniformity */
+}
+
+.now-showing .movie:hover {
+  transform: scale(1.05);
+}
+
+.now-showing .movie img {
+  width: 200px;  /* Set the desired width */
+  height: 300px; /* Set the desired height */
+  object-fit: cover; /* Maintain aspect ratio and cover the specified width/height */
+  border-radius: 4px;
+  transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+.now-showing .movie-name {
+  padding: 1rem;
+  background: #fff; /* Ensure the background is white */
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 0 0 10px 10px; /* Round bottom corners to match movie container */
+}
+
+/* Latest News section */
+.latest-news {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.latest-news div {
+  background-color: #0056b3;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal styles */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  border-radius: 20px; /* Add this line for rounded edges */
+  max-width: 600px; /* Add a maximum width to the modal */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#countryImage {
+  max-width: 100%; /* Make sure the image doesn't exceed the modal's width */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 4px;
+  margin-bottom: 20px; /* Add some space below the image */
+}

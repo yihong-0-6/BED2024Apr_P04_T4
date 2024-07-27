@@ -8,7 +8,7 @@ class Admins{
     }
 
     static async adminLogin(email, password) {
-        const connection = await sqll.connect(dbConfig);
+        const connection = await sql.connect(dbConfig);
 
         const sqlQuery = `SELECT * FROM Admins WHERE email = @email`;
         const request = connection.request();
@@ -48,33 +48,6 @@ class Admins{
       }
 
       //Yi Hong
-      static async addAdmin(adminData) {
-        let connection;
-        try {
-          connection = await sql.connect(dbConfig);
-    
-          const sqlQuery = `INSERT INTO Admins (email, password) 
-          VALUES (@email, @password)`;
-    
-          const request = connection.request();
-          request.input('email', sql.VarChar, adminData.email);
-          request.input('password', sql.VarChar, adminData.password);
-    
-          await request.query(sqlQuery);
-        } 
-        
-        catch (error) {
-          console.error('Error adding admin:', error);
-          throw error;
-        } 
-        
-        finally {
-          if (connection) {
-            connection.close();
-          }
-        }
-      }
-
       static async getAllAdmins() {
         const connection = await sql.connect(dbConfig);
     

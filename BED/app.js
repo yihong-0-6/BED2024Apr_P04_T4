@@ -1,11 +1,14 @@
+require('dotenv').config();
 const express = require("express");
 const sql = require("mssql");
 const path = require("path");
+const fs = require('fs');
 const dbConfig = require("./dbConfig");
-const bodyParser = require("body-parser"); // Import body parser
+const bodyParser = require("body-parser");
 const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
-const cors = require("cors"); 
+const multer = require("multer");
+const cors = require("cors");
 
 // Controllers
 const forumController = require('./controllers/forumController');
@@ -21,115 +24,250 @@ const validateArticle = require('./middlewares/validateArticle');
 const { validateAdmin, verifyJWTadmin } = require("./middlewares/validateAdmin");
 
 const app = express();
-const port = process.env.PORT || 3000; // Use environment variable or default port
+const port = process.env.PORT || 3000;
 
-app.use(cors()); // Enable CORS
-// Include body-parser middleware to handle JSON data
-app.use(express.json()); 
-app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
+// Middleware setup
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serve static files from the 'public' directory at the root level
-app.use(express.static(path.join(__dirname, '..', 'public')));
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Users Routes & Forums From Community Page - Zhen Kang
+// Function to get the last movie ID
+async function getLastMovieID() {
+  const query = 'SELECT TOP 1 ID FROM Movies ORDER BY ID DESC';
+  try {
+    const pool = await sql.connect(dbConfig);
+    const result = await pool.request().query(query);
+    return result.recordset[0] ? result.recordset[0].ID : 0;
+  } catch (err) {
+    console.error('Error fetching last movie ID:', err);
+    throw err;
+  }
+}
 
-// Creating New Forum
-app.post('/Community/create', (req, res, next) => {
-  next();
-}, validateForum.forumValidation, forumController.createForum);
+// Multer configuration for file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/Images');
+  },
+  filename: async function (req, file, cb) {
+    try {
+      const lastMovieID = await getLastMovieID();
+      const newMovieID = lastMovieID + 1;
+      const newImageName = `moviesimage${newMovieID}${path.extname(file.originalname)}`;
+      cb(null, newImageName);
+    } catch (err) {
+      cb(err);
+    }
+  }
+});
+const upload = multer({ storage: storage });
 
-// Getting all forums
-app.get('/Community', forumController.getAllForums);
+// Add movie endpoint
+app.post('/movies/add', upload.single('image'), async (req, res) => {
+  try {
+    const { name, publishedYear, director, country, description, trailerUrl } = req.body;
+    const image = req.file;
 
+    if (!name || !publishedYear || !director || !country || !description || !trailerUrl || !image) {
+      return res.status(400).send('Missing required fields');
+    }
 
-app.get("/Community/forums", async (req, res) => {
-  const filePath = path.join(__dirname, "public", "html", "Community.html");
-  console.log("File path is ", filePath);
-  res.sendFile(filePath);
+    // Get the next movie ID from the database
+    const pool = await sql.connect(dbConfig);
+    const result = await pool.request().query('SELECT MAX(ID) AS maxID FROM Movies');
+    const maxID = result.recordset[0].maxID || 0;
+    const movieID = maxID + 1;
+
+    const movieData = {
+      ID: movieID,
+      Name: name,
+      Published_Year: publishedYear,
+      Director: director,
+      Country: country,
+      Description: description,
+      TrailerUrl: trailerUrl,
+      ImageUrl: `/Images/moviesimage${movieID}${path.extname(image.originalname)}`
+    };
+
+    const query = `
+      INSERT INTO Movies (ID, Name, Published_Year, Director, Country, Description, TrailerUrl, ImageUrl)
+      VALUES (@ID, @Name, @Published_Year, @Director, @Country, @Description, @TrailerUrl, @ImageUrl)
+    `;
+
+    const request = pool.request();
+    Object.keys(movieData).forEach(key => {
+      request.input(key, movieData[key]);
+    });
+
+    console.log('Executing query:', query);
+    console.log('With parameters:', movieData);
+
+    await request.query(query);
+    res.status(200).send('Movie added successfully');
+  } catch (error) {
+    console.error('Error adding movie:', error);
+    res.status(500).send('Error adding movie: ' + error.message);
+  }
 });
 
+// Delete movie endpoint
+app.delete('/movies/:id', async (req, res) => {
+  const movieId = req.params.id;
 
-// Get forum by Id
-app.get("/Community/id/:forumId", forumController.getForumById);
+  try {
+    const pool = await sql.connect(dbConfig);
+    const result = await pool.request()
+      .input('ID', sql.Int, movieId)
+      .query('SELECT ImageUrl FROM Movies WHERE ID = @ID');
 
-// Deleting a forum
-app.delete("/Community/remove/:forumId", forumController.deleteForum);
+    if (result.recordset.length === 0) {
+      return res.status(404).send('Movie not found');
+    }
 
-app.post("/user/account/login", loginController.userLogin);
+    const imageUrl = result.recordset[0].ImageUrl;
+    const imagePath = path.join(__dirname, 'public', imageUrl);
 
-// Get user by Id
-app.get("/login/:id", loginController.getUserById);
+    // Delete the movie from the database
+    await pool.request()
+      .input('ID', sql.Int, movieId)
+      .query('DELETE FROM Movies WHERE ID = @ID');
 
-// Update user
-app.put("/user/account/:id", loginController.updateUser);
+    // Delete the image file from the local storage
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
+    }
 
-// Remove user
-app.delete("/user/account/:id", loginController.deleteUser);
-
-app.get("/registerUser", (req, res) => {
-  const filePath = path.join(__dirname, "public", "html", "mainsignup.html");
-  console.log("File path is ", filePath);
-  res.sendFile(filePath);
+    res.status(200).send('Movie and associated image deleted successfully');
+  } catch (error) {
+    console.error('Error deleting movie:', error);
+    res.status(500).send('Error deleting movie: ' + error.message);
+  }
 });
 
-app.get("/loginUser", (req, res) => {
-  const filePath = path.join(__dirname, "public", "html", "mainlogin.html");
-  console.log("File path is ", filePath);
-  res.sendFile(filePath);
-});
-
-// EdisonChewJiaJun S10244576H Routes for GET request for articles
-app.get("/articles", articleController.getAllArticles);
-app.get("/articles/:ID", articleController.getArticleById);
-app.put("/articles/:ID", validateArticle, articleController.updateArticle); // Updating the articles
-app.delete("/articles/:ID", articleController.deleteArticle);
-
-// Tam Shi Ying S10257952D Routes for GET request for movies
-app.get("/movies/firstsix", movieController.getFirstSixMovies); // More specific route
-app.get("/movies/:id", movieController.getMovieById); // More general route
+// Fetch movies and countries
+app.get("/movies/firstsix", movieController.getFirstSixMovies);
+app.get("/movies/:id", movieController.getMovieById);
 app.get("/movies", movieController.getAllMovies);
 
 app.get("/countries", async (req, res) => {
   try {
-      const connection = await sql.connect(dbConfig);
-      const result = await connection.request().query("SELECT ID, CountryName, Description FROM Countries");
-      res.json(result.recordset);
+    const connection = await sql.connect(dbConfig);
+    const result = await connection.request().query("SELECT ID, CountryName, Description FROM Countries");
+    res.json(result.recordset);
   } catch (err) {
-      console.error("Error fetching countries:", err);
-      res.status(500).send("Error fetching countries");
+    console.error("Error fetching countries:", err);
+    res.status(500).send("Error fetching countries");
   }
 });
 
-//Huang Yi Hong S10257222H Routes for GET request for admins
-app.get("/admins/:email", adminController.getAdminsByEmail);
-app.get("/admins", adminController.getAllAdmins);
-app.post("/admins/create", adminController.createAdmin);
+app.put('/movies/:id', async (req, res) => {
+  const movieId = req.params.id;
+  const updates = req.body;
+
+  let query = 'UPDATE Movies SET ';
+  const fields = Object.keys(updates).map((key, index) => {
+    return `${key} = @${key}`;
+  });
+  query += fields.join(', ') + ' WHERE ID = @ID';
+
+  try {
+    const pool = await sql.connect(dbConfig);
+    const request = pool.request();
+
+    Object.keys(updates).forEach(key => {
+      request.input(key, updates[key]);
+    });
+    request.input('ID', sql.Int, movieId);
+
+    console.log('Executing query:', query);
+    console.log('With parameters:', updates);
+
+    await request.query(query);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error('Error updating movie:', err);
+    res.sendStatus(500);
+  }
+});
+
+app.get('/movies/:id', async (req, res) => {
+  const movieId = req.params.id;
+
+  try {
+    const pool = await sql.connect(dbConfig);
+    const result = await pool.request()
+      .input('ID', sql.Int, movieId)
+      .query('SELECT * FROM Movies WHERE ID = @ID');
+
+    if (result.recordset.length > 0) {
+      res.json(result.recordset[0]);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (err) {
+    console.error('Error fetching movie details:', err);
+    res.sendStatus(500);
+  }
+});
+
+// Forum Routes
+app.post('/Community/create', validateForum.forumValidation, forumController.createForum);
+app.get('/Community', forumController.getAllForums);
+app.get("/Community/forums", async (req, res) => {
+  const filePath = path.join(__dirname, "public", "html", "Community.html");
+  res.sendFile(filePath);
+});
+app.get("/Community/id/:forumId", forumController.getForumById);
+app.delete("/Community/delete/:forumId", forumController.deleteForum);
+
+// User Routes
+app.post("/user/account/login", loginController.userLogin);
+app.get("/login/:id", loginController.getUserById);
+app.put("/user/account/:id", loginController.updateUser);
+app.delete("/user/account/:id", loginController.deleteUser);
+
+// Registration and Login Routes
+app.get("/registerUser", (req, res) => {
+  const filePath = path.join(__dirname, "public", "html", "mainsignup.html");
+  res.sendFile(filePath);
+});
+app.get("/loginUser", (req, res) => {
+  const filePath = path.join(__dirname, "public", "html", "mainlogin.html");
+  res.sendFile(filePath);
+});
+
+// Article Routes
+app.get("/articles", articleController.getAllArticles);
+app.get("/articles/:ID", articleController.getArticleById);
+app.put("/articles/:ID", validateArticle, articleController.updateArticle);
+app.delete("/articles/:ID", articleController.deleteArticle);
+
+// Admin Routes
+app.post("/admins/login", adminController.adminLogin);
+app.post("/admins/create", validateAdmin, adminController.createAdmin);
 app.put("/admins/:email", validateAdmin, adminController.updateAdmin);
 app.delete("/admins/:email", validateAdmin, adminController.deleteAdmin);
-
-
-
-app.listen(port, async () => {
-  try {
-    // Connect to the database
-    await sql.connect(dbConfig);
-    console.log("Database connection established successfully");
-  } 
-  
-  catch (err) {
-    console.error("Database connection error:", err);
-    // Terminate the application with an error code (optional)
-    process.exit(1); // Exit with code 1 indicating an error
-  }
-
-  console.log(`Server listening on port ${port}`);
-});
+app.get("/admins/:email", adminController.getAdminsByEmail);
+app.get("/admins", adminController.getAllAdmins);
 
 // Close the connection pool on SIGINT signal
 process.on("SIGINT", async () => {
   console.log("Server is gracefully shutting down");
-  // Perform cleanup tasks (e.g., close database connections)
   await sql.close();
   console.log("Database connection closed");
-  process.exit(0); // Exit with code 0 indicating successful shutdown
+  process.exit(0);
+});
+
+app.listen(port, async () => {
+  try {
+    await sql.connect(dbConfig);
+    console.log("Database connection established successfully");
+    console.log(`Server listening on port ${port}`);
+  } catch (err) {
+    console.error("Database connection error:", err);
+    process.exit(1);
+  }
 });

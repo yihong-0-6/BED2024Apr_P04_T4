@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Movie</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/adminpage.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Update Movie</h1>
+        <div class="form-container">
+            <button class="back-button" onclick="location.href='adminpage.html'">X</button>
+            <form id="update-movie-form">
+                <label for="movie-id">Movie ID:</label>
+                <select id="movie-id" name="movie-id" required></select>
+
+                <label for="movie-name">Name:</label>
+                <input type="text" id="movie-name" name="movie-name">
+
+                <label for="movie-year">Published Year:</label>
+                <input type="number" id="movie-year" name="movie-year">
+
+                <label for="movie-director">Director:</label>
+                <input type="text" id="movie-director" name="movie-director">
+
+                <label for="movie-country">Country:</label>
+                <select id="movie-country" name="movie-country" required></select>
+
+                <label for="movie-description">Description:</label>
+                <textarea id="movie-description" name="movie-description"></textarea>
+
+                <label for="movie-trailer-url">Trailer URL:</label>
+                <input type="text" id="movie-trailer-url" name="movie-trailer-url">
+
+                <button type="submit">Update Movie</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../Javascript/adminpage.js"></script>
+</body>
+</html>

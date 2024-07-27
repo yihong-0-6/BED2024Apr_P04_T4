@@ -9,7 +9,7 @@ const getAllArticles = async (req, res) => {
 
         // It catches potential errors
     } catch (error) {
-        console.error(error);
+        console.error("Error fetching articles: ", error);
         // Sends an error message to the client
         res.status(500).send("Error retrieving articles");
     }
@@ -27,31 +27,29 @@ const getArticleById = async (req, res) => {
         }
         res.json(article);
     } catch (error) {
-        console.error(error);
+        console.error("Error fetching article: ",error);
         res.status(500).send("Error retrieving article");
     }
 };
 
 const updateArticle = async (req, res) => {
     const articleId = parseInt(req.params.ID);
-    const newArticleData = req.body;
-
-    // Basic validation of newArticleData
-    if (!newArticleData.Description || !newArticleData.Published_Date || !newArticleData.Author) {
-        return res.status(400).send("Missing required fields");
-    }
+    const updatedData = req.body;
 
     try {
-        const updatedArticle = await Articles.updateArticle (articleId, newArticleData);
+        const updatedArticle = await Articles.updateArticle(articleId, updatedData);
+        
         if (!updatedArticle) {
             return res.status(404).send("Article not found");
         }
-        res.json(updatedArticle);
-    } catch (error) {
-        console.error(error);
+        
+        res.status(200).json(updatedArticle); // Send back the updated article
+    } catch (err) {
+        console.error('Error updating article:', err);
         res.status(500).send("Error updating article");
     }
 };
+
 
 const deleteArticle = async (req, res) => {
     const articleId = parseInt(req.params.ID);

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Update Article</title>
+        <link rel="stylesheet" href="../css/header.css">
+        <link rel="stylesheet" href="../css/global.css">
+        <link rel="stylesheet" href="../css/updateArticle.css">
+        <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    </head>
+    <body>
+        <div class="header">
+            <header class="sticky">
+                <a href="/html/index.html" class="logo">Southeast Asia Readiness</a>
+                <ul class="navlist">
+                    <li><a href="/html/index.html">Home</a></li>
+                    <li><a href="/html/moviepage.html">Movies</a></li>
+                    <li><a href="/html/Development.html">Development</a></li>
+                    <li><a href="/html/industry.html">Industry</a></li>
+                    <li><a href="/html/Community.html">Community</a></li>
+                </ul>
+                <div class="header-icons">
+                    <a href="/html/mainlogin.html">
+                        <div id="login-btn" class="bx bx-user"></div> <!-- Login Button -->
+                    </a>
+                </div>
+            </header>
+        </div>
+        <div class="header">
+            <header class="sticky">
+                <a href="index.html" class="logo">Southeast Asia Readiness</a>
+                <ul class="navlist">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="moviepage.html">Movies</a></li>
+                    <li><a href="Development.html">Development</a></li>
+                    <li><a href="industry.html">Industry</a></li>
+                    <li><a href="Community.html">Community</a></li>
+                </ul>
+                <div class="header-icons">
+                    <a href="mainlogin.html">
+                        <div id="login-btn" class="bx bx-user"></div> <!-- Login Button -->
+                    </a>
+                </div>
+            </header>
+        </div>
+
+        <div class="container">
+            <h1>Update Article</h1>
+            <div class="article-preview">
+                <img id="article-image" src="" alt="Article Image" class="article-image">
+                <div class="article-details">
+                    <h2 id="article-title"></h2>
+                    <p><strong>Author:</strong> <span id="article-author"></span></p>
+                    <p><strong>Published Date:</strong> <span id="article-published-date"></span></p>
+                </div>
+            </div>
+            <form id="update-form">
+                <input type="hidden" id="article-id" name="article-id">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <input type="text" id="author" name="author" required>
+                </div>
+                <button type="submit">Update Article</button>
+                <p id="message"></p>
+            </form>
+        </div>
+
+        <script src="../Javascript/updateArticlePage.js"></script>
+
+    </body>
+</html>

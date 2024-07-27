@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Movie</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/adminpage.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Add New Movie</h1>
+        <div class="form-container">
+            <button class="back-button" onclick="location.href='adminpage.html'">X</button>
+            <form id="add-movie-form" enctype="multipart/form-data">
+                <label for="new-movie-name">Name:</label>
+                <input type="text" id="new-movie-name" name="name" required>
+
+                <label for="new-movie-year">Published Year:</label>
+                <input type="number" id="new-movie-year" name="publishedYear" required>
+
+                <label for="new-movie-director">Director:</label>
+                <input type="text" id="new-movie-director" name="director" required>
+
+                <label for="new-movie-country">Country:</label>
+                <input type="text" id="new-movie-country" name="country" required>
+
+                <label for="new-movie-description">Description:</label>
+                <textarea id="new-movie-description" name="description" required></textarea>
+
+                <label for="new-movie-trailer-url">Trailer URL:</label>
+                <input type="text" id="new-movie-trailer-url" name="trailerUrl" required>
+
+                <label for="new-movie-image">Movie Image:</label>
+                <input type="file" id="new-movie-image" name="image" accept="image/*" required>
+
+                <button type="submit">Add Movie</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../Javascript/adminpage.js"></script>
+</body>
+</html>
