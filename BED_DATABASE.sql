@@ -263,3 +263,8 @@ ADD ImageUrl NVARCHAR(255);
 
 ALTER TABLE Admins 
 ALTER COLUMN password VARCHAR(150);
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/nAYUv9wjV48?si=IIStAoZkfhljTm6r',
+    ImageUrl = 'http://example.com/image.jpg'
+WHERE ID = 1;

@@ -72,38 +72,7 @@ main.content {
   justify-content: center;
 }
 
-/* credit styles --------------------------------------------------------------------------------- */
-.credits-header, .credits-container {
-  width: 100%;
-  max-width: 600px;
-  margin: 20px auto;
-}
 
-.credits-header {
-  text-align: center;
-}
-
-.credits-container {
-  background-color: #f1f1f1;
-  padding: 20px;
-  border-radius: 15px;
-}
-
-.credit-item {
-  margin-bottom: 20px;
-}
-
-.credit-item h3 {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.credit-item p {
-  margin: 5px 0 0;
-  font-size: 1rem;
-}
 /* footer styles --------------------------------------------------------------------------------- */
 footer {
   background-color: #A8C39B; 
