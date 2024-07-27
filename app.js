@@ -3,7 +3,7 @@ const express = require("express");
 const sql = require("mssql");
 const path = require("path");
 const fs = require('fs');
-const dbConfig = require("./dbConfig");
+const dbConfig = require("./dbconfig");
 const bodyParser = require("body-parser");
 const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
@@ -11,17 +11,17 @@ const multer = require("multer");
 const cors = require("cors");
 
 // Controllers
-const forumController = require('./controllers/forumController');
-const userController = require("./controllers/usersController");
-const articleController = require("./controllers/articleController");
-const movieController = require('./controllers/movieController');
-const adminController = require('./controllers/adminController');
+const forumController = require('./BED/controllers/forumController');
+const userController = require("./BED/controllers/usersController");
+const articleController = require("./BED/controllers/articleController");
+const movieController = require('./BED/controllers/movieController');
+const adminController = require('./BED/controllers/adminController');
 
 // Middlewares
-const validateForum = require("./middlewares/validateForum");
-const validateUser = require("./middlewares/validateUser");
-const validateArticle = require('./middlewares/validateArticle');
-const { validateAdmin, verifyJWTadmin } = require("./middlewares/validateAdmin");
+const validateForum = require("./BED/middlewares/validateForum");
+const validateUser = require("./BED/middlewares/validateUser");
+const validateArticle = require('./BED/middlewares/validateArticle');
+const { validateAdmin, verifyJWTadmin } = require("./BED/middlewares/validateAdmin");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -224,7 +224,7 @@ app.get("/Community/id/:forumId", forumController.getForumById);
 app.delete("/Community/delete/:forumId", forumController.deleteForum);
 
 // User Routes
-app.post("/users/account", validateUser.validateUserAccount, 
+app.post("/users/account/:id", validateUser.validateUserAccount, 
 userController.createUser);
 app.post("/users/account/login", userController.userLogin);
 app.get("/users/login/:id", userController.getUserById);

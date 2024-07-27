@@ -1,9 +1,9 @@
-//Yi Hong S10257222
+// Yi Hong S10257222
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 
-
-const validateUser = (req, res, next) => {
+// Middleware to validate user account details
+const validateUserAccount = (req, res, next) => {
   const schema = Joi.object({
     username: Joi.string().min(4).max(50).required(),
     password: Joi.string().min(4).max(50).required(),
@@ -21,11 +21,12 @@ const validateUser = (req, res, next) => {
   next(); // If validation passes, proceed to the next route handler
 };
 
-
+// Middleware to verify JWT and check user role
 function verifyJWTuser(req, res, next) {
-  // Get the token from the request body
-  const token = req.body.token;
-  
+  // Get the token from the Authorization header
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Extract token from "Bearer [token]" format
+
   if (!token) {
     return res.status(401).json({ message: 'Token is missing' });
   }
@@ -49,7 +50,4 @@ function verifyJWTuser(req, res, next) {
   });
 }
 
-
-
-module.exports = validateUser;
-module.exports = {verifyJWTuser};
+module.exports = { validateUserAccount, verifyJWTuser };
