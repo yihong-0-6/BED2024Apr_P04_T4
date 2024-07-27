@@ -1,6 +1,6 @@
 // EdisonChewJiaJun S10244576H
 const sql = require('mssql');
-const dbConfig = require('../dbConfig')
+const dbConfig = require('../../dbconfig')
 
 // Article entity with properties for 'ID', 'Title', 'Author', 'Published_Date'
 class Articles {

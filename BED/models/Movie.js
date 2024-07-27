@@ -1,5 +1,5 @@
 const sql = require('mssql');
-const dbConfig = require('../dbConfig');
+const dbConfig = require('../../dbconfig');
 
 class Movies {
     constructor(ID, Name, Published_Year, Director, Country, Description, TrailerUrl) {
