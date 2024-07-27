@@ -18,7 +18,7 @@ class Forum {
   
       const request = new sql.Request();
   
-      // Assuming `id` is an identity column that auto-generates
+      // Assuming `forumforumId` is an forumIdentity column that auto-generates
       const query = `
         INSERT INTO Forums (title, author, comments) 
         OUTPUT Inserted.forumId AS forumId
@@ -43,13 +43,13 @@ class Forum {
     }
   }
 
-  static async getForumById(forumId){
+  static async getForumByforumId(forumId){
     const connection = await sql.connect(dbConfig);
 
     const sqlQuery = `SELECT * FROM Forums WHERE forumId = @forumId`; 
 
     const request = connection.request();
-    request.input("id", forumId);
+    request.input("forumId", forumId);
     const result = await request.query(sqlQuery);
 
     connection.close();
@@ -96,7 +96,7 @@ class Forum {
     }
   }
 
-  static async getForumById(forumId){
+  static async getForumByforumId(forumId){
     const connection = await sql.connect(dbConfig);
 
     const sqlQuery = `SELECT * FROM Forums WHERE forumId = @forumId`; 
