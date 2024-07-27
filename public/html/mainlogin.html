@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <title>Login</title>
+        <title>Southeast Asia Readiness</title>
         
         <div id="Up"></div>
         <link rel="stylesheet" href="../css/header.css">
@@ -13,7 +13,6 @@
         <link rel="stylesheet" href="../css/login-singup.css">
         <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     </head>
-
     <body>
         <div class="header">
             <header class="sticky">
@@ -25,7 +24,6 @@
                     <li><a href="industry.html">Industry</a></li>
                     <li><a href="Community.html">Community</a></li>
                 </ul>
-
                 <div class="header-icons">
                     <a href="mainlogin.html">
                         <div id="login-btn" class="bx bx-user"></div> <!-- Login Button -->
@@ -35,48 +33,24 @@
         </div>
 
      <!-- Main Content -->
-    <div class="main-content">
+     <div class="main-content">
         <div class="login-container">
-
             <h2>Login to Your Account</h2>
-
             <form id="loginForm">
-
                 <div class="form-group">
                     <label for="login-username">Username</label>
-                    <input type="text" id="login-username" class="w-full p-3 border border-gray-300 rounded-lg" required>
+                    <input type="username" id="login-username" class="w-full p-3 border border-gray-300 rounded-lg" required>
                 </div>
-
                 <div class="form-group">
                     <label for="login-password">Password</label>
                     <input type="password" id="login-password" class="w-full p-3 border border-gray-300 rounded-lg" required>
                 </div>
-
                 <button type="submit" id="submit" class="login-btn">Log In</button>
-
             </form>
-
             <div id="message"></div>
 
-            <p class="text-center mt-4">
-                <a href="user.html"
-                style="text-decoration: none;">User Management</a>
-            </p>
-
-            <p class="text-center mt-4">Forgot Password?
-                <a href="forgotpassword.html" class="text-blue-500" 
-                style="text-decoration: none;">Click Here</a>
-            </p>
-
-            <p class="text-center mt-4">Don't have an account? 
-                <a href="mainsignup.html" class="text-blue-500" 
-                style="text-decoration: none;">Create One!</a>
-            </p>
-
+            <p class="text-center mt-4">Don't have an account? <a href="mainsignup.html" class="text-blue-500">Sign up here</a></p>
         </div>
     </div>
-
-        <script src="../Javascript/userLogin.js"></script>
-        
-    </body>
-</html>
+    <script src="userlogin.js"></script>
+</body>

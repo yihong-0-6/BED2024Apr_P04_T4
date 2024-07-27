@@ -9,29 +9,6 @@ class User {
     this.email = email;
   }
 
-  static async getAllUsers(id) {
-    const connection = await sql.connect(dbConfig);
-
-    const sqlQuery = `SELECT * FROM Users WHERE id = @id`
-
-    const request = connection.request();
-
-    request.input("id", id);
-
-    const result = await request.query(sqlQuery);
-
-    connection.close();
-
-    if (result.recordset.length > 0) {
-        const user = result.recordset[0];
-        return new User(user.id, user.email, user.username, user.password);
-    } 
-    
-    else {
-        return null;
-    }
-  }
-
   static async userLogin(username, password) {
     const connection = await sql.connect(dbConfig);
 
@@ -53,20 +30,20 @@ class User {
     }
   }
 
-  static async getUserById(id) {
+  static async getUserById(userId) {
     const connection = await sql.connect(dbConfig);
 
-    const sqlQuery = `SELECT * FROM Users WHERE id = @id`; // Parameterized query
+    const sqlQuery = `SELECT * FROM Users WHERE userId = @userId`; // Parameterized query
 
     const request = connection.request();
-    request.input("id", id);
+    request.input("userId", userId);
     const result = await request.query(sqlQuery);
 
     connection.close();
 
     return result.recordset[0]
       ? new User(
-          result.recordset[0].id,
+          result.recordset[0].userId,
           result.recordset[0].username,
           result.recordset[0].password,
           result.recordset[0].email
@@ -125,15 +102,31 @@ class User {
   }
 
   // Zhen Kang
-  static async updateUser(id, newUserData) {
-    const createdUser = await this.getUserById(id);
+  static async getAllUsers() {
+    const connection = await sql.connect(dbConfig);
+
+    const sqlQuery = `SELECT username, password, email FROM Users`;
+
+    const request = connection.request();
+    const result = await request.query(sqlQuery);
+
+    connection.close(); 
+
+    return result.recordset.map(
+      (row) => new User(row.username, row.password, row.email)
+    ); // Convert rows to User objects
+  }
+
+  // Zhen Kang
+  static async updateUser(userId, newUserData) {
+    const createdUser = await this.getUserById(userId);
     const connection = await sql.connect(dbConfig);
     
     const sqlQuery = `UPDATE Users SET username = @username, email = @email, 
-                            password = @password WHERE id = @id`; // Parameterized query
+                            password = @password WHERE userId = @userId`; // Parameterized query
 
     const request = connection.request();
-    request.input("id", id);
+    request.input("userId",userId || createdUser.userId);
     request.input("username", newUserData.username || createdUser.username);
     request.input("email", newUserData.email || createdUser.email);
     request.input("password", newUserData.password || createdUser.password);
@@ -142,35 +135,29 @@ class User {
     
     connection.close();
 
-    return this.getUserById(id);
+    return this.getUserById(userId);
   }
 
 
   //Yi Hong S10257222
   static async createUser(newUserData) {
     const connection = await sql.connect(dbConfig);
-  
+
     const sqlQuery = `INSERT INTO Users (username, password, email) 
-      VALUES (@username, @password, @email); 
-      SELECT SCOPE_IDENTITY() AS id;`; // Retrieve ID of inserted record
-  
+    VALUES (@username, @password, @email); 
+    SELECT SCOPE_IDENTITY() AS id;`; // Retrieve ID of inserted record
+
     const request = connection.request();
-    request.input("username", sql.VarChar, newUserData.username);
-    request.input("password", sql.VarChar, newUserData.password);
-    request.input("email", sql.VarChar, newUserData.email);
-  
-    // Execute the query and store the result
-    const result = await request.query(sqlQuery);
-  
+    request.input("username", newUserData.username);
+    request.input("password", newUserData.password);
+    request.input("email", newUserData.email)
+
+    await request.query(sqlQuery);
+
     connection.close();
-  
-    // Retrieve the new user's ID
-    const newUserId = result.recordset[0].id;
-  
-    // Return the newly created user
-    return this.getUserById(newUserId);
+
+    return this.getAllUsers();
   }
-  
 
   static async deleteUser(id) {
     const connection = await sql.connect(dbConfig);
@@ -184,29 +171,6 @@ class User {
     connection.close();
 
     return result.rowsAffected > 0; 
-  }
-
-  static async forgotPassword(email){
-    const connection = await sql.connect(dbConfig);
-
-    const sqlQuery = `SELECT * FROM Users WHERE email = @email`;
-
-    const request = connection.request();
-
-    request.input('email', email);
-
-    const result = await request.query(sqlQuery);
-
-    connection.close();
-
-    return result.recordset[0]
-      ? new User(
-          result.recordset[0].id,
-          result.recordset[0].username,
-          result.recordset[0].password,
-          result.recordset[0].email
-        )
-    : null;
   }
 }
 

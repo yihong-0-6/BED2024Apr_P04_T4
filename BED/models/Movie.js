@@ -2,12 +2,13 @@ const sql = require('mssql');
 const dbConfig = require('../dbConfig');
 
 class Movies {
-    constructor(ID, Name, Published_Year, Director, Country) {
+    constructor(ID, Name, Published_Year, Director, Country, Description) {
         this.ID = ID;
         this.Name = Name;
         this.Published_Year = Published_Year;
         this.Director = Director;
         this.Country = Country;
+        this.Description = Description;
         this.ImageUrl = `/Images/moviesimage${this.ID}.jpg`; 
     }
 
@@ -18,7 +19,7 @@ class Movies {
         const result = await request.query(sqlQuery);
         connection.close();
         return result.recordset.map(
-            (row) => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country)
+            (row) => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country, row.Description)
         );
     }
 
@@ -30,7 +31,7 @@ class Movies {
             const result = await request.query(sqlQuery);
             console.log(`Database query result for first six movies: ${JSON.stringify(result.recordset)}`);
             connection.close();
-            return result.recordset.map(row => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country));
+            return result.recordset.map(row => new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country, row.Description));
         } catch (error) {
             console.error('Error in getFirstSixMovies query:', error);
             throw error;
@@ -48,7 +49,7 @@ class Movies {
             connection.close();
             if (result.recordset.length > 0) {
                 const row = result.recordset[0];
-                return new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country);
+                return new Movies(row.ID, row.Name, row.Published_Year, row.Director, row.Country,row.Description);
             } else {
                 return null;
             }
