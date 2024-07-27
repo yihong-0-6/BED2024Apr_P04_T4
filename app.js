@@ -249,13 +249,12 @@ app.get("/articles/:ID", articleController.getArticleById);
 app.put("/articles/:ID", validateArticle, articleController.updateArticle);
 app.delete("/articles/:ID", articleController.deleteArticle);
 
-// Admin Routes
-app.post("/admins/login", adminController.adminLogin);
-app.post("/admins/create", validateAdmin, adminController.createAdmin);
-app.put("/admins/:email", validateAdmin, adminController.updateAdmin);
-app.delete("/admins/:email", validateAdmin, adminController.deleteAdmin);
-app.get("/admins/:email", adminController.getAdminsByEmail);
-app.get("/admins", adminController.getAllAdmins);
+// Admin Routes Yi Hong S10257222H
+app.get("/admins/:email", adminController.getAdminsByEmail); //GET function to get admin data by email
+app.get("/admins", adminController.getAllAdmins); //GET function to get all admin data in database
+app.post("/admins/create", validateAdmin, adminController.createAdmin); //POST function to create new admin in database
+app.post("/admins/login", adminController.adminLogin); //POST function to handle admin log in
+app.delete("/admins/delete/:email", adminController.deleteAdmin); //DELETE function to delete admin data from email
 
 // Close the connection pool on SIGINT signal
 process.on("SIGINT", async () => {

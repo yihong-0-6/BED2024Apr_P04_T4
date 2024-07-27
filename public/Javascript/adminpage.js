@@ -45,11 +45,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    if (document.getElementById('update-movie-form') || document.getElementById('delete-movie-form') || document.getElementById('add-movie-form')) {
+    if (document.getElementById('update-movie-form') ||document.getElementById('update-country-form') || document.getElementById('delete-movie-form') || document.getElementById('add-movie-form')) {
         fetchMovies();
         fetchCountries();
     }
-
+    
     document.getElementById('update-movie-form')?.addEventListener('submit', async function (e) {
         e.preventDefault();
 
@@ -152,4 +152,31 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Error deleting movie:', error);
         }
     });
+}
+);
+
+//Yi Hong S10257222H
+//Fetch DELETE function from back end to link with front end
+document.getElementById('delete-admin')?.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById('admin-email').value;
+
+    try {
+        const response = await fetch(`http://localhost:3000/admins/delete/${email}`, {
+            method: 'DELETE'
+
+        });
+
+        if (response.ok) {
+            alert('Admin deleted successfully');
+            window.location.href = 'adminpage.html'; //Redirect to admin page
+        }
+         else {
+            alert('Failed to delete admin');
+
+        }
+    } catch (error) {
+        console.error('Error deleting admin:', error);
+    }
 });
