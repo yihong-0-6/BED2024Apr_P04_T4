@@ -99,31 +99,37 @@
     });
 
     const deleteButton = document.getElementById("deleteButton");
-    deleteButton.addEventListener("click", async (event) =>{
-        event.preventDefault();
-
+    deleteButton.addEventListener("click", async function (e) {
+        console.log("button clicked");
+    
         const confirmed = confirm(
-        "Are you sure you want to delete your article? This action cannot be undone."
+            "Are you sure you want to delete this article? This action cannot be undone."
         );
         if (!confirmed) {
-        return;
+            return;
         }
-        
-        await fetch(`/articles/${localStorage.getItem('articleId')}`, {
-        method: "DELETE",
-        })
-        .then((response) => {
+    
+        const articleId = document.getElementById("article-id").value;
+    
+        try {
+            const response = await fetch(`http://localhost:3000/articles/${articleId}`, {
+                method: "DELETE",
+            });
+    
             if (response.ok) {
-            alert("Article deleted successfully.");
-            // Optionally redirect the user to another page
-            window.location.href = "./industry.html";
+                alert("Article deleted successfully.");
+                
+                // Store the deleted article ID in session storage
+                sessionStorage.setItem("deletedArticleId", articleId);
+    
+                // Optionally redirect the user to another page
+                window.location.href = "industry.html";
             } else {
                 alert("Failed to delete article.");
             }
-        })
-        .catch((error) => {
+        } catch (error) {
             console.error("Error:", error);
             alert("An error occurred. Please try again later.");
-        });
+        }
     });
 });

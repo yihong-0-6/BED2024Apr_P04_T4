@@ -74,7 +74,23 @@ button[type="submit"] {
     width: 100%;
 }
 
+
 button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+button[type="button"] {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+
+button[type="button"]:hover {
     background-color: #45a049;
 }
 
