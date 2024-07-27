@@ -3,7 +3,7 @@ const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 
 
-const validateUser = (req, res, next) => {
+const validateUserAccount = (req, res, next) => {
   const schema = Joi.object({
     username: Joi.string().min(4).max(50).required(),
     password: Joi.string().min(4).max(50).required(),
@@ -51,5 +51,4 @@ function verifyJWTuser(req, res, next) {
 
 
 
-module.exports = validateUser;
-module.exports = {verifyJWTuser};
+module.exports = {validateUserAccount, verifyJWTuser};
