@@ -1,6 +1,6 @@
 
 const sql = require('mssql');
-const dbConfig = require('../../dbconfig');
+const dbConfig = require("../dbConfig");
 
 class Forum {
   constructor(forumId, title, author, likes, dislikes, comments) {
