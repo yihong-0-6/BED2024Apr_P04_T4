@@ -11,16 +11,16 @@ const multer = require("multer");
 const cors = require("cors");
 
 // Controllers
-const forumController = require('./BED/controllers/forumController');
+const forumController = require("./BED/controllers/forumController");
 const userController = require("./BED/controllers/usersController");
 const articleController = require("./BED/controllers/articleController");
-const movieController = require('./BED/controllers/movieController');
-const adminController = require('./BED/controllers/adminController');
+const movieController = require("./BED/controllers/movieController");
+const adminController = require("./BED/controllers/adminController");
 
 // Middlewares
 const validateForum = require("./BED/middlewares/validateForum");
 const validateUser = require("./BED/middlewares/validateUser");
-const validateArticle = require('./BED/middlewares/validateArticle');
+const validateArticle = require("./BED/middlewares/validateArticle");
 const { validateAdmin, verifyJWTadmin } = require("./BED/middlewares/validateAdmin");
 
 const app = express();
@@ -224,8 +224,6 @@ app.get("/Community/id/:forumId", forumController.getForumById);
 app.delete("/Community/delete/:forumId", forumController.deleteForum);
 
 // User Routes
-app.post("/users/account/:id", validateUser.validateUserAccount, 
-userController.createUser);
 app.post("/users/account/login", userController.userLogin);
 app.get("/users/login/:id", userController.getUserById);
 app.put("/users/account/:id", userController.updateUser);
