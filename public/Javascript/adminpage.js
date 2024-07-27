@@ -1,14 +1,21 @@
+// Event listener for when the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
+
+    // Function to fetch movies from the server
     async function fetchMovies() {
         try {
+            // Make a GET request to fetch movies
             const response = await fetch("http://localhost:3000/movies");
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
+            // Parse the response as JSON
             const movies = await response.json();
+            // Get all select elements with the name 'movie-id'
             const movieSelects = document.querySelectorAll('select[name="movie-id"]');
 
+            // Populate each select element with movie options
             movieSelects.forEach(select => {
                 movies.forEach(movie => {
                     const option = document.createElement('option');
@@ -22,16 +29,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Function to fetch countries from the server
     async function fetchCountries() {
         try {
+            // Make a GET request to fetch countries
             const response = await fetch("http://localhost:3000/countries");
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
+            // Parse the response as JSON
             const countries = await response.json();
+            // Get all select elements with the name 'country-id' or 'country'
             const countrySelects = document.querySelectorAll('select[name="country-id"], select[name="country"]');
 
+            // Populate each select element with country options
             countrySelects.forEach(select => {
                 countries.forEach(country => {
                     const option = document.createElement('option');
@@ -45,17 +57,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Check if specific forms are present in the document and fetch initial data
     if (document.getElementById('update-movie-form') || document.getElementById('delete-movie-form') || document.getElementById('add-movie-form')) {
         fetchMovies();
         fetchCountries();
     }
 
+    // Event listener for the movie update form submission
     document.getElementById('update-movie-form')?.addEventListener('submit', async function (e) {
         e.preventDefault();
 
+        // Get the movie ID from the select element
         const movieId = document.getElementById('movie-id').value;
         const updates = {};
 
+        // Get form values and populate the updates object
         const name = document.getElementById('movie-name').value;
         const year = document.getElementById('movie-year').value;
         const director = document.getElementById('movie-director').value;
@@ -71,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (trailerUrl) updates.TrailerUrl = trailerUrl;
 
         try {
+            // Make a PUT request to update the movie
             const response = await fetch(`http://localhost:3000/movies/${movieId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -87,8 +104,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Event listener for the country update form submission
     document.getElementById('update-country-form')?.addEventListener('submit', async function (e) {
         e.preventDefault();
+        // Get the country ID from the select element
         const countryId = document.getElementById('country-id').value;
         const countryData = {
             CountryName: document.getElementById('country-name').value,
@@ -96,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         try {
+            // Make a PUT request to update the country
             const response = await fetch(`http://localhost:3000/countries/${countryId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -112,11 +132,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Event listener for the add movie form submission
     document.getElementById('add-movie-form')?.addEventListener('submit', async function (e) {
         e.preventDefault();
+        // Create a new FormData object from the form
         const formData = new FormData(this);
 
         try {
+            // Make a POST request to add a new movie
             const response = await fetch('http://localhost:3000/movies/add', {
                 method: 'POST',
                 body: formData
@@ -132,19 +155,22 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Event listener for the delete movie form submission
     document.getElementById('delete-movie-form')?.addEventListener('submit', async function (e) {
         e.preventDefault();
 
+        // Get the movie ID from the select element
         const movieId = document.getElementById('delete-movie-id').value;
 
         try {
+            // Make a DELETE request to remove the movie
             const response = await fetch(`http://localhost:3000/movies/${movieId}`, {
                 method: 'DELETE'
             });
 
             if (response.ok) {
                 alert('Movie deleted successfully');
-                location.reload();
+                location.reload(); // Reload the page to update the movie list
             } else {
                 alert('Failed to delete movie');
             }
