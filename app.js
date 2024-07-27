@@ -224,7 +224,7 @@ app.get("/Community/id/:forumId", forumController.getForumById);
 app.delete("/Community/delete/:forumId", forumController.deleteForum);
 
 // User Routes
-app.post("/users/account/:id", validateUser.validateUserAccount, 
+app.post("/users/account", validateUser.validateUserAccount, 
 userController.createUser);
 app.post("/users/account/login", userController.userLogin);
 app.get("/users/login/:id", userController.getUserById);

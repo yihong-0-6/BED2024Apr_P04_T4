@@ -14,8 +14,7 @@ const validateUserAccount = (req, res, next) => {
 
   if (validation.error) {
     const errors = validation.error.details.map((error) => error.message);
-    res.status(400).json({ message: "Validation error", errors });
-    return; // Terminate middleware execution on validation error
+    return res.status(400).json({ message: "Validation error", errors });
   }
 
   next(); // If validation passes, proceed to the next route handler
@@ -48,6 +47,6 @@ function verifyJWTuser(req, res, next) {
     // Proceed to the next middleware or route handler
     next();
   });
-}
+};
 
 module.exports = { validateUserAccount, verifyJWTuser };
