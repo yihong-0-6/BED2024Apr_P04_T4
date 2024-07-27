@@ -30,20 +30,20 @@ class User {
     }
   }
 
-  static async getUserById(userId) {
+  static async getUserById(id) {
     const connection = await sql.connect(dbConfig);
 
-    const sqlQuery = `SELECT * FROM Users WHERE userId = @userId`; // Parameterized query
+    const sqlQuery = `SELECT * FROM Users WHERE id = @id`; // Parameterized query
 
     const request = connection.request();
-    request.input("userId", userId);
+    request.input("id", id);
     const result = await request.query(sqlQuery);
 
     connection.close();
 
     return result.recordset[0]
       ? new User(
-          result.recordset[0].userId,
+          result.recordset[0].id,
           result.recordset[0].username,
           result.recordset[0].password,
           result.recordset[0].email
@@ -64,7 +64,7 @@ class User {
 
     return result.recordset[0]
       ? new User(
-          result.recordset[0].userId,
+          result.recordset[0].id,
           result.recordset[0].username,
           result.recordset[0].password,
           result.recordset[0].email
@@ -118,15 +118,15 @@ class User {
   }
 
   // Zhen Kang
-  static async updateUser(userId, newUserData) {
-    const createdUser = await this.getUserById(userId);
+  static async updateUser(id, newUserData) {
+    const createdUser = await this.getUserById(id);
     const connection = await sql.connect(dbConfig);
     
     const sqlQuery = `UPDATE Users SET username = @username, email = @email, 
-                            password = @password WHERE userId = @userId`; // Parameterized query
+                            password = @password WHERE id = @id`; // Parameterized query
 
     const request = connection.request();
-    request.input("userId",userId || createdUser.userId);
+    request.input("id",id || createdUser.id);
     request.input("username", newUserData.username || createdUser.username);
     request.input("email", newUserData.email || createdUser.email);
     request.input("password", newUserData.password || createdUser.password);
@@ -135,7 +135,7 @@ class User {
     
     connection.close();
 
-    return this.getUserById(userId);
+    return this.getUserById(id);
   }
 
 
