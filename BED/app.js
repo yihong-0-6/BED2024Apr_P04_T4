@@ -12,7 +12,7 @@ const cors = require("cors");
 
 // Controllers
 const forumController = require('./controllers/forumController');
-const loginController = require("./controllers/loginController");
+const userController = require("./controllers/usersController");
 const articleController = require("./controllers/articleController");
 const movieController = require('./controllers/movieController');
 const adminController = require('./controllers/adminController');
@@ -224,10 +224,12 @@ app.get("/Community/id/:forumId", forumController.getForumById);
 app.delete("/Community/delete/:forumId", forumController.deleteForum);
 
 // User Routes
-app.post("/user/account/login", loginController.userLogin);
-app.get("/login/:id", loginController.getUserById);
-app.put("/user/account/:id", loginController.updateUser);
-app.delete("/user/account/:id", loginController.deleteUser);
+app.post("/users/account/login", userController.userLogin);
+app.get("/users/login/:id", userController.getUserById);
+app.put("/users/account/:id", userController.updateUser);
+app.delete("/users/remove/:id", userController.deleteUser);
+app.post("/users/forgotpassword/:email", userController.forgotPassword);
+app.post("/users/verifyPassword", userController.confirmPassword);
 
 // Registration and Login Routes
 app.get("/registerUser", (req, res) => {
