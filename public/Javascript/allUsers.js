@@ -61,11 +61,14 @@ document.addEventListener('DOMContentLoaded', () => {
             
             document.getElementById('result').innerHTML = 
             `<pre>${JSON.stringify(updatedUser, null, 2)}</pre>`;
-        } 
-        
-        else {
+
             document.getElementById('result').textContent 
-            = 'Error updating user';
+            = 'User updated successfully!';
+        } 
+
+        else {
+          document.getElementById('result').textContent 
+          = 'Error updating user';
         }
     } 
     

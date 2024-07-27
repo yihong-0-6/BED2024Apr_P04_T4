@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/user.css">
+    <title>User Management</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>User Management</h1>
+
+        <!-- Form to Get User by ID -->
+        <h2>Get User by ID</h2>
+
+        <form id="getUserForm">
+            <input type="number" id="getUserId" placeholder="User ID" min="1"
+            required>
+            <button type="submit">Get User</button>
+        </form>
+
+        <!-- Form to Update User -->
+        <h2>Update User</h2>
+
+        <form id="updateUserForm">
+            <input type="number" id="updateUserId" placeholder="User ID" min="1" required>
+            <input type="text" id="updateUsername" placeholder="New Username">
+            <input type="email" id="updateEmail" placeholder="New Email">
+            <input type="password" id="updatePassword" placeholder="New Password">
+            <button type="submit">Update User</button>
+
+        </form>
+
+        <!-- Form to Delete User -->
+        <h2>Delete User</h2>
+
+        <form id="deleteUserForm">
+            <input type="number" id="deleteUserId" placeholder="User ID" min="1"
+            required>
+
+            <button type="submit">Delete User</button>
+        </form>
+
+        <!-- Back to Login Button -->
+        <a href="mainlogin.html" class="back-button">Back to Login</a>
+
+        <div id="result">
+
+        </div>
+    </div>
+
+    <script src="../Javascript/allUsers.js"></script>
+
+  </body>
+</html>
