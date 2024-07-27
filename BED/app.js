@@ -9,7 +9,7 @@ const cors = require("cors");
 
 // Controllers
 const forumController = require('./controllers/forumController');
-const loginController = require("./controllers/loginController");
+const userController = require("./controllers/userController");
 const articleController = require("./controllers/articleController");
 const movieController = require('./controllers/movieController');
 const adminController = require('./controllers/adminController');
@@ -48,23 +48,37 @@ app.get("/Community/forums", async (req, res) => {
   res.sendFile(filePath);
 });
 
-
 // Get forum by Id
 app.get("/Community/id/:forumId", forumController.getForumById);
 
 // Deleting a forum
 app.delete("/Community/delete/:forumId", forumController.deleteForum);
 
-app.post("/user/account/login", loginController.userLogin);
+// Create new user
+app.post("/users/account", validateUser.validateUserAccount, 
+userController.createUser);
+
+// Get all users
+app.get("/users/accounts/:id", userController.getAllUsers);
+
+// User Login
+app.post("/users/account/login", userController.userLogin);
 
 // Get user by Id
-app.get("/login/:id", loginController.getUserById);
+app.get("/users/login/:id", userController.getUserById);
+
+// Forget Password
+app.post("/users/forgotpassword/:email", userController.forgotPassword);
+
+app.post("/users/verifyPassword", userController.confirmPassword);
 
 // Update user
-app.put("/user/account/:id", loginController.updateUser);
+app.put("/users/account/:id", userController.updateUser);
 
 // Remove user
-app.delete("/user/account/:id", loginController.deleteUser);
+app.delete("/users/remove/:id", userController.deleteUser);
+
+
 
 app.get("/registerUser", (req, res) => {
   const filePath = path.join(__dirname, "public", "html", "mainsignup.html");

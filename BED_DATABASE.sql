@@ -75,14 +75,10 @@ VALUES (1, 'Economic Development in Southeast Asia', 'Alex Harper', 'Good discus
 CREATE TABLE Users (
     id INT IDENTITY(1,1) PRIMARY KEY,
     username NVARCHAR(50) NOT NULL,
-    password NVARCHAR(50) NOT NULL,
+    password NVARCHAR(255) NOT NULL,
 	email NVARCHAR(50) NOT NULL
 );
 
-INSERT INTO Users (username, password, email)
-VALUES 
-   ('User123', 'pass1234', 'User123@gmail.com'), 
-   ('admin123', 'forum456', 'admin123@gmail.com');
 
 CREATE TABLE Admins (
     id INT IDENTITY(1,1) PRIMARY KEY,
