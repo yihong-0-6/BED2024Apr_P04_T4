@@ -1,6 +1,6 @@
 // Event listener for when the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
-
+    
     // Function to fetch movies from the server
     async function fetchMovies() {
         try {
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
 
         // Get the movie ID from the select element
-        const movieId = document.getElementById('delete-movie-id').value;
+        const movieId = document.getElementById('movie-id').value;
 
         try {
             // Make a DELETE request to remove the movie
@@ -178,31 +178,26 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Error deleting movie:', error);
         }
     });
-}
-);
 
-//Yi Hong S10257222H
-//Fetch DELETE function from back end to link with front end
-document.getElementById('delete-admin')?.addEventListener('submit', async function (e) {
-    e.preventDefault();
+    // Event listener for the delete admin form submission
+    document.getElementById('delete-admin')?.addEventListener('submit', async function (e) {
+        e.preventDefault();
 
-    const email = document.getElementById('admin-email').value;
+        const email = document.getElementById('admin-email').value;
 
-    try {
-        const response = await fetch(`http://localhost:3000/admins/delete/${email}`, {
-            method: 'DELETE'
+        try {
+            const response = await fetch(`http://localhost:3000/admins/delete/${email}`, {
+                method: 'DELETE'
+            });
 
-        });
-
-        if (response.ok) {
-            alert('Admin deleted successfully');
-            window.location.href = 'adminpage.html'; //Redirect to admin page
+            if (response.ok) {
+                alert('Admin deleted successfully');
+                window.location.href = 'adminpage.html'; // Redirect to admin page
+            } else {
+                alert('Failed to delete admin');
+            }
+        } catch (error) {
+            console.error('Error deleting admin:', error);
         }
-         else {
-            alert('Failed to delete admin');
-
-        }
-    } catch (error) {
-        console.error('Error deleting admin:', error);
-    }
+    });
 });
