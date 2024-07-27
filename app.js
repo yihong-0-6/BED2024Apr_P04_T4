@@ -9,6 +9,10 @@ const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
 const multer = require("multer");
 const cors = require("cors");
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json'); // Import generated spec
+
+
 
 // Controllers
 const forumController = require("./BED/controllers/forumController");
@@ -25,6 +29,10 @@ const { validateAdmin, verifyJWTadmin } = require("./BED/middlewares/validateAdm
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+
+// Serve the Swagger UI at a specific route
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Middleware setup
 app.use(cors());

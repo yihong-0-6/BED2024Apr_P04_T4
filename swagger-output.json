@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Southeast Asia Readines",
-    "description": "Test All Routes On This Website",
+    "title": "AgriDynamic",
+    "description": "Test All Admin and User Routes",
     "version": "1.0.0"
   },
   "host": "localhost:3000",
@@ -202,6 +202,19 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/Community/forums": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -230,28 +243,27 @@
         }
       }
     },
-      "/Community/delete/:{forumId}": {
-      "summary": "Delete a forum post by ID",
-      "description": "Deletes a forum post by its ID.",
-      "parameters": [
-        {
-          "name": "forumId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "integer"
+    "/Community/delete/{forumId}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "forumId",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
-        }
-      ],
-      "responses": {
-        "204": {
-          "description": "Forum post deleted successfully"
-        },
-        "404": {
-          "description": "Forum post not found"
-        },
-        "500": {
-          "description": "Internal server error"
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
         }
       }
     },
@@ -399,9 +411,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           },
@@ -480,12 +489,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }
@@ -496,15 +499,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }
@@ -749,4 +743,3 @@
     }
   }
 }
-
