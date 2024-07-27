@@ -6,10 +6,16 @@ html, body {
   box-sizing: border-box;
   width: 100%;
   background-color: #FAFDF3;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 body {
   font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 h1 {
@@ -42,13 +48,17 @@ h3 {
   color: #000000;
 }
 
+.container {
+  flex: 1;
+}
+
+/* footer styles --------------------------------------------------------------------------------- */
 footer {
-  background-color: #A8C39B; /* Match the header's background color */
+  background-color: #A8C39B; 
   color: rgb(0, 0, 0);
   text-align: center;
-  padding: 10px 0; /* Adjusted padding for a more compact footer */
+  padding: 10px 0;
   width: 100%;
-  bottom: 0;
 }
 
 .footer-container {
