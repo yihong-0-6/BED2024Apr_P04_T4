@@ -266,5 +266,5 @@ ALTER COLUMN password VARCHAR(150);
 
 UPDATE Movies
 SET TrailerUrl = 'https://www.youtube.com/embed/nAYUv9wjV48?si=IIStAoZkfhljTm6r',
-    ImageUrl = 'http://example.com/image.jpg'
+    ImageUrl = '/Images/moviesimage1.jpg'
 WHERE ID = 1;
