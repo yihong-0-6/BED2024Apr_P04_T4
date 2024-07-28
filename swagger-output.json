@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Southeast Asia Readines",
+    "title": "Southeast Asia Readiness",
     "description": "Test All Routes On This Website",
     "version": "1.0.0"
   },
@@ -230,31 +230,30 @@
         }
       }
     },
-      "/Community/delete/:{forumId}": {
-      "summary": "Delete a forum post by ID",
-      "description": "Deletes a forum post by its ID.",
-      "parameters": [
-        {
-          "name": "forumId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "integer"
+      "/Community/remove/{forumId}": {
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "forumId",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Deleted, No Content"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
           }
         }
-      ],
-      "responses": {
-        "204": {
-          "description": "Forum post deleted successfully"
-        },
-        "404": {
-          "description": "Forum post not found"
-        },
-        "500": {
-          "description": "Internal server error"
-        }
-      }
-    },
+      },
     "/users/account/login": {
       "post": {
         "description": "",
@@ -288,6 +287,7 @@
           "500": {
             "description": "Internal Server Error"
           }
+          
         }
       }
     },
@@ -315,6 +315,70 @@
         }
       }
     },
+    "/users/account/{id}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "example": ""
+                },
+                "email": {
+                  "example": ""
+                },
+                "password": {
+                  "example": ""
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "get": {
+      "description": "",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "OK"
+        },
+        "404": {
+          "description": "Not Found"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      }
+    },
     "/users/account": {
       "post": {
         "description": "",
@@ -333,7 +397,7 @@
                 },
                 "password": {
                   "example": "any"
-                }
+                }             
               }
             }
           }
@@ -344,42 +408,6 @@
           },
           "400": {
             "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/users/account/{id}": {
-      "put": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "password": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"

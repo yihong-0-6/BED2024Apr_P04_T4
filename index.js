@@ -228,7 +228,7 @@ app.get("/Community/forums", async (req, res) => {
   res.sendFile(filePath);
 });
 app.get("/Community/id/:forumId", forumController.getForumById);
-app.delete("/Community/delete/:forumId", forumController.deleteForum);
+app.delete("/Community/remove/:forumId", forumController.deleteForum);
 
 // User Routes
 app.post("/users/account/login", userController.userLogin);
