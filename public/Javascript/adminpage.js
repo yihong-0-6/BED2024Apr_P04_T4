@@ -29,21 +29,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Function to fetch countries from the server
     async function fetchCountries() {
         try {
-            // Make a GET request to fetch countries
             const response = await fetch("http://localhost:3000/countries");
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            // Parse the response as JSON
             const countries = await response.json();
-            // Get all select elements with the name 'country-id' or 'country'
+            console.log('Fetched countries:', countries); // Debugging line
+
             const countrySelects = document.querySelectorAll('select[name="country-id"], select[name="country"]');
 
-            // Populate each select element with country options
             countrySelects.forEach(select => {
                 countries.forEach(country => {
                     const option = document.createElement('option');
@@ -56,6 +53,9 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Error fetching countries:', error);
         }
     }
+
+    fetchCountries();
+
 
     // Check if specific forms are present in the document and fetch initial data
     if (document.getElementById('update-movie-form') || document.getElementById('delete-movie-form') || document.getElementById('add-movie-form')) {
