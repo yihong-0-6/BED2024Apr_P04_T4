@@ -126,7 +126,7 @@ class User {
                             password = @password WHERE id = @id`; // Parameterized query
 
     const request = connection.request();
-    request.input("id",id || createdUser.id);
+    request.input("id", newUserData.id || createdUser.id);
     request.input("username", newUserData.username || createdUser.username);
     request.input("email", newUserData.email || createdUser.email);
     request.input("password", newUserData.password || createdUser.password);
@@ -172,7 +172,28 @@ class User {
 
     return result.rowsAffected > 0; 
   }
-}
 
+
+static async forgotpassword(email){
+  const connection = await sql.connect(dbConfig);
+
+  const sqlQuery = `SELECT * FROM Users WHERE email = email`;
+
+  const request = connection.request();
+  request.input('email', email);
+  const result = await request.query(sqlQuery);
+
+  connection.close();
+
+  return result.recordset[0]
+    ? new User(
+        result.recordset[0].id,
+        result.recordset[0].username,
+        result.recordset[0].email,
+        result.recordset[0].password,
+      )
+  : null;
+  }
+} 
 
 module.exports = User;

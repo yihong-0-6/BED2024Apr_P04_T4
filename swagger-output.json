@@ -209,16 +209,6 @@
         }
       }
     },
-    "/Community/forums": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/Community/id/{forumId}": {
       "get": {
         "description": "",
