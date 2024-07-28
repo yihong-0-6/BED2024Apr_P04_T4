@@ -219,6 +219,71 @@ app.get('/movies/:id', async (req, res) => {
     res.sendStatus(500);
   }
 });
+// Fetch movies and countries
+app.get("/movies/firstsix", movieController.getFirstSixMovies);
+app.get("/movies/:id", movieController.getMovieById);
+app.get("/movies", movieController.getAllMovies);
+
+app.get("/countries", async (req, res) => {
+  try {
+    const connection = await sql.connect(dbConfig);
+    const result = await connection.request().query("SELECT ID, CountryName, Description FROM Countries");
+    res.json(result.recordset);
+  } catch (err) {
+    console.error("Error fetching countries:", err);
+    res.status(500).send("Error fetching countries");
+  }
+});
+
+app.put('/movies/:id', async (req, res) => {
+  const movieId = req.params.id;
+  const updates = req.body;
+
+  let query = 'UPDATE Movies SET ';
+  const fields = Object.keys(updates).map((key, index) => {
+    return `${key} = @${key}`;
+  });
+  query += fields.join(', ') + ' WHERE ID = @ID';
+
+  try {
+    const pool = await sql.connect(dbConfig);
+    const request = pool.request();
+
+    Object.keys(updates).forEach(key => {
+      request.input(key, updates[key]);
+    });
+    request.input('ID', sql.Int, movieId);
+
+    console.log('Executing query:', query);
+    console.log('With parameters:', updates);
+
+    await request.query(query);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error('Error updating movie:', err);
+    res.sendStatus(500);
+  }
+});
+
+app.get('/movies/:id', async (req, res) => {
+  const movieId = req.params.id;
+
+  try {
+    const pool = await sql.connect(dbConfig);
+    const result = await pool.request()
+      .input('ID', sql.Int, movieId)
+      .query('SELECT * FROM Movies WHERE ID = @ID');
+
+    if (result.recordset.length > 0) {
+      res.json(result.recordset[0]);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (err) {
+    console.error('Error fetching movie details:', err);
+    res.sendStatus(500);
+  }
+});
 
 // Forum Routes
 app.post('/Community/create', validateForum.forumValidation, forumController.createForum);
