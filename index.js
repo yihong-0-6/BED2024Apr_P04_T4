@@ -168,6 +168,7 @@ app.get("/countries", async (req, res) => {
   }
 });
 
+// Update country endpoint
 app.put('/countries/:id', async (req, res) => {
   const countryId = req.params.id;
   const { CountryName, Description } = req.body;
@@ -192,6 +193,7 @@ app.put('/countries/:id', async (req, res) => {
   }
 });
 
+// Update movie endpoint
 app.put('/movies/:id', async (req, res) => {
   const movieId = req.params.id;
   const updates = req.body;
@@ -222,6 +224,7 @@ app.put('/movies/:id', async (req, res) => {
   }
 });
 
+// Get movie details endpoint
 app.get('/movies/:id', async (req, res) => {
   const movieId = req.params.id;
 
@@ -292,6 +295,7 @@ process.on("SIGINT", async () => {
   process.exit(0);
 });
 
+// Start the server
 app.listen(port, async () => {
   try {
     await sql.connect(dbConfig);
