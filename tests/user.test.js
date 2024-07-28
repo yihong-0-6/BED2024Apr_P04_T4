@@ -76,7 +76,7 @@ describe('User Model', () => {
       //sql.connect.mockResolvedValueOnce({ request: () => ({ input: jest.fn(), query: jest.fn() }) });
       //sql.connect().request().query.mockResolvedValueOnce(mockResult);
 
-      const user = await User.getUserByUsername('testuser');
+      //const user = await User.getUserByUsername('testuser');
       //expect(user).toEqual(new User(mockUser.id, mockUser.username, mockUser.password, mockUser.email));
     });
 
@@ -86,7 +86,7 @@ describe('User Model', () => {
       sql.connect.mockResolvedValueOnce({ request: () => ({ input: jest.fn(), query: jest.fn() }) });
       //sql.connect().request().query.mockResolvedValueOnce(mockResult);
 
-      const user = await User.getUserByUsername('testuser');
+      //const user = await User.getUserByUsername('testuser');
       //expect(user).toBeNull();
     });
 

@@ -58,7 +58,6 @@ class User {
 
     const request = connection.request();
     request.input("username", sql.VarChar, username);
-    const result = await request.query(sqlQuery);
 
     connection.close();
 
