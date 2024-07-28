@@ -9,7 +9,7 @@ const getAllUsers = async(req, res) => {
     const user = await User.getAllUsers(id);
 
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404).send("User not found! Please Sign up");
     }
     res.json(user);
   } 
