@@ -37,4 +37,10 @@ https://www.imdb.com/title/tt2375605/
 https://en.wikipedia.org/wiki/KL_Gangster_2
 https://en.wikipedia.org/wiki/Thingyan_Moe
 https://www.imdb.com/title/tt4911656/
+https://www.japantimes.co.jp/business/2023/09/21/southeast-asia-cinema-growth/
+https://www.screendaily.com/features/how-the-vietnam-film-industry-is-booming-even-in-the-face-of-censorship/5185618.article
+https://www.straitstimes.com/life/entertainment/ai-film-festival-gives-glimpse-of-cinema-s-future
+https://metropolitant.com/2024/06/20/x3d-studio-pioneering-virtual-production-in-southeast-asia/
+https://www.ricemedia.co/for-over-a-decade-singaporean-cinema-was-dead-then-the-90s-came-along/
+https://www.screendaily.com/features/how-independent-filmmakers-in-southeast-asia-are-on-the-rise/5142223.article
 ```
