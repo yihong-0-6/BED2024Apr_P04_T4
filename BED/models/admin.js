@@ -1,18 +1,21 @@
+//Yi Hong S10257222H
 const sql = require('mssql');
-const dbConfig = require('../../dbconfig')
+const dbConfig = require('../../dbconfig') 
 
+//Admins Model
 class Admins{
     constructor(email, password){
         this.email = email;
         this.password = password;
     }
 
+    //Method to handle admin logins
     static async adminLogin(email, password) {
-        const connection = await sql.connect(dbConfig);
+        const connection = await sql.connect(dbConfig); //Connects to sql database
 
-        const sqlQuery = `SELECT * FROM Admins WHERE email = @email`;
+        const sqlQuery = `SELECT * FROM Admins WHERE email = @email`; //Finding the admin in the database
         const request = connection.request();
-
+      
         request.input('email', sql.VarChar, email);
         request.input('password', sql.VarChar, password);
 
@@ -28,10 +31,11 @@ class Admins{
         }
     }
 
+    //Method to find admin by email
     static async getAdminsByEmail(email) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `SELECT * FROM Admins WHERE email = @email`; // Parameterized query
+        const sqlQuery = `SELECT * FROM Admins WHERE email = @email`; 
     
         const request = connection.request();
         request.input("email", email);
@@ -41,17 +45,17 @@ class Admins{
     
         return result.recordset[0]
           ? new Admins(
-              result.recordset[0].email,
-              result.recordset[0].password,
+              result.recordset[0].email, 
+              result.recordset[0].password, 
             )
           : null;
       }
 
-      //Yi Hong
+      //Method to display all the admins in database
       static async getAllAdmins() {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `SELECT email, password FROM Admins`;
+        const sqlQuery = `SELECT email, password FROM Admins`; //Displays both email and password
     
         const request = connection.request();
         const result = await request.query(sqlQuery);
@@ -63,11 +67,12 @@ class Admins{
         ); // Convert rows to Admin objects
       }
 
+      //Method to create new admin
       static async createAdmin(newAdminsData) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `INSERT INTO Admins (email, password) 
-        VALUES (@email, @password);`
+        const sqlQuery = `INSERT INTO Admins (email, password)  
+        VALUES (@email, @password);` //Inserting new admin data into the database
     
         const request = connection.request();
         request.input("email", newAdminsData.email)
@@ -77,34 +82,17 @@ class Admins{
     
         connection.close();
     
-        return this.getAllAdmins();
+        return this.getAllAdmins(); //Calling method to display all admins in database
       }
 
-      static async updateAdmin(email, newAdminsData) {
-        const createdAdmin = await this.getAdminByEmail(email);
-        const connection = await sql.connect(dbConfig);
-        
-        const sqlQuery = `UPDATE Admins SET email = @email, 
-                                password = @password WHERE email = @email`; // Parameterized query
-    
-        const request = connection.request();
-        request.input("email", newAdminsData.email || createdAdmin.email);
-        request.input("password", newAdminsData.password || createdAdmin.password);
-    
-        await request.query(sqlQuery);
-        
-        connection.close();
-    
-        return this.getAdminByEmail(email);
-      }
-
+      //Method to delete admin in database
       static async deleteAdmin(email) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `DELETE FROM Admins WHERE email = @email`; // Parameterized query
+        const sqlQuery = `DELETE FROM Admins WHERE email = @email`; //Deleting admin rows by specific email
     
         const request = connection.request();
-        request.input("email", email);
+        request.input("email", sql.VarChar, email);
         const result = await request.query(sqlQuery);
     
         connection.close();

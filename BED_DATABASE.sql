@@ -87,7 +87,7 @@ VALUES
 CREATE TABLE Admins (
     id INT IDENTITY(1,1) PRIMARY KEY,
 	email NVARCHAR(50) NOT NULL,
-    password NVARCHAR(50) NOT NULL
+    password NVARCHAR(150) NOT NULL
 );
 
 INSERT INTO Admins (email, password)
@@ -260,3 +260,11 @@ ADD TrailerUrl NVARCHAR(255);
 
 ALTER TABLE Movies
 ADD ImageUrl NVARCHAR(255);
+
+ALTER TABLE Admins 
+ALTER COLUMN password VARCHAR(150);
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/nAYUv9wjV48?si=IIStAoZkfhljTm6r',
+    ImageUrl = '/Images/moviesimage1.jpg'
+WHERE ID = 1;

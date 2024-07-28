@@ -6,10 +6,28 @@ html, body {
   box-sizing: border-box;
   width: 100%;
   background-color: #FAFDF3;
+  height: 100%;
+}
+
+main.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 body {
   font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 h1 {
@@ -42,13 +60,27 @@ h3 {
   color: #000000;
 }
 
+.container {
+  flex: 1;
+}
+
+main.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* footer styles --------------------------------------------------------------------------------- */
 footer {
-  background-color: #A8C39B; /* Match the header's background color */
+  background-color: #A8C39B; 
   color: rgb(0, 0, 0);
   text-align: center;
-  padding: 10px 0; /* Adjusted padding for a more compact footer */
+  padding: 10px 0;
   width: 100%;
-  bottom: 0;
+  margin-top: auto;
 }
 
 .footer-container {

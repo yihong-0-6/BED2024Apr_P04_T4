@@ -1,3 +1,5 @@
+//Yi Hong S10257222H
+//Fetch POST function from back end to link with front end.
 document.getElementById('loginForm').addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -16,9 +18,7 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
         const data = await response.json();
 
         if (response.ok) {
-            localStorage.setItem('token', data.token);
-            alert('Login successful!');
-            window.location.href = 'adminpage.html'; // Redirect to admin dashboard
+            window.location.href = 'adminpage.html'; // Redirect to admin page
 
         } else {
             document.getElementById('message').innerText = data.message;

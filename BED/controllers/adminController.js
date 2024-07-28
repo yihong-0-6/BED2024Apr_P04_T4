@@ -1,56 +1,45 @@
-//Yi Hong
+//Yi Hong S10257222
 const Admins = require("../models/admin");
-const bcryptjs = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { validateAdmin } = require("../middlewares/validateAdmin");
 
+//Method to handle admin log in
 async function adminLogin(req, res) {
   const { email, password } = req.body;
 
   try {
-    // Validate user input
+    //Validate user input
     if (!email || !password) {
       return res.status(400).json({ message: "Email and password are required" });
     }
 
-    // Retrieve user from database by username
+    //Retrieve user from database by username
     const admin = await Admins.getAdminsByEmail(email);
 
     if (!admin) {
       return res.status(404).json({ message: "Admin not found" });
     }
 
-    // Compare password
-    const passwordMatch = await bcryptjs.compare(password, admin.password);
+    //Compare password using bcrypt
+    const passwordMatch = await bcrypt.compare(password, admin.password);
     
     if (!passwordMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-
-    // Ensure JWT secret key is defined
-    if (!process.env.JWT_SECRET_KEY) {
-      console.error("JWT secret key is not defined");
-      return res.status(500).json({ message: "Internal server error" });
+    else{
+      const loggedIn = await Admins.adminLogin(password);
+      res.status(201).json(loggedIn);
     }
 
-    // Generate JWT token
-    const payload = {
-      email: admin.email
-    };
-
-    // Sign token with secret and set expiry
-    const token = jwt.sign(payload, process.env.JWT_SECRET_KEY,
-      { expiresIn: "3600s" }); // Expires in 1 hour
-      
-    // Return token to client
-    res.status(200).json({ token });
-  } 
-  
+  }
   catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 }
   
+//Method to retrieve admin details by email
   const getAdminsByEmail = async (req, res) => {
     const email = req.params.email;
   
@@ -68,6 +57,7 @@ async function adminLogin(req, res) {
       }
   }
 
+  //Method to retrieve all admin details in database
   const getAllAdmins = async (req, res) => {
     try {
       const admin = await Admins.getAllAdmins();
@@ -77,37 +67,13 @@ async function adminLogin(req, res) {
       console.error(error);
       res.status(500).send("Error retrieving admins");
     }
-  };
+  };  
   
-  const updateAdmin = async (req, res) => {
-    const email = req.params.email;
-    const newAdminsData = req.body;
-  
-    try {
-        if (newAdminsData.password) {
-            // Hash the new password
-            const salt = await bcryptjs.genSalt(10);
-            newAdminsData.password = await bcryptjs.hash(newAdminsData.password, salt);
-        }
-  
-        const updatedAdmin = await Admins.updateAdmin(email, newAdminsData);
-  
-        if (!updatedAdmin) {
-            return res.status(404).send("Admin not found");
-        }
-        res.json(updatedAdmin);
-    } 
-    
-    catch (error) {
-        console.error("Update Admin Error: ", error);
-        res.status(500).send("Error updating Admin");
-    }
-  };
-  
-  
+  //Method to create a new admin in database
   const createAdmin = async (req, res) => {
-    const newAdminsData = req.body;
     try {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10) //Hashing the password using bcrypt and salt
+      const newAdminsData = { email: req.body.email, password: hashedPassword} //Setting the variables
       const createdAdmin = await Admins.createAdmin(newAdminsData);
       res.status(201).json(createdAdmin);
     } catch (error) {
@@ -116,11 +82,12 @@ async function adminLogin(req, res) {
     }
   };
   
+  //Method to delete admin data from database
   const deleteAdmin = async (req, res) => {
     const email = req.params.email;
   
     try {
-      const success = await Admins.deleteAdmin(email);
+      const success = await Admins.deleteAdmin(email); //Ensure admin exists
       if (!success) {
         return res.status(404).send("Admin not found");
       }
@@ -138,7 +105,6 @@ async function adminLogin(req, res) {
     adminLogin,
     getAdminsByEmail,
     getAllAdmins,
-    updateAdmin,
     createAdmin,
     deleteAdmin
   }

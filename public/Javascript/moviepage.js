@@ -1,13 +1,18 @@
+// Function to fetch and display movies
 async function fetchMovies() {
     try {
+        // Fetch movies from the server
         const response = await fetch("http://localhost:3000/movies");
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
+        // Parse the response as JSON
         const data = await response.json();
+        // Get the movie list container element
         const movieList = document.getElementById("movie-list");
 
+        // Iterate over each movie and create HTML elements to display them
         data.forEach((movie) => {
             const movieItem = document.createElement("div");
             movieItem.classList.add("movie");
@@ -20,32 +25,36 @@ async function fetchMovies() {
             titleElement.textContent = movie.Name;
 
             const yearElement = document.createElement("p");
-            
+            yearElement.textContent = `Year: ${movie.Published_Year}`;
 
             const directorElement = document.createElement("p");
-            
+            directorElement.textContent = `Director: ${movie.Director}`;
 
             const countryElement = document.createElement("p");
-            
+            countryElement.textContent = `Country: ${movie.Country}`;
 
             // Add click event listener to navigate to movieDetail.html with the movie ID
             movieItem.addEventListener('click', () => {
                 const detailUrl = `movieDetail.html?id=${movie.ID}`;
-                console.log(`Navigating to: ${detailUrl}`); // Add this log
+                console.log(`Navigating to: ${detailUrl}`); // Add this log for debugging
                 window.location.href = detailUrl;
             });
 
+            // Append created elements to the movie item
             movieItem.appendChild(imgElement);
             movieItem.appendChild(titleElement);
             movieItem.appendChild(yearElement);
             movieItem.appendChild(directorElement);
             movieItem.appendChild(countryElement);
 
+            // Append the movie item to the movie list container
             movieList.appendChild(movieItem);
         });
     } catch (error) {
+        // Log any errors that occur during fetch
         console.error("Error fetching movie details:", error);
     }
 }
 
+// Call the fetchMovies function to fetch and display movies when the DOM is fully loaded
 fetchMovies();
