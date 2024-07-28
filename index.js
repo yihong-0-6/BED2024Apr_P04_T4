@@ -54,38 +54,51 @@ async function getLastMovieID() {
 
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
+  // Set the destination for uploaded files
   destination: function (req, file, cb) {
-    cb(null, 'public/Images');
+    cb(null, 'public/Images'); // Save files in the 'public/Images' directory
   },
+  // Set the filename for uploaded files
   filename: async function (req, file, cb) {
     try {
+      // Get the ID of the last movie in the database
       const lastMovieID = await getLastMovieID();
+      // Increment the ID to create a new unique ID for the new movie
       const newMovieID = lastMovieID + 1;
+      // Generate a new image name using the new movie ID and the original file extension
       const newImageName = `moviesimage${newMovieID}${path.extname(file.originalname)}`;
+      // Call the callback function with the new image name
       cb(null, newImageName);
     } catch (err) {
+      // Call the callback function with the error if any occurs
       cb(err);
     }
   }
 });
+
+// Initialize the multer upload configuration with the specified storage settings
 const upload = multer({ storage: storage });
 
 // Add movie endpoint
 app.post('/movies/add', upload.single('image'), async (req, res) => {
   try {
+    // Destructure request body to get movie details
     const { name, publishedYear, director, country, description, trailerUrl } = req.body;
-    const image = req.file;
+    const image = req.file; // Get the uploaded image file
 
+    // Check if any required field is missing
     if (!name || !publishedYear || !director || !country || !description || !trailerUrl || !image) {
-      return res.status(400).send('Missing required fields');
+      return res.status(400).send('Missing required fields'); // Return error if any field is missing
     }
 
-    // Get the next movie ID from the database
+    // Connect to the database
     const pool = await sql.connect(dbConfig);
+    // Get the highest movie ID from the Movies table
     const result = await pool.request().query('SELECT MAX(ID) AS maxID FROM Movies');
-    const maxID = result.recordset[0].maxID || 0;
-    const movieID = maxID + 1;
+    const maxID = result.recordset[0].maxID || 0; // Get the max ID, or 0 if no records exist
+    const movieID = maxID + 1; // Calculate new movie ID
 
+    // Create an object with the new movie data
     const movieData = {
       ID: movieID,
       Name: name,
@@ -94,156 +107,162 @@ app.post('/movies/add', upload.single('image'), async (req, res) => {
       Country: country,
       Description: description,
       TrailerUrl: trailerUrl,
-      ImageUrl: `/Images/moviesimage${movieID}${path.extname(image.originalname)}`
+      ImageUrl: `/Images/moviesimage${movieID}${path.extname(image.originalname)}` // Generate the image URL
     };
 
+    // SQL query to insert the new movie data
     const query = `
       INSERT INTO Movies (ID, Name, Published_Year, Director, Country, Description, TrailerUrl, ImageUrl)
       VALUES (@ID, @Name, @Published_Year, @Director, @Country, @Description, @TrailerUrl, @ImageUrl)
     `;
 
+    // Create a request and add the movie data as inputs
     const request = pool.request();
     Object.keys(movieData).forEach(key => {
       request.input(key, movieData[key]);
     });
 
-    console.log('Executing query:', query);
-    console.log('With parameters:', movieData);
+    console.log('Executing query:', query); // Log the query
+    console.log('With parameters:', movieData); // Log the parameters
 
-    await request.query(query);
-    res.status(200).send('Movie added successfully');
+    await request.query(query); // Execute the query
+    res.status(200).send('Movie added successfully'); // Send success response
   } catch (error) {
-    console.error('Error adding movie:', error);
-    res.status(500).send('Error adding movie: ' + error.message);
+    console.error('Error adding movie:', error); // Log any error
+    res.status(500).send('Error adding movie: ' + error.message); // Send error response
   }
 });
 
 // Delete movie endpoint
 app.delete('/movies/:id', async (req, res) => {
-  const movieId = req.params.id;
+  const movieId = req.params.id; // Get movie ID from the URL parameters
 
   try {
-    const pool = await sql.connect(dbConfig);
+    const pool = await sql.connect(dbConfig); // Connect to the database
+    // Query to get the image URL of the movie to be deleted
     const result = await pool.request()
       .input('ID', sql.Int, movieId)
       .query('SELECT ImageUrl FROM Movies WHERE ID = @ID');
 
     if (result.recordset.length === 0) {
-      return res.status(404).send('Movie not found');
+      return res.status(404).send('Movie not found'); // Return error if movie not found
     }
 
-    const imageUrl = result.recordset[0].ImageUrl;
-    const imagePath = path.join(__dirname, 'public', imageUrl);
+    const imageUrl = result.recordset[0].ImageUrl; // Get the image URL
+    const imagePath = path.join(__dirname, 'public', imageUrl); // Construct the image path
 
     // Delete the movie from the database
     await pool.request()
       .input('ID', sql.Int, movieId)
       .query('DELETE FROM Movies WHERE ID = @ID');
 
-    // Delete the image file from the local storage
+    // Delete the image file from local storage if it exists
     if (fs.existsSync(imagePath)) {
       fs.unlinkSync(imagePath);
     }
 
-    res.status(200).send('Movie and associated image deleted successfully');
+    res.status(200).send('Movie and associated image deleted successfully'); // Send success response
   } catch (error) {
-    console.error('Error deleting movie:', error);
-    res.status(500).send('Error deleting movie: ' + error.message);
+    console.error('Error deleting movie:', error); // Log any error
+    res.status(500).send('Error deleting movie: ' + error.message); // Send error response
   }
 });
 
 // Fetch movies and countries
-app.get("/movies/firstsix", movieController.getFirstSixMovies);
-app.get("/movies/:id", movieController.getMovieById);
-app.get("/movies", movieController.getAllMovies);
+app.get("/movies/firstsix", movieController.getFirstSixMovies); // Route to get first six movies
+app.get("/movies/:id", movieController.getMovieById); // Route to get a movie by ID
+app.get("/movies", movieController.getAllMovies); // Route to get all movies
 
 app.get("/countries", async (req, res) => {
   try {
-    const connection = await sql.connect(dbConfig);
-    const result = await connection.request().query("SELECT ID, CountryName, Description FROM Countries");
-    res.json(result.recordset);
+    const connection = await sql.connect(dbConfig); // Connect to the database
+    const result = await connection.request().query("SELECT ID, CountryName, Description FROM Countries"); // Query to get all countries
+    res.json(result.recordset); // Send the result as JSON
   } catch (err) {
-    console.error("Error fetching countries:", err);
-    res.status(500).send("Error fetching countries");
+    console.error("Error fetching countries:", err); // Log any error
+    res.status(500).send("Error fetching countries"); // Send error response
   }
 });
 
 // Update country endpoint
 app.put('/countries/:id', async (req, res) => {
-  const countryId = req.params.id;
-  const { CountryName, Description } = req.body;
+  const countryId = req.params.id; // Get country ID from the URL parameters
+  const { CountryName, Description } = req.body; // Destructure request body to get country details
 
   try {
-    const pool = await sql.connect(dbConfig);
+    const pool = await sql.connect(dbConfig); // Connect to the database
+    // SQL query to update the country details
     const query = `
       UPDATE Countries 
       SET CountryName = @CountryName, Description = @Description 
       WHERE ID = @ID
     `;
     await pool.request()
-      .input('CountryName', sql.NVarChar, CountryName)
+      .input('CountryName', sql.NVarChar, CountryName) // Add inputs for the query
       .input('Description', sql.NVarChar, Description)
       .input('ID', sql.Int, countryId)
       .query(query);
 
-    res.status(200).send('Country updated successfully');
+    res.status(200).send('Country updated successfully'); // Send success response
   } catch (error) {
-    console.error('Error updating country:', error);
-    res.status(500).send('Failed to update country');
+    console.error('Error updating country:', error); // Log any error
+    res.status(500).send('Failed to update country'); // Send error response
   }
 });
 
 // Update movie endpoint
 app.put('/movies/:id', async (req, res) => {
-  const movieId = req.params.id;
-  const updates = req.body;
+  const movieId = req.params.id; // Get movie ID from the URL parameters
+  const updates = req.body; // Get the updates from the request body
 
-  let query = 'UPDATE Movies SET ';
+  let query = 'UPDATE Movies SET '; // Start constructing the SQL update query
   const fields = Object.keys(updates).map((key, index) => {
-    return `${key} = @${key}`;
+    return `${key} = @${key}`; // Map each update key to a query string
   });
-  query += fields.join(', ') + ' WHERE ID = @ID';
+  query += fields.join(', ') + ' WHERE ID = @ID'; // Join the fields and complete the query
 
   try {
-    const pool = await sql.connect(dbConfig);
+    const pool = await sql.connect(dbConfig); // Connect to the database
     const request = pool.request();
 
+    // Add inputs for the query
     Object.keys(updates).forEach(key => {
       request.input(key, updates[key]);
     });
     request.input('ID', sql.Int, movieId);
 
-    console.log('Executing query:', query);
-    console.log('With parameters:', updates);
+    console.log('Executing query:', query); // Log the query
+    console.log('With parameters:', updates); // Log the parameters
 
-    await request.query(query);
-    res.sendStatus(200);
+    await request.query(query); // Execute the query
+    res.sendStatus(200); // Send success response
   } catch (err) {
-    console.error('Error updating movie:', err);
-    res.sendStatus(500);
+    console.error('Error updating movie:', err); // Log any error
+    res.sendStatus(500); // Send error response
   }
 });
 
 // Get movie details endpoint
 app.get('/movies/:id', async (req, res) => {
-  const movieId = req.params.id;
+  const movieId = req.params.id; // Get movie ID from the URL parameters
 
   try {
-    const pool = await sql.connect(dbConfig);
+    const pool = await sql.connect(dbConfig); // Connect to the database
     const result = await pool.request()
       .input('ID', sql.Int, movieId)
-      .query('SELECT * FROM Movies WHERE ID = @ID');
+      .query('SELECT * FROM Movies WHERE ID = @ID'); // Query to get the movie details by ID
 
     if (result.recordset.length > 0) {
-      res.json(result.recordset[0]);
+      res.json(result.recordset[0]); // Send the movie details as JSON if found
     } else {
-      res.sendStatus(404);
+      res.sendStatus(404); // Send 404 if movie not found
     }
   } catch (err) {
-    console.error('Error fetching movie details:', err);
-    res.sendStatus(500);
+    console.error('Error fetching movie details:', err); // Log any error
+    res.sendStatus(500); // Send error response
   }
 });
+
 
 // Forum Routes
 app.post('/Community/create', validateForum.forumValidation, forumController.createForum);
