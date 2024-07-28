@@ -268,3 +268,166 @@ UPDATE Movies
 SET TrailerUrl = 'https://www.youtube.com/embed/nAYUv9wjV48?si=IIStAoZkfhljTm6r',
     ImageUrl = '/Images/moviesimage1.jpg'
 WHERE ID = 1;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/MqtITxxMZvc?si=EZnHH-2QgjrFaAhp',
+    ImageUrl = '/Images/moviesimage2.jpg'
+WHERE ID = 2;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/qdceqkkFF10?si=t4F4T75xoH5I64kG',
+    ImageUrl = '/Images/moviesimage3.jpg'
+WHERE ID = 3;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/CLdhN4oMxCQ?si=vGDdE0qmHikTLRDG',
+    ImageUrl = '/Images/moviesimage4.jpg'
+WHERE ID = 4;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/KkdYrSJEICE?si=zrvXk1YM62HGHbk3',
+    ImageUrl = '/Images/moviesimage5.jpg'
+WHERE ID = 5;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/m6Q7KnXpNOg?si=32cDoSC42-5I08aV',
+    ImageUrl = '/Images/moviesimage6.jpg'
+WHERE ID = 6;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/eJc5ARq8c94?si=EzRZSZ0uN4S-jjuU',
+    ImageUrl = '/Images/moviesimage7.jpg'
+WHERE ID = 7;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/RgREUEyOeaY?si=LHk_m1MB2jijrJwe',
+    ImageUrl = '/Images/moviesimage8.jpg'
+WHERE ID = 8;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/Jk-EoUb0nvg?si=V1SFNrF9_iFZEce1',
+    ImageUrl = '/Images/moviesimage9.jpg'
+WHERE ID = 9;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/WIc1VuKhjAI?si=HK2VsL6o1oAxHajY',
+    ImageUrl = '/Images/moviesimage10.jpg'
+WHERE ID = 10;
+
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/KdkNTEkCsO8?si=fmQPFdHNARP2WkKa',
+    ImageUrl = '/Images/moviesimage11.jpg'
+WHERE ID = 11;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/CI9q7PU3Mqs?si=q536He334jvQlR2q',
+    ImageUrl = '/Images/moviesimage12.jpg'
+WHERE ID = 12;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/5ku1ZPsWqM0?si=4tSDamTocWG89XOt',
+    ImageUrl = '/Images/moviesimage13.jpg'
+WHERE ID = 13;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/WRf46RzvZKQ?si=wVmiRidOXbkrKcPN',
+    ImageUrl = '/Images/moviesimage14.jpg'
+WHERE ID = 14;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/frKM41BlZY8?si=bKQcDS2b5zi1bClG',
+    ImageUrl = '/Images/moviesimage15.jpg'
+WHERE ID = 15;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/KvLVWTaUT5w?si=CWaF4PqqZvljEUci',
+    ImageUrl = '/Images/moviesimage16.jpg'
+WHERE ID = 16;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/mA16YcY2GxQ?si=BCouHJ88Fg7_d-V1',
+    ImageUrl = '/Images/moviesimage17.jpg'
+WHERE ID = 17;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/rRN_HRZoV_w?si=81fEloX-TVLuSelu',
+    ImageUrl = '/Images/moviesimage18.jpg'
+WHERE ID = 18;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/ZQ-YX-5bAs0?si=yDXTiiajqqbLaNuq',
+    ImageUrl = '/Images/moviesimage19.jpg'
+WHERE ID = 19;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/Jg4XUCXBSZo?si=NIpY1kWu1qZHcb1H',
+    ImageUrl = '/Images/moviesimage20.jpg'
+WHERE ID = 20;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/e03-vp0Rf6w?si=BQKn6qtHZxZ7mhkR',
+    ImageUrl = '/Images/moviesimage21.jpg'
+WHERE ID = 21;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/7k8h_X3GjgM?si=YsC5d-jVk6471Gzy',
+    ImageUrl = '/Images/moviesimage22.jpg'
+WHERE ID = 22;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/t2uuECXPL-w?si=LaQS9CHtw5NZRdTC',
+    ImageUrl = '/Images/moviesimage23.jpg'
+WHERE ID = 23;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/cr_PtdZuuRU?si=5I0zdlW4a0fzg2cx',
+    ImageUrl = '/Images/moviesimage24.jpg'
+WHERE ID = 24;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/fFZVM8EDbKA?si=RHD502_PyiqJOX7o',
+    ImageUrl = '/Images/moviesimage25.jpg'
+WHERE ID = 25;
+
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/eiFWYHLz5ok?si=sMKpXao2a5Qma5qj',
+    ImageUrl = '/Images/moviesimage26.jpg'
+WHERE ID = 26;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/QbHpyjrGdpc?si=5OZGY5lzoGCkiych',
+    ImageUrl = '/Images/moviesimage27.jpg'
+WHERE ID = 27;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/xj-PYuAOL3U?si=ZeaEUcKPyUzOrdZL',
+    ImageUrl = '/Images/moviesimage28.jpg'
+WHERE ID = 28;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/abplnDyLohY?si=grc0_4bZHR7RGIkj',
+    ImageUrl = '/Images/moviesimage29.jpg'
+WHERE ID = 29;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/SD5oMxbMcHM?si=9Bp7FvmesKN-OTzb',
+    ImageUrl = '/Images/moviesimage30.jpg'
+WHERE ID = 30;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/9D94SHNiw_w?si=aa0PAfQrMGSAOjjl',
+    ImageUrl = '/Images/moviesimage31.jpg'
+WHERE ID = 31;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/jo04L1f1MKw?si=ZUPmQWZbdy3KkVcD',
+    ImageUrl = '/Images/moviesimage32.jpg'
+WHERE ID = 32;
+
+UPDATE Movies
+SET TrailerUrl = 'https://www.youtube.com/embed/8JigYotRQoY?si=q-gEA5kF4qdgDFcn',
+    ImageUrl = '/Images/moviesimage33.jpg'
+WHERE ID = 33;
+
