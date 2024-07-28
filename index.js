@@ -9,6 +9,8 @@ const bcryptjs = require("bcryptjs");
 const jsonwebtoken = require("jsonwebtoken");
 const multer = require("multer");
 const cors = require("cors");
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json'); // Import generated spec
 
 // Controllers
 const forumController = require("./BED/controllers/forumController");
@@ -23,10 +25,6 @@ const validateUser = require("./BED/middlewares/validateUser");
 const validateArticle = require("./BED/middlewares/validateArticle");
 const { validateAdmin, verifyJWTadmin } = require("./BED/middlewares/validateAdmin");
 
-//Swagger 
-const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = require("./swagger-output.json"); // Import generated spec
-
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -38,8 +36,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serveing Swagger UI
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// Serve the Swagger UI at a specific route
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Function to get the last movie ID
 async function getLastMovieID() {
@@ -170,68 +168,27 @@ app.get("/countries", async (req, res) => {
   }
 });
 
-app.put('/movies/:id', async (req, res) => {
-  const movieId = req.params.id;
-  const updates = req.body;
-
-  let query = 'UPDATE Movies SET ';
-  const fields = Object.keys(updates).map((key, index) => {
-    return `${key} = @${key}`;
-  });
-  query += fields.join(', ') + ' WHERE ID = @ID';
+app.put('/countries/:id', async (req, res) => {
+  const countryId = req.params.id;
+  const { CountryName, Description } = req.body;
 
   try {
     const pool = await sql.connect(dbConfig);
-    const request = pool.request();
+    const query = `
+      UPDATE Countries 
+      SET CountryName = @CountryName, Description = @Description 
+      WHERE ID = @ID
+    `;
+    await pool.request()
+      .input('CountryName', sql.NVarChar, CountryName)
+      .input('Description', sql.NVarChar, Description)
+      .input('ID', sql.Int, countryId)
+      .query(query);
 
-    Object.keys(updates).forEach(key => {
-      request.input(key, updates[key]);
-    });
-    request.input('ID', sql.Int, movieId);
-
-    console.log('Executing query:', query);
-    console.log('With parameters:', updates);
-
-    await request.query(query);
-    res.sendStatus(200);
-  } catch (err) {
-    console.error('Error updating movie:', err);
-    res.sendStatus(500);
-  }
-});
-
-app.get('/movies/:id', async (req, res) => {
-  const movieId = req.params.id;
-
-  try {
-    const pool = await sql.connect(dbConfig);
-    const result = await pool.request()
-      .input('ID', sql.Int, movieId)
-      .query('SELECT * FROM Movies WHERE ID = @ID');
-
-    if (result.recordset.length > 0) {
-      res.json(result.recordset[0]);
-    } else {
-      res.sendStatus(404);
-    }
-  } catch (err) {
-    console.error('Error fetching movie details:', err);
-    res.sendStatus(500);
-  }
-});
-// Fetch movies and countries
-app.get("/movies/firstsix", movieController.getFirstSixMovies);
-app.get("/movies/:id", movieController.getMovieById);
-app.get("/movies", movieController.getAllMovies);
-
-app.get("/countries", async (req, res) => {
-  try {
-    const connection = await sql.connect(dbConfig);
-    const result = await connection.request().query("SELECT ID, CountryName, Description FROM Countries");
-    res.json(result.recordset);
-  } catch (err) {
-    console.error("Error fetching countries:", err);
-    res.status(500).send("Error fetching countries");
+    res.status(200).send('Country updated successfully');
+  } catch (error) {
+    console.error('Error updating country:', error);
+    res.status(500).send('Failed to update country');
   }
 });
 
@@ -298,8 +255,7 @@ app.delete("/Community/delete/:forumId", forumController.deleteForum);
 // User Routes
 app.post("/users/account/login", userController.userLogin);
 app.get("/users/login/:id", userController.getUserById);
-app.post("/users/account", validateUser.validateUserAccount, 
-userController.createUser);
+app.post("/users/account", validateUser.validateUserAccount, userController.createUser);
 app.put("/users/account/:id", userController.updateUser);
 app.delete("/users/remove/:id", userController.deleteUser);
 app.post("/users/forgotpassword/:email", userController.forgotPassword);
@@ -321,13 +277,12 @@ app.get("/articles/:ID", articleController.getArticleById);
 app.put("/articles/:ID", validateArticle, articleController.updateArticle);
 app.delete("/articles/:ID", articleController.deleteArticle);
 
-// Admin Routes
-app.post("/admins/login", adminController.adminLogin);
-app.post("/admins/create", validateAdmin, adminController.createAdmin);
-app.put("/admins/:email", validateAdmin, adminController.updateAdmin);
-app.delete("/admins/:email", validateAdmin, adminController.deleteAdmin);
-app.get("/admins/:email", adminController.getAdminsByEmail);
-app.get("/admins", adminController.getAllAdmins);
+// Admin Routes Yi Hong S10257222H
+app.get("/admins/:email", adminController.getAdminsByEmail); //GET function to get admin data by email
+app.get("/admins", adminController.getAllAdmins); //GET function to get all admin data in database
+app.post("/admins/create", validateAdmin, adminController.createAdmin); //POST function to create new admin in database
+app.post("/admins/login", adminController.adminLogin); //POST function to handle admin log in
+app.delete("/admins/delete/:email", adminController.deleteAdmin); //DELETE function to delete admin data from email
 
 // Close the connection pool on SIGINT signal
 process.on("SIGINT", async () => {
