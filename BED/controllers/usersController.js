@@ -79,10 +79,6 @@ const updateUser = async (req, res) => {
   const { id } = req.params;
   const { username, password, email } = req.body;
 
-  if (!username || !password || !email) {
-    return res.status(400).json({ message: "Missing required fields" });
-  }
-
   try {
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
